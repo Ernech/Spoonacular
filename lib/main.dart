@@ -20,12 +20,20 @@ class MyApp extends StatelessWidget {
 
 var bannerItems = ["a", "b", "c", "d", "e", "f"];
 var bannerImages = [
-  "images/aguacate.jpg",
   "images/leckerbrot.jpg",
+  "images/ventanita.jpg",
+  "images/aguacate.jpg",
   "images/lupito.jpg",
   "images/manadeoscileos.jpg",
-  "images/ventanita.jpg",
   "images/wellness.jpg"
+];
+var nombresRestaurantes = [
+  "leckerbrot",
+  "ventanita",
+  "aguacate.",
+  "ilupito",
+  "manadeoscileos",
+  "wellness"
 ];
 
 class MyHomePage extends StatelessWidget {
@@ -70,28 +78,55 @@ class BannerWidgetArea extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> banners = new List<Widget>();
     for (int i = 0; i < bannerItems.length; i++) {
-      var bannerView = Container(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              bannerImages[i],
-              fit: BoxFit.cover,
-            ),
-          ],
-        ),
+      var bannerView = Padding(
+        padding: const EdgeInsets.all(10),
+         child: Column(
+            children: [
+              Container(
+                width: 125,
+                height: 125,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: new AssetImage(
+                        bannerImages[i],
+                      ),
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              SizedBox(height: 15),
+              Text(nombresRestaurantes[i]),
+            ],
+          ),
       );
+
+      //child: Container(
+      //  child: Stack(
+      //    fit: StackFit.expand,
+      //    children: [
+      //      ClipRRect(
+      //        borderRadius:BorderRadius.all(Radius.circular(10)),
+      //        child: Image.asset(
+      //          bannerImages[i],
+      //          fit: BoxFit.cover,
+      //        ),
+      //      ),
+      //    ],
+      //  ),
+      //),
       banners.add(bannerView);
     }
-    PageController controller = PageController(initialPage: 0);
-    return Container(
-      width: screenWidth,
-      height: screenWidth * 9 / 16,
-      child: PageView(
-        controller: controller,
-        scrollDirection: Axis.horizontal,
-        children: banners,
-      ),
+    PageController controller =
+        PageController(viewportFraction: 0.6, initialPage: 0);
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(26,0,0,0),
+      scrollDirection: Axis.horizontal,
+      child: Row(children: banners,),
+      //child: PageView(
+      //  controller: controller,
+      //  scrollDirection: Axis.horizontal,
+      //  children: banners,
+      //),
     );
   }
 }
