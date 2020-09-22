@@ -28,6 +28,12 @@ var bannerImages = [
   "images/manadeoscileos.jpg",
   "images/wellness.jpg"
 ];
+var iconsImages = [
+  "images/icon-vegetarian.png",
+  "images/icon-vegan.png",
+  "images/icon-omnivoro.png",
+  "images/icon-no-gluten.png",
+];
 var nombresRestaurantes = [
   "Leckerbrot",
   "Ventanita",
@@ -141,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                               padding: const EdgeInsets.fromLTRB(36,10,10,10),
                               child: Container(
                                 width: (MediaQuery.of(context).size.width) /2.55,
-                                height: 130,
+                                height: 115,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
@@ -151,6 +157,96 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         spreadRadius: 3.0,
                                         blurRadius: 5.0
                                     )
+                                  ],
+                                  
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Hero(
+                                            tag: "vegetarian",
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      iconsImages[0]
+                                                  ),
+                                                    fit:BoxFit.contain
+                                                )
+                                              ),
+                                            ),
+                                          )
+                                          ,
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      "Vegetariano",
+                                      style: TextStyle(fontSize: 16, fontFamily: "Muli",color: Colors.green ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(36,10,10,10),
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width) /2.55,
+                                height: 115,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 3.0,
+                                        blurRadius: 5.0
+                                    )
+                                  ],
+
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Hero(
+                                            tag: "Omnivoro",
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          iconsImages[2]
+                                                      ),
+                                                      fit:BoxFit.contain
+                                                  )
+                                              ),
+                                            ),
+                                          )
+                                          ,
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      "Omnivoro",
+                                      style: TextStyle(fontSize: 16, fontFamily: "Muli",color: Colors.deepOrangeAccent ),
+                                    ),
+
                                   ],
                                 ),
                               ),
@@ -166,8 +262,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10,10,36,10),
                               child: Container(
-                                width: (MediaQuery.of(context).size.width) / 2.55,
-                                height: 130,
+                                width: (MediaQuery.of(context).size.width) /2.55,
+                                height: 115,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
@@ -178,8 +274,97 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         blurRadius: 5.0
                                     )
                                   ],
-                                ),
 
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Hero(
+                                            tag: "vegano",
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          iconsImages[1]
+                                                      ),
+                                                      fit:BoxFit.contain
+                                                  )
+                                              ),
+                                            ),
+                                          )
+                                          ,
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      "Vegano",
+                                      style: TextStyle(fontSize: 16, fontFamily: "Muli",color: Colors.lightGreen ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10,10,36,10),
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width) /2.55,
+                                height: 115,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 3.0,
+                                        blurRadius: 5.0
+                                    )
+                                  ],
+
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Hero(
+                                            tag: "No gluten",
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          iconsImages[3]
+                                                      ),
+                                                      fit:BoxFit.contain
+                                                  )
+                                              ),
+                                            ),
+                                          )
+                                          ,
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      "No gluten",
+                                      style: TextStyle(fontSize: 16, fontFamily: "Muli",color: Colors.grey ),
+                                    ),
+
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -207,8 +392,8 @@ class BannerWidgetArea extends StatelessWidget {
          child: Column(
             children: [
               Container(
-                width: 125,
-                height: 125,
+                width: 120,
+                height: 120,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
