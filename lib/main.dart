@@ -65,6 +65,16 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       body: Container(
         height: screenHeight,
         width: screenWidth,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end:Alignment.bottomCenter,
+              colors: [
+                Color(0xFFCDDE47),
+                Colors.white
+              ],
+            )
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -75,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                     children: [
                       Text(
                         "Nutrana",
-                        style: TextStyle(fontSize: 30, fontFamily: "Pacifico"),
+                        style: TextStyle(fontSize: 30, fontFamily: "Pacifico",color:Color(0xFF5B8C2A),letterSpacing: 5.0),
                       ),
                     ],
                   ),
