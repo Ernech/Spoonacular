@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/dieta_pagina.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,15 +29,28 @@ var bannerImages = [
   "images/wellness.jpg"
 ];
 var nombresRestaurantes = [
-  "leckerbrot",
-  "ventanita",
-  "aguacate.",
-  "ilupito",
-  "manadeoscileos",
-  "wellness"
+  "Leckerbrot",
+  "Ventanita",
+  "Aguacate",
+  "Lupito",
+  "Mana de los cielos",
+  "Wellness food"
 ];
 
-class MyHomePage extends StatelessWidget {
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
+
+  TabController _tabController;
+  @override
+  void initState(){
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -45,13 +59,11 @@ class MyHomePage extends StatelessWidget {
       body: Container(
         height: screenHeight,
         width: screenWidth,
-        child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(36),
+                  padding: const EdgeInsets.fromLTRB(36,36,10,10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -62,11 +74,123 @@ class MyHomePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(36,10,10,10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Restaurantes",
+                        style: TextStyle(fontSize: 16, fontFamily: "Muli",fontWeight: FontWeight.bold ),
+                      ),
+                    ],
+                  ),
+                ),
                 BannerWidgetArea(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(36,10,10,10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Estilo de Vida",
+                        style: TextStyle(fontSize: 16, fontFamily: "Muli",fontWeight: FontWeight.bold ),
+                      ),
+                    ],
+                  ),
+                ),
+                //Container(
+                //  height: MediaQuery.of(context).size.height - 10,
+                //  width: double.infinity,
+                //  child: TabBarView(
+                //    controller: _tabController,
+                //    children: [DietaPagina(),DietaPagina(),DietaPagina()],
+                //  ),
+                //),
+                //Container(
+                //  child: GridView.count(
+                //    crossAxisCount: 2,
+                //  children: [
+                //    Container(
+                //      decoration: BoxDecoration(
+                //        color: Colors.red,
+                //        borderRadius: BorderRadius.circular(13),
+                //      ),
+                //    ),
+                //  ],),
+                //),
+                //Container(
+                //  height: MediaQuery.of(context).size.height - 10,
+                //  width: double.infinity,
+                //  child: TabBarView(
+                //    controller: _tabController,
+                //    children: [
+                //      DietaPagina(),
+                //      DietaPagina(),
+                //      DietaPagina(),
+                //    ],
+                //  ),
+                //),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(36,10,10,10),
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width) /2.55,
+                                height: 130,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 3.0,
+                                        blurRadius: 5.0
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10,10,36,10),
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width) / 2.55,
+                                height: 130,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 3.0,
+                                        blurRadius: 5.0
+                                    )
+                                  ],
+                                ),
+
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                )
               ],
             ),
           ),
-        ),
       ),
     );
   }
@@ -92,10 +216,10 @@ class BannerWidgetArea extends StatelessWidget {
                         bannerImages[i],
                       ),
                       fit: BoxFit.cover,
-                    )),
+                    ),),
               ),
               SizedBox(height: 15),
-              Text(nombresRestaurantes[i]),
+              Text(nombresRestaurantes[i] , style: TextStyle(fontSize: 16, fontFamily: "Muli",fontWeight: FontWeight.bold,color: Colors.grey),),
             ],
           ),
       );
@@ -116,10 +240,10 @@ class BannerWidgetArea extends StatelessWidget {
       //),
       banners.add(bannerView);
     }
-    PageController controller =
-        PageController(viewportFraction: 0.6, initialPage: 0);
+    //PageController controller =
+    //    PageController(viewportFraction: 0.6, initialPage: 0);
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(26,0,0,0),
+      padding: const EdgeInsets.fromLTRB(26,0,26,0),
       scrollDirection: Axis.horizontal,
       child: Row(children: banners,),
       //child: PageView(
