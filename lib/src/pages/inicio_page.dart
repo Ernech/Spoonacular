@@ -26,29 +26,23 @@ class _InicioPageState extends State<InicioPage>
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    var screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         height: screenHeight,
         width: screenWidth,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xFFCDDE47), Colors.white],
-            )),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFFCDDE47), Colors.white],
+        )),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(36, 36, 10, 10),
+                padding: const EdgeInsets.fromLTRB(36, 36, 10, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -64,17 +58,35 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 36, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Hola , Ariel",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Muli",
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF828282)),
+                    ),
+                  ],
+                ),
               ),
 
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 32),
-                padding: EdgeInsets.symmetric(horizontal: 30,),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 30,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(
-                      color: Colors.white,
+                    color: Colors.white,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -86,14 +98,14 @@ class _InicioPageState extends State<InicioPage>
                 ),
                 child: TextField(
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.grey,
-                      ),
-                      hintText: "Restaurantes , plato y dietas",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      ),
+                    border: InputBorder.none,
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                    hintText: "Restaurantes , plato y dietas",
+                    hintStyle: TextStyle(color: Colors.grey),
+                  ),
                 ),
               ),
 
@@ -164,7 +176,7 @@ class _InicioPageState extends State<InicioPage>
               //    ],
               //  ),
               //),
-              _tarjetas()
+              _tarjetas(),
               // Row(
               //   children: [
               //     Column(
@@ -192,17 +204,14 @@ class _InicioPageState extends State<InicioPage>
     );
   }
 
-  Widget _tarjetasEstiloDeVida(String tag, String texto, String image,
-      Color color) {
+  Widget _tarjetasEstiloDeVida(
+      String tag, String texto, String image, Color color) {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(36, 10, 10, 10),
+          padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
           child: Container(
-            width: (MediaQuery
-                .of(context)
-                .size
-                .width) / 2.55,
+            //width: (MediaQuery.of(context).size.width) / 2.55,
             height: 115,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -238,7 +247,7 @@ class _InicioPageState extends State<InicioPage>
                 Text(
                   texto,
                   style:
-                  TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
+                      TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
                 ),
               ],
             ),
@@ -249,21 +258,24 @@ class _InicioPageState extends State<InicioPage>
   }
 
   Widget _tarjetas() {
-    return Table(
-      children: [
-        TableRow(children: [
-          _tarjetasEstiloDeVida(
-              "vegetarian", "Vegetariano", iconsImages[0], Colors.green),
-          _tarjetasEstiloDeVida(
-              "Omnivoro", "Omnivoro", iconsImages[2], Colors.deepOrangeAccent),
-        ]),
-        TableRow(children: [
-          _tarjetasEstiloDeVida(
-              "vegano", "Vegano", iconsImages[1], Colors.lightGreen),
-          _tarjetasEstiloDeVida(
-              "No gluten", "No gluten", iconsImages[3], Colors.grey),
-        ])
-      ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(36, 0, 36, 0),
+      child: Table(
+        children: [
+          TableRow(children: [
+            _tarjetasEstiloDeVida(
+                "vegetarian", "Vegetariano", iconsImages[0], Colors.green),
+            _tarjetasEstiloDeVida("Omnivoro", "Omnivoro", iconsImages[2],
+                Colors.deepOrangeAccent),
+          ]),
+          TableRow(children: [
+            _tarjetasEstiloDeVida(
+                "vegano", "Vegano", iconsImages[1], Colors.lightGreen),
+            _tarjetasEstiloDeVida(
+                "No gluten", "No gluten", iconsImages[3], Colors.grey),
+          ])
+        ],
+      ),
     );
   }
 }

@@ -33,12 +33,23 @@ class BannerWidgetArea extends StatelessWidget {
               height: 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4,
+                ),
                 image: DecorationImage(
                   image: new AssetImage(
                     bannerImages[i],
                   ),
                   fit: BoxFit.cover,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 6.0,
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 15),
@@ -48,7 +59,7 @@ class BannerWidgetArea extends StatelessWidget {
                   fontSize: 16,
                   fontFamily: "Muli",
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey),
+                  color: Color(0xFF4F4F4F)),
             ),
           ],
         ),
