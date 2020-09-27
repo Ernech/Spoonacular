@@ -24,8 +24,9 @@ class _HomePageState extends State<HomePage> {
           canvasColor: Color.fromRGBO(80, 102, 0, 0.8),
           primaryColor: Colors.white,
           textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Color.fromRGBO(195, 226, 212, 1)))),
+              caption: TextStyle(color: Color.fromRGBO(255, 255, 255, 0.5)))),
       child: BottomNavigationBar(
+        backgroundColor: Color(0xFF5B8C2A),
         items: _items(),
         currentIndex: _currentIndex,
         onTap: (index) {
