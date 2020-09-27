@@ -19,14 +19,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _crearBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: _items(),
-      currentIndex: _currentIndex,
-      onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
+    return Theme(
+      data: Theme.of(context).copyWith(
+          canvasColor: Color.fromRGBO(64, 172, 31, 1),
+          primaryColor: Colors.white,
+          textTheme: Theme.of(context).textTheme.copyWith(
+              caption: TextStyle(color: Color.fromRGBO(195, 226, 212, 1)))),
+      child: BottomNavigationBar(
+        items: _items(),
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
     );
   }
 
