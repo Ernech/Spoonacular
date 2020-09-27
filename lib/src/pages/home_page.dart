@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget _crearBottomNavigationBar() {
     return Theme(
       data: Theme.of(context).copyWith(
-          canvasColor: Color.fromRGBO(64, 172, 31, 1),
+          canvasColor: Color.fromRGBO(51, 102, 0, 1),
           primaryColor: Colors.white,
           textTheme: Theme.of(context).textTheme.copyWith(
               caption: TextStyle(color: Color.fromRGBO(195, 226, 212, 1)))),
