@@ -8,6 +8,7 @@ class InicioPage extends StatefulWidget {
 
 class _InicioPageState extends State<InicioPage>
     with SingleTickerProviderStateMixin {
+  final _buscador = TextEditingController();
   var iconsImages = [
     "images/icon-vegetarian.png",
     "images/icon-vegan.png",
@@ -16,6 +17,7 @@ class _InicioPageState extends State<InicioPage>
   ];
 
   TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -24,18 +26,24 @@ class _InicioPageState extends State<InicioPage>
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    var screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
       body: Container(
         height: screenHeight,
         width: screenWidth,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFCDDE47), Colors.white],
-        )),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFFCDDE47), Colors.white],
+            )),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -55,6 +63,44 @@ class _InicioPageState extends State<InicioPage>
                   ],
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 32),
+                padding: EdgeInsets.symmetric(horizontal: 30,),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(
+                      color: Colors.white,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                      hintText: "Restaurantes , plato y dietas",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                ),
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+
               Padding(
                 padding: const EdgeInsets.fromLTRB(36, 10, 10, 10),
                 child: Row(
@@ -146,14 +192,17 @@ class _InicioPageState extends State<InicioPage>
     );
   }
 
-  Widget _tarjetasEstiloDeVida(
-      String tag, String texto, String image, Color color) {
+  Widget _tarjetasEstiloDeVida(String tag, String texto, String image,
+      Color color) {
     return Stack(
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(36, 10, 10, 10),
           child: Container(
-            width: (MediaQuery.of(context).size.width) / 2.55,
+            width: (MediaQuery
+                .of(context)
+                .size
+                .width) / 2.55,
             height: 115,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -189,7 +238,7 @@ class _InicioPageState extends State<InicioPage>
                 Text(
                   texto,
                   style:
-                      TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
+                  TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
                 ),
               ],
             ),

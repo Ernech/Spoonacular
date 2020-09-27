@@ -53,21 +53,6 @@ class BannerWidgetArea extends StatelessWidget {
           ],
         ),
       );
-
-      //child: Container(
-      //  child: Stack(
-      //    fit: StackFit.expand,
-      //    children: [
-      //      ClipRRect(
-      //        borderRadius:BorderRadius.all(Radius.circular(10)),
-      //        child: Image.asset(
-      //          bannerImages[i],
-      //          fit: BoxFit.cover,
-      //        ),
-      //      ),
-      //    ],
-      //  ),
-      //),
       banners.add(bannerView);
     }
     //PageController controller =
@@ -78,11 +63,6 @@ class BannerWidgetArea extends StatelessWidget {
       child: Row(
         children: banners,
       ),
-      //child: PageView(
-      //  controller: controller,
-      //  scrollDirection: Axis.horizontal,
-      //  children: banners,
-      //),
     );
   }
 }
