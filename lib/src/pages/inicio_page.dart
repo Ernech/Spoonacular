@@ -209,7 +209,7 @@ class _InicioPageState extends State<InicioPage>
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+          padding: const EdgeInsets.fromLTRB(7.5, 10, 7.5, 10),
           child: Container(
             //width: (MediaQuery.of(context).size.width) / 2.55,
             height: 115,
