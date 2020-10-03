@@ -60,6 +60,10 @@ flutter:
     - images/icon-vegetarian.png
     - images/icon-omnivoro.png
     - images/icon-vegan.png
+    - images/dish1.png
+    - images/dish2.png
+    - images/dish3.png
+    - images/dish4.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -76,6 +80,12 @@ flutter:
     - family: Pacifico
       fonts:
        - asset: fonts/Pacifico.ttf
+    - family: Muli
+      fonts:
+      - asset: fonts/Muli.ttf
+    - family: Rubik
+      fonts:
+      - asset: fonts/Rubik-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

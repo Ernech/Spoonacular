@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
+import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
 class InicioPage extends StatefulWidget {
   @override
@@ -60,23 +61,7 @@ class _InicioPageState extends State<InicioPage>
               SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 36, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Hola , Ariel",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Muli",
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF828282)),
-                    ),
-                  ],
-                ),
-              ),
-
+              TituloSecundario("Hola , Ariel"),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 32),
                 padding: EdgeInsets.symmetric(
