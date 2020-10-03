@@ -38,25 +38,24 @@ class BannerMenu extends StatelessWidget {
     List<Widget> banners = new List<Widget>();
     for (int i = 0; i < bannerImagesMenu.length; i++) {
       var bannerView = Container(
-        margin: EdgeInsets.only(right: 20),
-        height: 280,
+        margin: EdgeInsets.only(right: 20,top: 10,bottom: 10),
+        height: 270,
         width: 180,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: primaryWhite,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 10.0,
+            ),
+          ],
+        ),
         child: Stack(
           children: [
             Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                height: 270,
-                width: 180,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: primaryWhite,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 20,
+              top: 10,
               right: -20,
               child: Container(
                 height: 100,
@@ -71,7 +70,7 @@ class BannerMenu extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 15,
+              top: 5,
               left: 0,
               child: Row(
                 children: [
@@ -90,7 +89,7 @@ class BannerMenu extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 130,
+              top: 120,
               left: 16,
               width: 150,
               child: Column(
