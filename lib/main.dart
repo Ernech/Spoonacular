@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/providers/menu_item_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,12 +56,19 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 BannerWidgetArea(),
+                _menuItemsTest()
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _menuItemsTest() {
+    MenuItemProvider menuItemProvider = new MenuItemProvider();
+    menuItemProvider.getMenuItems('burger');
+    return Container();
   }
 }
 
