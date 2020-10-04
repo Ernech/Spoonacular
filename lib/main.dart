@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/menu_item_provider.dart';
+import 'package:translator/translator.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,20 +58,38 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 BannerWidgetArea(),
-                _menuItemsTest()
+                // _menuItemsTest()
               ],
             ),
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _traducir,
+        child: Icon(Icons.language),
+      ),
     );
   }
 
-  Widget _menuItemsTest() {
-    MenuItemProvider menuItemProvider = new MenuItemProvider();
-    menuItemProvider.getMenuItems('burger');
-    return Container();
+  _traducir() async {
+    final translator = GoogleTranslator();
+    var translation =
+        await translator.translate("Burger", from: 'en', to: 'es');
+    print(translation);
   }
+
+  // Widget _menuItemsTest() {
+  //   MenuItemProvider menuItemProvider = new MenuItemProvider();
+  //   return FutureBuilder(
+  //     future: menuItemProvider.getMenuItems('burger'),
+  //     initialData: null,
+  //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //       List<MenuItem> items = snapshot.data;
+  //       print(items[0].title);
+  //       return Container();
+  //     },
+  //   );
+  // }
 }
 
 class BannerWidgetArea extends StatelessWidget {

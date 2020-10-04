@@ -1,5 +1,5 @@
 class MenuItems {
-  List<MenuItem> menuItems = new List();
+  List<MenuItem> items = new List();
   MenuItems();
   MenuItems.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) {
@@ -7,7 +7,7 @@ class MenuItems {
     } else {
       for (var item in jsonList) {
         final menuItem = new MenuItem.fromJSONMap(item);
-        menuItems.add(menuItem);
+        items.add(menuItem);
       }
     }
   }

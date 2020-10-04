@@ -12,8 +12,9 @@ class MenuItemProvider {
         _url, 'food/menuItems/search', {'query': query, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
-    print(urlEndpoint);
-    print(decodedData);
-    return [];
+    //print(decodedData);
+    //return [];
+    final menuItems = new MenuItems.fromJsonList(decodedData['menuItems']);
+    return menuItems.items;
   }
 }
