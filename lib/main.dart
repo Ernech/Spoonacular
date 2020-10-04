@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/menu_item_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
+import 'package:translator/translator.dart';
 
 void main() {
   runApp(MyApp());
@@ -58,7 +59,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 BannerWidgetArea(),
-                // _menuItemsTest()
+                _menuItemsTest()
               ],
             ),
           ),
@@ -73,14 +74,17 @@ class MyHomePage extends StatelessWidget {
 
   Widget _menuItemsTest() {
     MenuItemProvider menuItemProvider = new MenuItemProvider();
-    String query = utils.enToEs('Hamburgesa');
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems(query),
+      future: menuItemProvider.getMenuItems('Hamburgesa'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        List<MenuItem> items = snapshot.data;
-        print('Item: ${items[0].title}');
-        return Container();
+        if (snapshot.data == null) {
+          return CircularProgressIndicator();
+        } else {
+          List<MenuItem> items = snapshot.data;
+          print('Item: ${utils.enToEs(items[3].title)}');
+          return Container();
+        }
       },
     );
   }

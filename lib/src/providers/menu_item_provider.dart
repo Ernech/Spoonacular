@@ -9,8 +9,11 @@ class MenuItemProvider {
   String _url = 'api.spoonacular.com';
 
   Future<List<MenuItem>> getMenuItems(String query) async {
+    final translator = GoogleTranslator();
+    var translation = await translator.translate(query, from: 'en', to: 'es');
+    String texto = translation.toString();
     final urlEndpoint = Uri.https(
-        _url, 'food/menuItems/search', {'query': query, 'apiKey': _apiKey});
+        _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
     print('OK!!!!');
