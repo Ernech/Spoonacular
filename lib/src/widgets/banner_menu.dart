@@ -78,7 +78,7 @@ class BannerMenu extends StatelessWidget {
                     icon: Icon(Icons.favorite),
                     color: primaryGreenLight,
                     onPressed: () {
-                      print("favorito");
+                      print("favoritos");
                     },
                   ),
                   Text(
