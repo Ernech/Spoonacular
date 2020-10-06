@@ -10,13 +10,13 @@ class MenuItemProvider {
 
   Future<List<MenuItem>> getMenuItems(String query) async {
     final translator = GoogleTranslator();
-    var translation = await translator.translate(query, from: 'en', to: 'es');
+    var translation = await translator.translate(query, from: 'es', to: 'en');
     String texto = translation.toString();
     final urlEndpoint = Uri.https(
         _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
-    print('OK!!!!');
+    print(decodedData);
     //return [];
     final menuItems = new MenuItems.fromJsonList(decodedData['menuItems']);
     return menuItems.items;

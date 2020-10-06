@@ -2,8 +2,8 @@ import 'package:translator/translator.dart';
 
 String texto = '';
 
-String enToEs(String query) {
-  _traducirEnToEs(query);
+Future<String> enToEs(String query) async {
+  await _traducirEnToEs(query);
   return texto;
 }
 

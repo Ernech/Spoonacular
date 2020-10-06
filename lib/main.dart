@@ -75,15 +75,26 @@ class MyHomePage extends StatelessWidget {
   Widget _menuItemsTest() {
     MenuItemProvider menuItemProvider = new MenuItemProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('Hamburgesa'),
+      future: menuItemProvider.getMenuItems('tomate'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
           return CircularProgressIndicator();
         } else {
           List<MenuItem> items = snapshot.data;
-          print('Item: ${utils.enToEs(items[3].title)}');
-          return Container();
+          return FutureBuilder(
+            future: utils.enToEs(items[1].title),
+            initialData: null,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                String texto = snapshot.data;
+                print('Traducido $texto');
+                return Container();
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          );
         }
       },
     );
