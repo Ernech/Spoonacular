@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:spoonacular/src/pages/home_page.dart';
 import 'package:spoonacular/src/pages/inicio_page.dart';
-=======
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/menu_item_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import 'package:translator/translator.dart';
->>>>>>> backend
 
 void main() {
   runApp(MyApp());
@@ -18,19 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
-      title: 'Nutrana',
-      initialRoute: 'home',
-      routes: {
-        'home': (BuildContext context) => HomePage()
-        //'inicio': (BuildContext context) => InicioPage()
-      },
-=======
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: HomePage(),
     );
   }
 }
@@ -88,7 +77,7 @@ class MyHomePage extends StatelessWidget {
   Widget _menuItemsTest() {
     MenuItemProvider menuItemProvider = new MenuItemProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('tomate'),
+      future: menuItemProvider.getMenuItems('arroz'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
@@ -142,7 +131,6 @@ class BannerWidgetArea extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: banners,
       ),
->>>>>>> backend
     );
   }
 }

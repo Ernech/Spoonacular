@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/providers/menu_item_provider.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
+import 'package:spoonacular/utils/utils.dart' as utils;
 
 class InicioPage extends StatefulWidget {
   @override
@@ -162,6 +165,7 @@ class _InicioPageState extends State<InicioPage>
               //  ),
               //),
               _tarjetas(),
+              _menuItemsTest()
               // Row(
               //   children: [
               //     Column(
@@ -261,6 +265,34 @@ class _InicioPageState extends State<InicioPage>
           ])
         ],
       ),
+    );
+  }
+
+  Widget _menuItemsTest() {
+    MenuItemProvider menuItemProvider = new MenuItemProvider();
+    return FutureBuilder(
+      future: menuItemProvider.getMenuItems('arroz'),
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.data == null) {
+          return CircularProgressIndicator();
+        } else {
+          List<MenuItem> items = snapshot.data;
+          return FutureBuilder(
+            future: utils.enToEs(items[1].title),
+            initialData: null,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                String texto = snapshot.data;
+                print('Traducido: $texto');
+                return Container();
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          );
+        }
+      },
     );
   }
 }
