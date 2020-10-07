@@ -37,7 +37,9 @@ class IngredientesPage extends StatelessWidget {
               width: double.infinity,
               child: Image.asset("images/dish1.png"),
             ),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -47,6 +49,13 @@ class IngredientesPage extends StatelessWidget {
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.45),
+                      blurRadius: 40,
+                      offset: Offset(0, -1.0),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
