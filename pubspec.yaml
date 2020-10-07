@@ -66,6 +66,13 @@ flutter:
     - images/dish2.png
     - images/dish3.png
     - images/dish4.png
+    - images/arbeja.png
+    - images/arroz.png
+    - images/cebolla.png
+    - images/fideo.png
+    - images/lechuga.png
+    - images/tomate.png
+    - images/zanahoria.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

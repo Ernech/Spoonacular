@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
@@ -53,16 +54,25 @@ class IngredientesPage extends StatelessWidget {
                         child: Column(
                           children: [
                             SubtituloGeneral("Nombre del plato"),
-                            ParrafoGeneral("Ensalda Napolitana",primaryGreen),
-                            SizedBox(height: 15,),
+                            ParrafoGeneral("Ensalda Napolitana", primaryGreen),
+                            SizedBox(
+                              height: 15,
+                            ),
                             SubtituloGeneral("Descripcion"),
                             ParrafoGeneral(
                                 "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
-                                    "su nombre; sus colores predominantes son verde.",primaryBlack),
+                                "su nombre; sus colores predominantes son verde.",
+                                primaryBlack),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            SubtituloGeneral("Ingredientes"),
+
                           ],
                         ),
                       ),
                     ),
+                    BannerIngredientes(),
                   ],
                 ),
               ),

@@ -132,7 +132,7 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               _tarjetas(),
-              _menuItemsTest()
+              //_menuItemsTest(),
             ],
           ),
         ),
