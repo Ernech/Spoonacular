@@ -4,7 +4,7 @@ import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:translator/translator.dart';
 
-class MenuItemProvider {
+class SpoonacularProvider {
   String _apiKey = '0409316eb2644d86a23e7fdce0bdeb81';
   String _url = 'api.spoonacular.com';
 

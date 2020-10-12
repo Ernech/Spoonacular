@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/providers/menu_item_provider.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
-import 'package:translator/translator.dart';
 
 void main() {
   runApp(MyApp());
@@ -73,9 +72,9 @@ class MyHomePage extends StatelessWidget {
   }
 
   Widget _menuItemsTest() {
-    MenuItemProvider menuItemProvider = new MenuItemProvider();
+    SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('tomate'),
+      future: spoonacularProvider.getMenuItems('tomate'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
