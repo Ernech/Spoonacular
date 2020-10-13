@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/providers/menu_item_provider.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
@@ -96,6 +96,7 @@ class _InicioPageState extends State<InicioPage>
                   ),
                 ),
               ),
+
               SizedBox(
                 height: 10,
               ),
@@ -131,8 +132,60 @@ class _InicioPageState extends State<InicioPage>
                   ],
                 ),
               ),
+              //Container(
+              //  height: MediaQuery.of(context).size.height - 10,
+              //  width: double.infinity,
+              //  child: TabBarView(
+              //    controller: _tabController,
+              //    children: [DietaPagina(),DietaPagina(),DietaPagina()],
+              //  ),
+              //),
+              //Container(
+              //  child: GridView.count(
+              //    crossAxisCount: 2,
+              //  children: [
+              //    Container(
+              //      decoration: BoxDecoration(
+              //        color: Colors.red,
+              //        borderRadius: BorderRadius.circular(13),
+              //      ),
+              //    ),
+              //  ],),
+              //),
+              //Container(
+              //  height: MediaQuery.of(context).size.height - 10,
+              //  width: double.infinity,
+              //  child: TabBarView(
+              //    controller: _tabController,
+              //    children: [
+              //      DietaPagina(),
+              //      DietaPagina(),
+              //      DietaPagina(),
+              //    ],
+              //  ),
+              //),
               _tarjetas(),
               _menuItemsTest()
+              // Row(
+              //   children: [
+              //     Column(
+              //       children: [
+              //         _tarjetasEstiloDeVida("vegetarian", "Vegetariano",
+              //             iconsImages[0], Colors.green),
+              //         _tarjetasEstiloDeVida("Omnivoro", "Omnivoro",
+              //             iconsImages[2], Colors.deepOrangeAccent),
+              //       ],
+              //     ),
+              //     Column(
+              //       children: [
+              //         _tarjetasEstiloDeVida("vegano", "Vegano", iconsImages[1],
+              //             Colors.lightGreen),
+              //         _tarjetasEstiloDeVida("No gluten", "No gluten",
+              //             iconsImages[3], Colors.grey),
+              //       ],
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ),
@@ -216,9 +269,9 @@ class _InicioPageState extends State<InicioPage>
   }
 
   Widget _menuItemsTest() {
-    MenuItemProvider menuItemProvider = new MenuItemProvider();
+    SpoonacularProvider menuItemProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('pollo'),
+      future: menuItemProvider.getMenuItems('arroz'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/models/menu_item_detail_model.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
-import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
 class IngredientesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final int idMenuItem = ModalRoute.of(context).settings.arguments;
+    SpoonacularProvider spoonacularProvider = SpoonacularProvider();
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -53,12 +56,28 @@ class IngredientesPage extends StatelessWidget {
                         child: Column(
                           children: [
                             SubtituloGeneral("Nombre del plato"),
-                            ParrafoGeneral("Ensalda Napolitana",primaryGreen),
-                            SizedBox(height: 15,),
+                            FutureBuilder(
+                              future: spoonacularProvider
+                                  .getMenuItemDetail(idMenuItem),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<dynamic> snapshot) {
+                                if (snapshot.hasData) {
+                                  MenuItemDetail menuItemDetail = snapshot.data;
+                                  return ParrafoGeneral(
+                                      menuItemDetail.title, primaryGreen);
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
                             SubtituloGeneral("Descripcion"),
                             ParrafoGeneral(
                                 "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
-                                    "su nombre; sus colores predominantes son verde.",primaryBlack),
+                                "su nombre; sus colores predominantes son verde.",
+                                primaryBlack),
                           ],
                         ),
                       ),
