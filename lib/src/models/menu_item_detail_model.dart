@@ -1,26 +1,10 @@
-class MenuItemsDetail {
-  List<MenuItemDetail> items = new List();
-
-  MenuItemsDetail();
-  MenuItemsDetail.fromJSONList(List<dynamic> jsonList) {
-    if (jsonList == null) {
-      return;
-    } else {
-      for (var item in jsonList) {
-        final detail = new MenuItemDetail.fromJSONMap(item);
-        items.add(detail);
-      }
-    }
-  }
-}
-
 class MenuItemDetail {
   int id;
   String title;
   String restaurantChain;
   Map<String, dynamic> nutrition;
   List<dynamic> badges;
-  List<String> breadcrumbs;
+  List<dynamic> breadcrumbs;
   String generatedText;
   String imageType;
   double likes;
@@ -101,9 +85,9 @@ class NutrientsItems {
 
 class Nutrients {
   String title;
-  int amount;
+  double amount;
   String unit;
-  int percentOfDailyNeeds;
+  double percentOfDailyNeeds;
 
   Nutrients({this.title, this.amount, this.unit, this.percentOfDailyNeeds});
 
@@ -116,9 +100,9 @@ class Nutrients {
 }
 
 class CaloricBreakdown {
-  int percentProtein;
-  int percentFat;
-  int percentCarbs;
+  double percentProtein;
+  double percentFat;
+  double percentCarbs;
   CaloricBreakdown({this.percentProtein, this.percentFat, this.percentCarbs});
   CaloricBreakdown.fromJSONMAP(Map<String, dynamic> jsonResponse) {
     percentProtein = jsonResponse['percentProtein'];

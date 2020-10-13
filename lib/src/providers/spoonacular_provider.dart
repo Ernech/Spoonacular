@@ -17,7 +17,7 @@ class SpoonacularProvider {
         _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
-    print(decodedData);
+    //print(decodedData);
     //return [];
     final menuItems = new MenuItems.fromJsonList(decodedData['menuItems']);
     return menuItems.items;

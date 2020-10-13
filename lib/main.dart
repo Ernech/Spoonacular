@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
@@ -58,7 +59,8 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 BannerWidgetArea(),
-                _menuItemsTest()
+                _menuItemsTest(),
+                _menuItemDetail(424571)
               ],
             ),
           ),
@@ -98,6 +100,30 @@ class MyHomePage extends StatelessWidget {
       },
     );
   }
+}
+
+Widget _menuItemDetail(int id) {
+  SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
+  return FutureBuilder(
+    future: spoonacularProvider.getMenuItemDetail(id),
+    initialData: null,
+    builder: (BuildContext context, AsyncSnapshot<MenuItemDetail> snapshot) {
+      if (snapshot.hasData) {
+        MenuItemDetail menuItemDetail = snapshot.data;
+        print(menuItemDetail);
+        List<Nutrients> nutrients = menuItemDetail
+            .obtenerNutrientes(menuItemDetail.nutrition['nutrients']);
+        print('NUTRIENTES ${nutrients[1].amount}');
+        final caloricBreakdown = menuItemDetail.obtenerCaloricBreakdown(
+            menuItemDetail.nutrition['caloricBreakdown']);
+        print('CALORIC ${caloricBreakdown.percentCarbs}');
+
+        return Container();
+      } else {
+        return CircularProgressIndicator();
+      }
+    },
+  );
 }
 
 class BannerWidgetArea extends StatelessWidget {
