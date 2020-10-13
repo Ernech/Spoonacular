@@ -82,7 +82,7 @@ class BannerMenu extends StatelessWidget {
               height: 100,
               width: 100,
               child: FadeInImage(
-                placeholder: AssetImage('images/dish1.png'),
+                placeholder: AssetImage('images/loading-circle.gif'),
                 image: NetworkImage(menuItems[i].image),
               ),
             ),
