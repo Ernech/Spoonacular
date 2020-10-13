@@ -96,7 +96,6 @@ class _InicioPageState extends State<InicioPage>
                   ),
                 ),
               ),
-
               SizedBox(
                 height: 10,
               ),
@@ -132,60 +131,8 @@ class _InicioPageState extends State<InicioPage>
                   ],
                 ),
               ),
-              //Container(
-              //  height: MediaQuery.of(context).size.height - 10,
-              //  width: double.infinity,
-              //  child: TabBarView(
-              //    controller: _tabController,
-              //    children: [DietaPagina(),DietaPagina(),DietaPagina()],
-              //  ),
-              //),
-              //Container(
-              //  child: GridView.count(
-              //    crossAxisCount: 2,
-              //  children: [
-              //    Container(
-              //      decoration: BoxDecoration(
-              //        color: Colors.red,
-              //        borderRadius: BorderRadius.circular(13),
-              //      ),
-              //    ),
-              //  ],),
-              //),
-              //Container(
-              //  height: MediaQuery.of(context).size.height - 10,
-              //  width: double.infinity,
-              //  child: TabBarView(
-              //    controller: _tabController,
-              //    children: [
-              //      DietaPagina(),
-              //      DietaPagina(),
-              //      DietaPagina(),
-              //    ],
-              //  ),
-              //),
               _tarjetas(),
               _menuItemsTest()
-              // Row(
-              //   children: [
-              //     Column(
-              //       children: [
-              //         _tarjetasEstiloDeVida("vegetarian", "Vegetariano",
-              //             iconsImages[0], Colors.green),
-              //         _tarjetasEstiloDeVida("Omnivoro", "Omnivoro",
-              //             iconsImages[2], Colors.deepOrangeAccent),
-              //       ],
-              //     ),
-              //     Column(
-              //       children: [
-              //         _tarjetasEstiloDeVida("vegano", "Vegano", iconsImages[1],
-              //             Colors.lightGreen),
-              //         _tarjetasEstiloDeVida("No gluten", "No gluten",
-              //             iconsImages[3], Colors.grey),
-              //       ],
-              //     ),
-              //   ],
-              // )
             ],
           ),
         ),
@@ -271,7 +218,7 @@ class _InicioPageState extends State<InicioPage>
   Widget _menuItemsTest() {
     MenuItemProvider menuItemProvider = new MenuItemProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('arroz'),
+      future: menuItemProvider.getMenuItems('pollo'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/pages/ingredientes_page.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
 
 import '../../constants.dart';
@@ -31,14 +32,13 @@ class BannerMenu extends StatelessWidget {
     "20",
   ];
 
-
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> banners = new List<Widget>();
     for (int i = 0; i < bannerImagesMenu.length; i++) {
       var bannerView = Container(
-        margin: EdgeInsets.only(right: 20,top: 10,bottom: 10),
+        margin: EdgeInsets.only(right: 20, top: 10, bottom: 10),
         height: 270,
         width: 180,
         decoration: BoxDecoration(
@@ -98,10 +98,14 @@ class BannerMenu extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        constraints: BoxConstraints( maxWidth: 150 , minHeight: 46),
+                        constraints:
+                            BoxConstraints(maxWidth: 150, minHeight: 46),
                         child: Text(
                           nombresMenuPlato[i],
-                          style: TextStyle(fontSize: 18, color: primaryGreen,),
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: primaryGreen,
+                          ),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -113,7 +117,7 @@ class BannerMenu extends StatelessWidget {
                       Chip(
                         label: Text(
                           dietaMenuPlato[i],
-                          style: TextStyle(color: primaryWhite,fontSize: 12),
+                          style: TextStyle(color: primaryWhite, fontSize: 12),
                         ),
                         backgroundColor: primaryBrown,
                       ),
@@ -123,7 +127,7 @@ class BannerMenu extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Bs "+preciosMenu[i],
+                        "Bs " + preciosMenu[i],
                         style: TextStyle(
                             fontSize: 16,
                             color: primaryGreen,
@@ -138,7 +142,11 @@ class BannerMenu extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0))),
                         onPressed: () {
-                          print("ver menu item $i");
+                          //print("Container"+i.toString());
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => IngredientesPage()));
                         },
                         child: Text('Ver', style: TextStyle(fontSize: 16)),
                       ),
