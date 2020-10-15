@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:translator/translator.dart';
 
 class SpoonacularProvider {
-  String _apiKey = '0409316eb2644d86a23e7fdce0bdeb81';
+  String _apiKey = '4aa0c9982fad4ced95bb848e4f7870af';
   String _url = 'api.spoonacular.com';
 
   Future<List<MenuItem>> getMenuItems(String query) async {
