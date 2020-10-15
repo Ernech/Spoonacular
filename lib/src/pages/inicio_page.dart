@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/providers/menu_item_provider.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
@@ -96,6 +96,7 @@ class _InicioPageState extends State<InicioPage>
                   ),
                 ),
               ),
+
               SizedBox(
                 height: 10,
               ),
@@ -132,7 +133,6 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               _tarjetas(),
-              //_menuItemsTest(),
             ],
           ),
         ),
@@ -216,9 +216,9 @@ class _InicioPageState extends State<InicioPage>
   }
 
   Widget _menuItemsTest() {
-    MenuItemProvider menuItemProvider = new MenuItemProvider();
+    SpoonacularProvider menuItemProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('pollo'),
+      future: menuItemProvider.getMenuItems('arroz'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {

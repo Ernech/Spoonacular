@@ -73,6 +73,7 @@ flutter:
     - images/lechuga.png
     - images/tomate.png
     - images/zanahoria.png
+    - images/loading-circle.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

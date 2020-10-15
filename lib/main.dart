@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spoonacular/src/pages/home_page.dart';
-import 'package:spoonacular/src/pages/inicio_page.dart';
+import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/providers/menu_item_provider.dart';
+import 'package:spoonacular/src/pages/home_page.dart';
+import 'package:spoonacular/src/pages/ingredientes_page.dart';
+import 'package:spoonacular/src/pages/restaurante_menu.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
-import 'package:translator/translator.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      initialRoute: 'home',
+      routes: {
+        'home': (BuildContext context) => HomePage(),
+        'ingredientes': (BuildContext context) => IngredientesPage(),
+        'menu': (BuildContext context) => RestauranteMenuPage(),
+      },
     );
   }
 }
@@ -61,7 +67,8 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 BannerWidgetArea(),
-                _menuItemsTest()
+                _menuItemsTest(),
+                _menuItemDetail(424571)
               ],
             ),
           ),
@@ -75,9 +82,9 @@ class MyHomePage extends StatelessWidget {
   }
 
   Widget _menuItemsTest() {
-    MenuItemProvider menuItemProvider = new MenuItemProvider();
+    SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('arroz'),
+      future: spoonacularProvider.getMenuItems('tomate'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
@@ -101,6 +108,30 @@ class MyHomePage extends StatelessWidget {
       },
     );
   }
+}
+
+Widget _menuItemDetail(int id) {
+  SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
+  return FutureBuilder(
+    future: spoonacularProvider.getMenuItemDetail(id),
+    initialData: null,
+    builder: (BuildContext context, AsyncSnapshot<MenuItemDetail> snapshot) {
+      if (snapshot.hasData) {
+        MenuItemDetail menuItemDetail = snapshot.data;
+        print(menuItemDetail);
+        List<Nutrients> nutrients = menuItemDetail
+            .obtenerNutrientes(menuItemDetail.nutrition['nutrients']);
+        print('NUTRIENTES ${nutrients[1].amount}');
+        final caloricBreakdown = menuItemDetail.obtenerCaloricBreakdown(
+            menuItemDetail.nutrition['caloricBreakdown']);
+        print('CALORIC ${caloricBreakdown.percentCarbs}');
+
+        return Container();
+      } else {
+        return CircularProgressIndicator();
+      }
+    },
+  );
 }
 
 class BannerWidgetArea extends StatelessWidget {
