@@ -4,6 +4,7 @@ import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
+import 'package:spoonacular/src/widgets/nutriente_widget.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 
@@ -96,39 +97,22 @@ class IngredientesPage extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    Stack(
-                                      children: [
-                                        Container(
-                                          width: 80,
-                                          height: 130,
-                                          decoration: BoxDecoration(
-                                            /*shape: BoxShape.circle,*/
-                                            color: primaryYellow,
-                                            borderRadius: new BorderRadius.all(Radius.elliptical(100, 100)),
-                                            boxShadow: [
-                                              /*BoxShadow(
-                                                color: primaryBlack,
-                                                offset: Offset(0.0, 1.0),
-                                                //(x,y)
-                                                blurRadius: 6.0,
-                                              ),*/
-                                            ],
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 7.5,
-                                          left: 7.5,
-                                          child: Container(
-                                            width: 65,
-                                            height: 65,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: primaryWhite,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    NutrienteWidget("Grasa",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Proteina",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Calorias",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Azucares",8),
                                   ],
                                 ),
                               ],
