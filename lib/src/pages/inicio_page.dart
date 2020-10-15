@@ -4,6 +4,7 @@ import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
+import '../../constants.dart';
 
 class InicioPage extends StatefulWidget {
   @override
@@ -96,11 +97,9 @@ class _InicioPageState extends State<InicioPage>
                   ),
                 ),
               ),
-
               SizedBox(
                 height: 10,
               ),
-
               Padding(
                 padding: const EdgeInsets.fromLTRB(36, 10, 10, 10),
                 child: Row(
@@ -133,6 +132,71 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               _tarjetas(),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 130,
+                            decoration: BoxDecoration(
+                              /*shape: BoxShape.circle,*/
+                              color: primaryYellow,
+                              borderRadius: new BorderRadius.all(
+                                  Radius.elliptical(100, 100)),
+                              boxShadow: [
+                                /*BoxShadow(
+                                                color: primaryBlack,
+                                                offset: Offset(0.0, 1.0),
+                                                //(x,y)
+                                                blurRadius: 6.0,
+                                              ),*/
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 7.5,
+                            left: 7.5,
+                            child: Container(
+                              width: 65,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: primaryWhite,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "8 Gramos",
+                                  style: TextStyle(
+                                      color: primaryBrown,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 20,
+                            child: Container(
+                              width: 80,
+                              child: Text(
+                                "Grasa",
+                                style: TextStyle(
+                                    color: primaryWhite,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
         ),
