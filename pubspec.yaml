@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   http:
   translator:
+  rxdart: ^0.24.1
 
 dev_dependencies:
   flutter_test:
