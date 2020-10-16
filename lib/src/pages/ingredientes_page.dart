@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
@@ -10,7 +10,8 @@ class IngredientesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int idMenuItem = ModalRoute.of(context).settings.arguments;
-    SpoonacularProvider spoonacularProvider = SpoonacularProvider();
+    final spoonacularBloc = Provider.spoonacularBloc(context);
+    spoonacularBloc.cargarMenuItemDetail(idMenuItem);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -56,11 +57,10 @@ class IngredientesPage extends StatelessWidget {
                         child: Column(
                           children: [
                             SubtituloGeneral("Nombre del plato"),
-                            FutureBuilder(
-                              future: spoonacularProvider
-                                  .getMenuItemDetail(idMenuItem),
+                            StreamBuilder(
+                              stream: spoonacularBloc.menuItemDetailStream,
                               builder: (BuildContext context,
-                                  AsyncSnapshot<dynamic> snapshot) {
+                                  AsyncSnapshot<MenuItemDetail> snapshot) {
                                 if (snapshot.hasData) {
                                   MenuItemDetail menuItemDetail = snapshot.data;
                                   return ParrafoGeneral(

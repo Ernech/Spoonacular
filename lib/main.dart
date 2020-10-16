@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/pages/home_page.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final mapp = MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         'ingredientes': (BuildContext context) => IngredientesPage(),
         'menu': (BuildContext context) => RestauranteMenuPage(),
       },
+    );
+    return Provider(
+      child: mapp,
     );
   }
 }
