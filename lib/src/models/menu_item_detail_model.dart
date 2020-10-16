@@ -8,7 +8,7 @@ class MenuItemDetail {
   String generatedText;
   String imageType;
   double likes;
-  int numberOfServings;
+  double numberOfServings;
   double price;
   dynamic readableServingSize;
   dynamic servingSize;
