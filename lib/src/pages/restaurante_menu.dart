@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_menu.dart';
@@ -11,9 +12,9 @@ import 'package:spoonacular/constants.dart';
 
 class RestauranteMenuPage extends StatelessWidget {
   //const RestauranteMenuPage({Key key}) : super(key: key);
-  final SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
   @override
   Widget build(BuildContext context) {
+    final spoonacularBloc = Provider.spoonacularBloc(context);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -47,9 +48,9 @@ class RestauranteMenuPage extends StatelessWidget {
                 height: 5,
               ),
               TituloCard("Platos principales"),
-              _bannerMenu(),
+              _bannerMenu(spoonacularBloc),
               TituloCard("Otros"),
-              _bannerMenu(),
+              _bannerMenu(spoonacularBloc),
             ],
           ),
         ),
@@ -57,12 +58,12 @@ class RestauranteMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _bannerMenu() {
-    SpoonacularProvider menuItemProvider = new SpoonacularProvider();
-    return FutureBuilder(
-      future: menuItemProvider.getMenuItems('pollo'),
+  Widget _bannerMenu(SpoonacularBloc bloc) {
+    bloc.cargarMenuItems('pollo');
+    return StreamBuilder(
+      stream: bloc.menuItemsStream,
       initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<MenuItem>> snapshot) {
         if (snapshot.data == null) {
           return CircularProgressIndicator();
         } else {
