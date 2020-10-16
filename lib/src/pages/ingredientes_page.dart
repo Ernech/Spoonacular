@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
+import 'package:spoonacular/src/widgets/nutriente_widget.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 
@@ -35,8 +37,13 @@ class IngredientesPage extends StatelessWidget {
                 ButtonAtras(),
               ],
             ),
+            Container(
+              height: 200,
+              width: double.infinity,
+              child: Image.asset("images/dish1.png"),
+            ),
             SizedBox(
-              height: 215,
+              height: 50,
             ),
             Expanded(
               child: Container(
@@ -47,6 +54,13 @@ class IngredientesPage extends StatelessWidget {
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.45),
+                      blurRadius: 40,
+                      offset: Offset(0, -1.0),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
@@ -70,16 +84,84 @@ class IngredientesPage extends StatelessWidget {
                                 }
                               },
                             ),
+                            // SizedBox(
+                            //   height: 15,
+                            // ),
+                            SubtituloGeneral("Nutrientes"),
+                            // ParrafoGeneral(
+                            //     "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
+                            //     "su nombre; sus colores predominantes son verde.",
+                            //     primaryBlack),
+                            Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Grasa",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Proteina",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Calorias",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Azucares",8),
+                                  ],
+                                ),
+                              ],
+                            ),
                             SizedBox(
                               height: 15,
                             ),
-                            SubtituloGeneral("Descripcion"),
-                            ParrafoGeneral(
-                                "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
-                                "su nombre; sus colores predominantes son verde.",
-                                primaryBlack),
+                            SubtituloGeneral("Ingredientes"),
                           ],
                         ),
+                      ),
+                    ),
+                    BannerIngredientes(),
+                    Container(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 36, right: 36, top: 10),
+                        /*child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.favorite),
+                                    color: primaryGreen,
+                                    onPressed: () {
+                                      print("favorito");
+                                    },
+                                  ),
+                                  Text(
+                                    "10",
+                                    style: TextStyle(
+                                        color: primaryGreen,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              "Bs 40",
+                              style: TextStyle(
+                                  color: primaryGreen,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+
+                          ],
+                        ),*/
                       ),
                     ),
                   ],
