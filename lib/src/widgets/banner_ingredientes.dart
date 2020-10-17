@@ -30,7 +30,6 @@ class BannerIngredientes extends StatelessWidget {
       );
       banners.add(bannerView);
     }
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(

@@ -155,7 +155,7 @@ class _InicioPageState extends State<InicioPage>
                 BoxShadow(
                     color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 3.0,
-                    blurRadius: 5.0)
+                    blurRadius: 5.0),
               ],
             ),
             child: Column(
