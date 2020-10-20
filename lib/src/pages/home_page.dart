@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/src/pages/cuenta_page.dart';
 import 'package:spoonacular/src/pages/favoritos_page.dart';
 import 'package:spoonacular/src/pages/inicio_page.dart';
+import 'package:spoonacular/src/pages/login.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,8 +14,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _cargarPagina(_currentIndex),
-      bottomNavigationBar: _crearBottomNavigationBar(),
+      body: Login(),
+      //body: _cargarPagina(_currentIndex),
+      //bottomNavigationBar: _crearBottomNavigationBar(),
     );
   }
 
