@@ -3,6 +3,7 @@ import 'package:spoonacular/src/pages/cuenta_page.dart';
 import 'package:spoonacular/src/pages/favoritos_page.dart';
 import 'package:spoonacular/src/pages/inicio_page.dart';
 import 'package:spoonacular/src/pages/login.dart';
+import 'package:spoonacular/src/pages/registro.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Login(),
+      body: Registro(),
       //body: _cargarPagina(_currentIndex),
       //bottomNavigationBar: _crearBottomNavigationBar(),
     );
