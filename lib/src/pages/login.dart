@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 
@@ -59,7 +60,7 @@ class Login extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
                 ),
                 onPressed: () {
-                  print('clicked');
+                  Navigator.pushNamed(context, '/home');
                 },
               ),
               SizedBox(
@@ -90,8 +91,7 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        // do what you need to do when "Click here" gets clicked
-                        print("clicked link");
+                        Navigator.pushNamed(context, '/registro');
                       }),
                 ],
               ),

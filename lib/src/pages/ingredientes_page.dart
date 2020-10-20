@@ -129,39 +129,7 @@ class IngredientesPage extends StatelessWidget {
                       child: Padding(
                         padding:
                             const EdgeInsets.only(left: 36, right: 36, top: 10),
-                        /*child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.favorite),
-                                    color: primaryGreen,
-                                    onPressed: () {
-                                      print("favorito");
-                                    },
-                                  ),
-                                  Text(
-                                    "10",
-                                    style: TextStyle(
-                                        color: primaryGreen,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              "Bs 40",
-                              style: TextStyle(
-                                  color: primaryGreen,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold),
-                            ),
 
-                          ],
-                        ),*/
                       ),
                     ),
                   ],

@@ -3,6 +3,7 @@ import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 
 import '../../constants.dart';
+import 'login.dart';
 
 class Registro extends StatelessWidget {
   @override
@@ -72,7 +73,7 @@ class Registro extends StatelessWidget {
               ),
               LineCirculeDetail(),
               SizedBox(
-                height: 40,
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +97,7 @@ class Registro extends StatelessWidget {
                       ),
                       onTap: () {
                         // do what you need to do when "Click here" gets clicked
-                        print("clicked link");
+                        Navigator.pushNamed(context, '/');
                       }),
                 ],
               ),

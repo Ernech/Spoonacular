@@ -15,10 +15,10 @@ class CuentaPage extends StatefulWidget {
 
 class _CuentaPageState extends State<CuentaPage> {
   String _dietaValue;
-  List _tiposDietas=['Vegetariano','Vegano','No Gluten','Omnivoro'];
+  List _tiposDietas = ['Vegetariano', 'Vegano', 'No Gluten', 'Omnivoro'];
+
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -26,37 +26,56 @@ class _CuentaPageState extends State<CuentaPage> {
         height: screenHeight,
         width: screenWidth,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFCDDE47), Colors.white],
-        )),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFCDDE47), Colors.white],
+          ),
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconUser("A","Ariel Colque Herrera"),
-                SizedBox(height: 10,),
+                IconUser("A", "Ariel Colque Herrera"),
+                SizedBox(
+                  height: 10,
+                ),
                 LineCirculeDetail(),
-                CustomeInput("Usuario",Icons.person,"Nombre de usuario"),
-                SizedBox(height: 20,),
-                CustomeInput("Correo",Icons.alternate_email,"Correo Electronico"),
-                SizedBox(height: 20,),
-                CustomeInput("Contraseña",Icons.lock,"Contraseña"),
-                SizedBox(height: 20,),
+                CustomeInput("Usuario", Icons.person, "Nombre de usuario"),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomeInput(
+                    "Correo", Icons.alternate_email, "Correo Electronico"),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomeInput("Contraseña", Icons.lock, "Contraseña"),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 34 ),
-                      child: Text("Dieta",style: TextStyle(color: primaryGreen,fontSize: 16,fontWeight: FontWeight.bold),),
+                      padding: const EdgeInsets.only(left: 34),
+                      child: Text(
+                        "Dieta",
+                        style: TextStyle(
+                            color: primaryGreen,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 36,right: 36,bottom: 10),
+                  padding:
+                      const EdgeInsets.only(left: 36, right: 36, bottom: 10),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,

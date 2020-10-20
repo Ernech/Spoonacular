@@ -28,9 +28,10 @@ class BannerWidgetArea extends StatelessWidget {
     for (int i = 0; i < bannerItems.length; i++) {
       var bannerView = GestureDetector(
         onTap: () {
-          //print("Container"+i.toString());
+          print("Container"+i.toString());
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => RestauranteMenuPage()));
+          //Navigator.pushNamed(context, '/restaurantemenu');
         },
         child: Padding(
           padding: const EdgeInsets.all(10),

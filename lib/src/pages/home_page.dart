@@ -15,9 +15,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Registro(),
-      //body: _cargarPagina(_currentIndex),
-      //bottomNavigationBar: _crearBottomNavigationBar(),
+      body: _cargarPagina(_currentIndex),
+      bottomNavigationBar: _crearBottomNavigationBar(),
     );
   }
 
