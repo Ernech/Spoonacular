@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
         '/': (BuildContext context) => Login(),
         '/registro': (BuildContext context) => Registro(),
         '/home': (BuildContext context) => HomePage(),
-        'ingredientes': (BuildContext context) => IngredientesPage(),
-        'menu': (BuildContext context) => RestauranteMenuPage(),
+        '/ingredientes': (BuildContext context) => IngredientesPage(),
+        '/restaurantemenu': (BuildContext context) => RestauranteMenuPage(),
       },
     );
     return Provider(
