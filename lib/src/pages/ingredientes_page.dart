@@ -144,7 +144,7 @@ class IngredientesPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      /*  Column(
+                                      Column(
                                         children: [
                                           Container(
                                             child: NutrienteWidget(
@@ -153,7 +153,7 @@ class IngredientesPage extends StatelessWidget {
                                                 nutrientes[3].unit),
                                           ),
                                         ],
-                                      ),*/
+                                      ),
                                     ],
                                   );
                                 }
