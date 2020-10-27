@@ -12,9 +12,11 @@ import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 class IngredientesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final MenuItem menuItem = ModalRoute.of(context).settings.arguments;
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context).settings.arguments;
+    final menuItem = arguments['menuItem'];
     final spoonacularBloc = Provider.spoonacularBloc(context);
-    spoonacularBloc.cargarMenuItemDetail(menuItem.id);
+    spoonacularBloc.cargarMenuItemDetail(arguments['id']);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -142,7 +144,7 @@ class IngredientesPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Column(
+                                      /*  Column(
                                         children: [
                                           Container(
                                             child: NutrienteWidget(
@@ -151,7 +153,7 @@ class IngredientesPage extends StatelessWidget {
                                                 nutrientes[3].unit),
                                           ),
                                         ],
-                                      ),
+                                      ),*/
                                     ],
                                   );
                                 }

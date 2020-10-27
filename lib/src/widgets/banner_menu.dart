@@ -184,7 +184,10 @@ class BannerMenu extends StatelessWidget {
                       child: GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/ingredientes',
-                                arguments: menuItems[i]);
+                                arguments: <String, dynamic>{
+                                  'id': menuItems[i].id,
+                                  'menuItem': menuItems[i]
+                                });
                           },
                           child: Text('Ver', style: TextStyle(fontSize: 16))),
                     ),
