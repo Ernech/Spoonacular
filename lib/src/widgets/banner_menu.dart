@@ -173,7 +173,7 @@ class BannerMenu extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print("Container"+i.toString());
+                        print("Container" + i.toString());
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -183,8 +183,8 @@ class BannerMenu extends StatelessWidget {
                       },
                       child: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, 'ingredientes',
-                                arguments: menuItems[i].id);
+                            Navigator.pushNamed(context, '/ingredientes',
+                                arguments: menuItems[i]);
                           },
                           child: Text('Ver', style: TextStyle(fontSize: 16))),
                     ),

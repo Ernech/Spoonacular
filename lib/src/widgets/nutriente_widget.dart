@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
+import 'package:spoonacular/utils/utils.dart' as utils;
 
 class NutrienteWidget extends StatelessWidget {
   String nutriente;
-  int cantidadNutriente;
-  NutrienteWidget(this.nutriente,this.cantidadNutriente);
+  double cantidadNutriente;
+  String unidades;
+  NutrienteWidget(this.nutriente, this.cantidadNutriente, this.unidades);
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Stack(
         children: [
           Container(
-
             width: 80,
             height: 130,
             decoration: BoxDecoration(
@@ -40,7 +41,7 @@ class NutrienteWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  ("$cantidadNutriente gramos"),
+                  ("$cantidadNutriente $unidades"),
                   style: TextStyle(
                       color: primaryBrown,
                       fontWeight: FontWeight.bold,
@@ -53,14 +54,25 @@ class NutrienteWidget extends StatelessWidget {
             top: 25,
             child: Container(
               width: 80,
-              child: Text(
-                nutriente,
-                style: TextStyle(
-                  color: primaryWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
+              child: FutureBuilder(
+                future: utils.enToEs(nutriente),
+                initialData: null,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    String nutrienteTraducido = snapshot.data;
+                    return Text(
+                      nutrienteTraducido,
+                      style: TextStyle(
+                        color: primaryWhite,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
               ),
             ),
           ),
