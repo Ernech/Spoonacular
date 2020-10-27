@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
+import 'package:spoonacular/src/widgets/nutriente_widget.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 
@@ -10,7 +12,8 @@ class IngredientesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int idMenuItem = ModalRoute.of(context).settings.arguments;
-    SpoonacularProvider spoonacularProvider = SpoonacularProvider();
+    final spoonacularBloc = Provider.spoonacularBloc(context);
+    spoonacularBloc.cargarMenuItemDetail(idMenuItem);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -34,8 +37,13 @@ class IngredientesPage extends StatelessWidget {
                 ButtonAtras(),
               ],
             ),
+            Container(
+              height: 200,
+              width: double.infinity,
+              child: Image.asset("images/dish1.png"),
+            ),
             SizedBox(
-              height: 215,
+              height: 50,
             ),
             Expanded(
               child: Container(
@@ -46,6 +54,13 @@ class IngredientesPage extends StatelessWidget {
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.45),
+                      blurRadius: 40,
+                      offset: Offset(0, -1.0),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
@@ -56,11 +71,10 @@ class IngredientesPage extends StatelessWidget {
                         child: Column(
                           children: [
                             SubtituloGeneral("Nombre del plato"),
-                            FutureBuilder(
-                              future: spoonacularProvider
-                                  .getMenuItemDetail(idMenuItem),
+                            StreamBuilder(
+                              stream: spoonacularBloc.menuItemDetailStream,
                               builder: (BuildContext context,
-                                  AsyncSnapshot<dynamic> snapshot) {
+                                  AsyncSnapshot<MenuItemDetail> snapshot) {
                                 if (snapshot.hasData) {
                                   MenuItemDetail menuItemDetail = snapshot.data;
                                   return ParrafoGeneral(
@@ -70,16 +84,52 @@ class IngredientesPage extends StatelessWidget {
                                 }
                               },
                             ),
+                            // SizedBox(
+                            //   height: 15,
+                            // ),
+                            SubtituloGeneral("Nutrientes"),
+                            // ParrafoGeneral(
+                            //     "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
+                            //     "su nombre; sus colores predominantes son verde.",
+                            //     primaryBlack),
+                            Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Grasa",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Proteina",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Calorias",8),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    NutrienteWidget("Azucares",8),
+                                  ],
+                                ),
+                              ],
+                            ),
                             SizedBox(
                               height: 15,
                             ),
-                            SubtituloGeneral("Descripcion"),
-                            ParrafoGeneral(
-                                "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
-                                "su nombre; sus colores predominantes son verde.",
-                                primaryBlack),
+                            SubtituloGeneral("Ingredientes"),
                           ],
                         ),
+                      ),
+                    ),
+                    BannerIngredientes(),
+                    Container(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 36, right: 36, top: 10),
+
                       ),
                     ),
                   ],

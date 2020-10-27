@@ -8,7 +8,9 @@ import '../../constants.dart';
 
 class BannerMenu extends StatelessWidget {
   final List<MenuItem> menuItems;
+
   BannerMenu({@required this.menuItems});
+
   final bannerImagesMenu = [
     "images/dish1.png",
     "images/dish2.png",
@@ -166,13 +168,18 @@ class BannerMenu extends StatelessWidget {
                       color: primaryGreenLight,
                       elevation: 5.0,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
+                      ),
                       onPressed: () {
-                        //print("Container"+i.toString());
+                        print("Container"+i.toString());
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => IngredientesPage()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => IngredientesPage(),
+                          ),
+                        );
                       },
                       child: GestureDetector(
                           onTap: () {
