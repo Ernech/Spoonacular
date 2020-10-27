@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/pages/authentication_service.dart.dart';
 import 'package:spoonacular/src/pages/home_page.dart';
 import 'package:spoonacular/src/pages/ingredientes_page.dart';
 import 'package:spoonacular/src/pages/login.dart';
@@ -10,7 +14,9 @@ import 'package:spoonacular/src/pages/restaurante_menu.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -18,22 +24,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final mapp = MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (BuildContext context) => Login(),
+          '/registro': (BuildContext context) => Registro(),
+          '/home': (BuildContext context) => HomePage(),
+          '/ingredientes': (BuildContext context) => IngredientesPage(),
+          '/restaurantemenu': (BuildContext context) => RestauranteMenuPage(),
+        },
+        home: AuthenticationWrapper(),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (BuildContext context) => Login(),
-        '/registro': (BuildContext context) => Registro(),
-        '/home': (BuildContext context) => HomePage(),
-        '/ingredientes': (BuildContext context) => IngredientesPage(),
-        '/restaurantemenu': (BuildContext context) => RestauranteMenuPage(),
-      },
-    );
-    return Provider(
-      child: mapp,
     );
   }
 }
@@ -172,4 +187,12 @@ class BannerWidgetArea extends StatelessWidget {
       ),
     );
   }
+}
+class AuthenticationWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+  
 }
