@@ -174,12 +174,11 @@ class BannerMenu extends StatelessWidget {
                       ),
                       onPressed: () {
                         print("Container" + i.toString());
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => IngredientesPage(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, '/ingredientes',
+                            arguments: <String, dynamic>{
+                              'id': menuItems[i].id,
+                              'menuItem': menuItems[i]
+                            });
                       },
                       child: GestureDetector(
                           onTap: () {
