@@ -1,10 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/pages/inicio_page.dart';
 import 'package:spoonacular/src/pages/registro.dart';
-import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +45,35 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CustomeInput("Correo", Icons.person, "Correo Electronico"),
+              //  CustomeInput("Correo", Icons.person, "Correo Electronico"),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Email",
+                ),
+                validator: (String val) {
+                  if (val.isEmpty) {
+                    return "Ingrese el texto";
+                  }
+                  return null;
+                },
+              ),
+
               SizedBox(
                 height: 20,
               ),
-              CustomeInput("Contraseña", Icons.lock, "Contraseña"),
+              // CustomeInput("Contraseña", Icons.lock, "Contraseña"),
+              TextFormField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                ),
+                validator: (String val) {
+                  if (val.isEmpty) {
+                    return "Ingrese el texto";
+                  }
+                  return null;
+                },
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -59,8 +95,11 @@ class Login extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home');
+                onPressed: () async {
+                  _signinwithEmailPassword();
+                  /*if (_formKey.currentState.validate()) {
+                    _signinwithEmailPassword();
+                  }*/
                 },
               ),
               SizedBox(
@@ -91,7 +130,7 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, '/registro');
+                        _push(context, Registro());
                       }),
                 ],
               ),
@@ -100,5 +139,33 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _push(BuildContext context, Widget page) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return page;
+    }));
+  }
+
+  void _signinwithEmailPassword() async {
+    try {
+      final User user = (await _auth.signInWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text))
+          .user;
+
+      if (!user.emailVerified) {
+        await user.sendEmailVerification();
+      }
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return InicioPage(
+          user: user,
+        );
+      }));
+    } catch (e) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Inicio erroneo"),
+      ));
+      print(e);
+    }
   }
 }

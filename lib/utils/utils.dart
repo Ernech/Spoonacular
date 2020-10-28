@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 
 String texto = '';
@@ -22,4 +24,19 @@ Future<String> _traducirEsToEn(String text) async {
   final translator = GoogleTranslator();
   var translation = await translator.translate(text, from: 'es', to: 'en');
   texto = translation.toString();
+}
+
+void mostarAlerta(BuildContext context, String mensaje) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Información incorrecta'),
+          content: Text(mensaje),
+          actions: [
+            FlatButton(
+                onPressed: () => Navigator.of(context).pop(), child: Text('ok'))
+          ],
+        );
+      });
 }
