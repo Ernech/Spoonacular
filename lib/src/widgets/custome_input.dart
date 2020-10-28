@@ -6,7 +6,8 @@ class CustomeInput extends StatelessWidget {
   String textfieldText;
   String inputName;
 
-  CustomeInput(this.inputName,this.iconosTextfield, this.textfieldText);
+  
+  CustomeInput(this.inputName,this.iconosTextfield, this.textfieldText);//Correo, icono_persona, dentro del hint
 
   @override
   Widget build(BuildContext context) {
