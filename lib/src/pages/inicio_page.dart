@@ -152,7 +152,7 @@ class _InicioPageState extends State<InicioPage>
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withOpacity(0.4),
                     spreadRadius: 3.0,
                     blurRadius: 5.0),
               ],
@@ -216,7 +216,7 @@ class _InicioPageState extends State<InicioPage>
   Widget _menuItemsTest() {
     SpoonacularProvider menuItemProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: menuItemProvider.getMenuItems('arroz'),
+      future: menuItemProvider.getMenuItems('pollo'),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {

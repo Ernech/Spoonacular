@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
-import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
@@ -43,6 +42,10 @@ class IngredientesPage extends StatelessWidget {
             Container(
               height: 200,
               width: double.infinity,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: primaryWhite,
+              ),
               child: FadeInImage(
                   placeholder: AssetImage('images/loading-circle.gif'),
                   image: NetworkImage(menuItem.image)),

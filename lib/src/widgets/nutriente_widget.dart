@@ -16,7 +16,7 @@ class NutrienteWidget extends StatelessWidget {
         children: [
           Container(
             width: 80,
-            height: 130,
+            height: 145,
             decoration: BoxDecoration(
               /*shape: BoxShape.circle,*/
               color: primaryYellow,
@@ -25,7 +25,7 @@ class NutrienteWidget extends StatelessWidget {
                 BoxShadow(
                   color: Colors.grey,
                   offset: Offset(0.0, 0.5), //(x,y)
-                  blurRadius: 6.0,
+                  blurRadius: 8.0,
                 ),
               ],
             ),
