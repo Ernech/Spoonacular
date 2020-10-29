@@ -8,16 +8,30 @@ import 'package:spoonacular/src/pages/login.dart';
 import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
-void main() {
+
+void main() async {
+  
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new PreferenciasUsuario();
+  await prefs.initPrefs();
+
   runApp(MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context ) {
+    final prefs = PreferenciasUsuario();
+    if (prefs.token != null) {
+      print(prefs.token);
+    } else {
+      print('null');
+    }
     final mapp = MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
