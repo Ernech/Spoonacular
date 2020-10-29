@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
@@ -6,11 +5,7 @@ import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
-
 class InicioPage extends StatefulWidget {
-  final User user;
-
-  const InicioPage({Key key, this.user}) : super(key: key);
   @override
   _InicioPageState createState() => _InicioPageState();
 }

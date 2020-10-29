@@ -8,9 +8,15 @@ class CustomeInput extends StatelessWidget {
   String inputName;
   LoginBloc loginBloc;
   bool password;
+  TextInputType keyBoardType;
 
-  CustomeInput(this.inputName, this.iconosTextfield, this.textfieldText,
-      this.loginBloc, this.password); //Correo, icono_persona, dentro del hint
+  CustomeInput(
+      this.inputName,
+      this.iconosTextfield,
+      this.textfieldText,
+      this.loginBloc,
+      this.password,
+      this.keyBoardType); //Correo, icono_persona, dentro del hint
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +64,20 @@ class CustomeInput extends StatelessWidget {
                     password ? loginBloc.passwordStream : loginBloc.emailStream,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return TextField(
-                    onChanged: password ? loginBloc.changePassword : loginBloc.changeEmail,
+                    keyboardType: keyBoardType,
+                    onChanged: password
+                        ? loginBloc.changePassword
+                        : loginBloc.changeEmail,
                     obscureText: password,
                     decoration: InputDecoration(
-                      border: InputBorder.none,
-                      icon: Icon(
-                        iconosTextfield,
-                        color: Colors.grey,
-                      ),
-                      hintText: textfieldText,
-                      hintStyle: TextStyle(color: Colors.grey),
-                      errorText: snapshot.error
-                    ),
+                        border: InputBorder.none,
+                        icon: Icon(
+                          iconosTextfield,
+                          color: Colors.grey,
+                        ),
+                        hintText: textfieldText,
+                        hintStyle: TextStyle(color: Colors.grey),
+                        errorText: snapshot.error),
                   );
                 })),
       ],

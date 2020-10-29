@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
@@ -11,9 +12,11 @@ import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 class IngredientesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final int idMenuItem = ModalRoute.of(context).settings.arguments;
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context).settings.arguments;
+    final menuItem = arguments['menuItem'];
     final spoonacularBloc = Provider.spoonacularBloc(context);
-    spoonacularBloc.cargarMenuItemDetail(idMenuItem);
+    spoonacularBloc.cargarMenuItemDetail(arguments['id']);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -40,7 +43,9 @@ class IngredientesPage extends StatelessWidget {
             Container(
               height: 200,
               width: double.infinity,
-              child: Image.asset("images/dish1.png"),
+              child: FadeInImage(
+                  placeholder: AssetImage('images/loading-circle.gif'),
+                  image: NetworkImage(menuItem.image)),
             ),
             SizedBox(
               height: 50,
@@ -92,30 +97,69 @@ class IngredientesPage extends StatelessWidget {
                             //     "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
                             //     "su nombre; sus colores predominantes son verde.",
                             //     primaryBlack),
-                            Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    NutrienteWidget("Grasa",8),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    NutrienteWidget("Proteina",8),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    NutrienteWidget("Calorias",8),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    NutrienteWidget("Azucares",8),
-                                  ],
-                                ),
-                              ],
+
+                            StreamBuilder(
+                              stream: spoonacularBloc.menuItemDetailStream,
+                              initialData: null,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<MenuItemDetail> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return CircularProgressIndicator();
+                                } else {
+                                  final MenuItemDetail menuItemDetail =
+                                      snapshot.data;
+                                  final List<Nutrients> nutrientes =
+                                      menuItemDetail.obtenerNutrientes(
+                                          menuItemDetail
+                                              .nutrition['nutrients']);
+                                  return Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            child: NutrienteWidget(
+                                                nutrientes[0].title,
+                                                nutrientes[0].amount,
+                                                nutrientes[0].unit),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            child: NutrienteWidget(
+                                                nutrientes[1].title,
+                                                nutrientes[1].amount,
+                                                nutrientes[1].unit),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            child: NutrienteWidget(
+                                                nutrientes[2].title,
+                                                nutrientes[2].amount,
+                                                nutrientes[2].unit),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            child: NutrienteWidget(
+                                                nutrientes[3].title,
+                                                nutrientes[3].amount,
+                                                nutrientes[3].unit),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
                             ),
+
                             SizedBox(
                               height: 15,
                             ),
@@ -129,7 +173,6 @@ class IngredientesPage extends StatelessWidget {
                       child: Padding(
                         padding:
                             const EdgeInsets.only(left: 36, right: 36, top: 10),
-
                       ),
                     ),
                   ],

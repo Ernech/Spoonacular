@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_menu.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/titulo_card.dart';
 import 'package:spoonacular/src/widgets/titulo_primario.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
-
-import 'package:spoonacular/constants.dart';
 
 class RestauranteMenuPage extends StatelessWidget {
   //const RestauranteMenuPage({Key key}) : super(key: key);

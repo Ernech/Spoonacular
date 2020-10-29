@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/login_bloc.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
-import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/providers/usuario_provider.dart';
 import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
@@ -42,12 +41,12 @@ class Login extends StatelessWidget {
                 height: 20,
               ),
               CustomeInput("Correo", Icons.person, "Correo Electronico",
-                  loginbloc, false),
+                  loginbloc, false, TextInputType.emailAddress),
               SizedBox(
                 height: 20,
               ),
-              CustomeInput(
-                  "Contraseña", Icons.lock, "Contraseña", loginbloc, true),
+              CustomeInput("Contraseña", Icons.lock, "Contraseña", loginbloc,
+                  true, null),
               SizedBox(
                 height: 20,
               ),
@@ -97,24 +96,26 @@ class Login extends StatelessWidget {
 
   Widget crearBoton(LoginBloc loginBloc) {
     return StreamBuilder(
-      stream: loginBloc.formValidStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        return RaisedButton(
-      textColor: Colors.white,
-      padding: EdgeInsets.all(0.0),
-      shape: StadiumBorder(),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
-        child: Text(
-          'INGRESAR',
-          style: TextStyle(fontSize: 15.0),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
-      ),
-      onPressed: snapshot.hasData?()=>_ingresar(loginBloc, context):null,
-    );
-    });
+        stream: loginBloc.formValidStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return RaisedButton(
+            textColor: Colors.white,
+            padding: EdgeInsets.all(0.0),
+            shape: StadiumBorder(),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.0),
+                  color: primaryGreen),
+              child: Text(
+                'INGRESAR',
+                style: TextStyle(fontSize: 15.0),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
+            ),
+            onPressed:
+                snapshot.hasData ? () => _ingresar(loginBloc, context) : null,
+          );
+        });
   }
 
   _ingresar(LoginBloc bloc, BuildContext context) async {

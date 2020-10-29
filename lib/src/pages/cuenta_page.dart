@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spoonacular/src/widgets/button_atras.dart';
-import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/src/widgets/widget_icon_user.dart';
 
@@ -42,16 +40,16 @@ class _CuentaPageState extends State<CuentaPage> {
                   height: 10,
                 ),
                 LineCirculeDetail(),
-               // CustomeInput("Usuario", Icons.person, "Nombre de usuario"),
+                // CustomeInput("Usuario", Icons.person, "Nombre de usuario"),
                 SizedBox(
                   height: 20,
                 ),
-               // CustomeInput(
-                 //   "Correo", Icons.alternate_email, "Correo Electronico"),
+                // CustomeInput(
+                //   "Correo", Icons.alternate_email, "Correo Electronico"),
                 SizedBox(
                   height: 20,
                 ),
-               // CustomeInput("Contraseña", Icons.lock, "Contraseña"),
+                // CustomeInput("Contraseña", Icons.lock, "Contraseña"),
                 SizedBox(
                   height: 20,
                 ),
