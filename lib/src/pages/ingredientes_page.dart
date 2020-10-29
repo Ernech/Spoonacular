@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
-import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
@@ -112,49 +111,52 @@ class IngredientesPage extends StatelessWidget {
                                       menuItemDetail.obtenerNutrientes(
                                           menuItemDetail
                                               .nutrition['nutrients']);
-                                  return Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[0].title,
-                                                nutrientes[0].amount,
-                                                nutrientes[0].unit),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[1].title,
-                                                nutrientes[1].amount,
-                                                nutrientes[1].unit),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[2].title,
-                                                nutrientes[2].amount,
-                                                nutrientes[2].unit),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[3].title,
-                                                nutrientes[3].amount,
-                                                nutrientes[3].unit),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  return SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Container(
+                                              child: NutrienteWidget(
+                                                  nutrientes[0].title,
+                                                  nutrientes[0].amount,
+                                                  nutrientes[0].unit),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              child: NutrienteWidget(
+                                                  nutrientes[1].title,
+                                                  nutrientes[1].amount,
+                                                  nutrientes[1].unit),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              child: NutrienteWidget(
+                                                  nutrientes[2].title,
+                                                  nutrientes[2].amount,
+                                                  nutrientes[2].unit),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              child: NutrienteWidget(
+                                                  nutrientes[3].title,
+                                                  nutrientes[3].amount,
+                                                  nutrientes[3].unit),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 }
                               },

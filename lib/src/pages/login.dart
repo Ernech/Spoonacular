@@ -13,7 +13,9 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginbloc = Provider.of(context);
-
+    final size = MediaQuery.of(context).size;
+    final horizontalPadding = size.width;
+    print('Padding $horizontalPadding');
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -54,7 +56,7 @@ class Login extends StatelessWidget {
                 height: 20,
               ),
               //Botonnnnn
-              crearBoton(loginbloc),
+              crearBoton(loginbloc, horizontalPadding),
               SizedBox(
                 height: 40,
               ),
@@ -94,7 +96,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget crearBoton(LoginBloc loginBloc) {
+  Widget crearBoton(LoginBloc loginBloc, double horizontalPadding) {
     return StreamBuilder(
         stream: loginBloc.formValidStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -110,7 +112,8 @@ class Login extends StatelessWidget {
                 'INGRESAR',
                 style: TextStyle(fontSize: 15.0),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: horizontalPadding / 3, vertical: 15.0),
             ),
             onPressed:
                 snapshot.hasData ? () => _ingresar(loginBloc, context) : null,

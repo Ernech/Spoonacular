@@ -18,7 +18,8 @@ class _RegistroState extends State<Registro> {
   @override
   Widget build(BuildContext context) {
     final loginBloc = Provider.of(context);
-
+    final size = MediaQuery.of(context).size;
+    final horizontalPadding = size.width;
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -74,7 +75,7 @@ class _RegistroState extends State<Registro> {
               SizedBox(
                 height: 20,
               ),
-              _crearBoton(loginBloc),
+              _crearBoton(loginBloc, horizontalPadding),
               SizedBox(
                 height: 40,
               ),
@@ -141,7 +142,7 @@ class _RegistroState extends State<Registro> {
         });
   }
 
-  Widget _crearBoton(LoginBloc loginbloc) {
+  Widget _crearBoton(LoginBloc loginbloc, double horizontalPadding) {
     return StreamBuilder(
         stream: loginbloc.formValidStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -157,8 +158,8 @@ class _RegistroState extends State<Registro> {
                   'CREAR CUENTA',
                   style: TextStyle(fontSize: 15.0),
                 ),
-                padding:
-                    EdgeInsets.symmetric(horizontal: 130.0, vertical: 15.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding / 3, vertical: 15.0),
               ),
               onPressed: snapshot.hasData
                   ? () => _registrarse(loginbloc, context)
