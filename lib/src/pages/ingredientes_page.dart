@@ -40,16 +40,31 @@ class IngredientesPage extends StatelessWidget {
               ],
             ),
             Container(
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: primaryWhite,
-              ),
-              child: FadeInImage(
-                  placeholder: AssetImage('images/loading-circle.gif'),
-                  image: NetworkImage(menuItem.image)),
-            ),
+                height: 200,
+                width: 200,
+
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(100.0),
+                  border: Border.all(color: Colors.white, width: 7.5, ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: Image.network(
+                    menuItem.image,
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                )
+
+                // FadeInImage(
+                //   placeholder: AssetImage('images/loading-circle.gif'),
+                //   image: NetworkImage(menuItems[i].image),
+                // ),
+
+                // child: FadeInImage(
+                //     placeholder: AssetImage('images/loading-circle.gif'),
+                //     image: NetworkImage(menuItem.image)),
+                ),
             SizedBox(
               height: 50,
             ),
