@@ -143,6 +143,7 @@ class _InicioPageState extends State<InicioPage>
     return GestureDetector(
       onTap: (){
         print("dieta $index");
+        Navigator.pushNamed(context, '/estiloVida');
       },
       child: Stack(
         children: [
