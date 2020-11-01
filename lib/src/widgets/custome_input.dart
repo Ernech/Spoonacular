@@ -41,45 +41,45 @@ class CustomeInput extends StatelessWidget {
           height: 10,
         ),
         Container(
-            margin: EdgeInsets.symmetric(horizontal: 32),
-            padding: EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            decoration: BoxDecoration(
+          margin: EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(
+            horizontal: 30,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(
-                color: Colors.white,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0), //(x,y)
-                  blurRadius: 6.0,
-                ),
-              ],
             ),
-            child: StreamBuilder(
-                stream:
-                    password ? loginBloc.passwordStream : loginBloc.emailStream,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return TextField(
-                    keyboardType: keyBoardType,
-                    onChanged: password
-                        ? loginBloc.changePassword
-                        : loginBloc.changeEmail,
-                    obscureText: password,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        icon: Icon(
-                          iconosTextfield,
-                          color: Colors.grey,
-                        ),
-                        hintText: textfieldText,
-                        hintStyle: TextStyle(color: Colors.grey),
-                        errorText: snapshot.error),
-                  );
-                })),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
+              ),
+            ],
+          ),
+          child: StreamBuilder(
+            stream: password ? loginBloc.passwordStream : loginBloc.emailStream,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return TextField(
+                keyboardType: keyBoardType,
+                onChanged:
+                    password ? loginBloc.changePassword : loginBloc.changeEmail,
+                obscureText: password,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    icon: Icon(
+                      iconosTextfield,
+                      color: Colors.grey,
+                    ),
+                    hintText: textfieldText,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    errorText: snapshot.error),
+              );
+            },
+          ),
+        ),
       ],
     );
   }

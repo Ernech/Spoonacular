@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:rxdart/rxdart.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';

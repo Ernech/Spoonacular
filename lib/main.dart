@@ -17,7 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
-
   runApp(MyApp());
 
 }

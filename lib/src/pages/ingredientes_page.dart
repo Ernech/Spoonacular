@@ -42,6 +42,10 @@ class IngredientesPage extends StatelessWidget {
             Container(
               height: 200,
               width: double.infinity,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: primaryWhite,
+              ),
               child: FadeInImage(
                   placeholder: AssetImage('images/loading-circle.gif'),
                   image: NetworkImage(menuItem.image)),

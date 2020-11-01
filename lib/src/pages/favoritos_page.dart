@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/titulo_primario.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
@@ -42,6 +41,5 @@ class FavoritosPage extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
