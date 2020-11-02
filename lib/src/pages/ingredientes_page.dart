@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/models/ingredients_model.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
@@ -16,6 +17,7 @@ class IngredientesPage extends StatelessWidget {
     final menuItem = arguments['menuItem'];
     final spoonacularBloc = Provider.spoonacularBloc(context);
     spoonacularBloc.cargarMenuItemDetail(arguments['id']);
+    spoonacularBloc.cargarIngredientes(arguments['id']);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -175,6 +177,7 @@ class IngredientesPage extends StatelessWidget {
                       ),
                     ),
                     BannerIngredientes(),
+                    _testingIngredients(spoonacularBloc),
                     Container(
                       child: Padding(
                         padding:
@@ -188,6 +191,22 @@ class IngredientesPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _testingIngredients(SpoonacularBloc spoonacularBloc) {
+    return StreamBuilder(
+      stream: spoonacularBloc.ingredientsStream,
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          final List<Ingredient> ingredientes = snapshot.data;
+          print('Ingredientes: $ingredientes');
+          return Container();
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 }

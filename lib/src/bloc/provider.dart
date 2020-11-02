@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/bloc/google_translate_bloc.dart';
 import 'package:spoonacular/src/bloc/login_bloc.dart';
 import 'package:spoonacular/src/bloc/spoonacular_bloc.dart';
 
 export 'package:spoonacular/src/bloc/spoonacular_bloc.dart';
+export 'package:spoonacular/utils/utils.dart';
 
 class Provider extends InheritedWidget {
   final loginBloc = new LoginBloc();
   final _spoonacularBloc = new SpoonacularBloc();
+  final _googleTranslateBloc = new GoogleTranslateBloc();
 
   static Provider instanciaActual;
 
@@ -32,5 +35,11 @@ class Provider extends InheritedWidget {
     return context
         .dependOnInheritedWidgetOfExactType<Provider>()
         ._spoonacularBloc;
+  }
+
+  static GoogleTranslateBloc googleTranslateBloc(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<Provider>()
+        ._googleTranslateBloc;
   }
 }

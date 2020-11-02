@@ -41,7 +41,8 @@ class SpoonacularProvider {
         _url, 'recipes/$idRecipe/ingredientWidget.json', {'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
-    final ingredientes = Ingredients.fromJSONList(decodedData);
+    //print('Decoded ingredientes: ${decodedData['ingredients']}');
+    final ingredientes = Ingredients.fromJSONList(decodedData['ingredients']);
     return ingredientes.items;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/bloc/google_translate_bloc.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/utils/utils.dart' as utils;
 import '../../constants.dart';
 
 class BannerMenu extends StatelessWidget {
@@ -38,9 +39,10 @@ class BannerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    final googleTranslateBloc = Provider.googleTranslateBloc(context);
     List<Widget> banners = new List<Widget>();
     for (int i = 0; i < menuItems.length; i++) {
-      var bannerView = _crearTarjeta(context, i);
+      var bannerView = _crearTarjeta(context, i, googleTranslateBloc);
       banners.add(bannerView);
     }
     //PageController controller =
@@ -56,7 +58,9 @@ class BannerMenu extends StatelessWidget {
     );
   }
 
-  Widget _crearTarjeta(BuildContext context, int i) {
+  Widget _crearTarjeta(
+      BuildContext context, int i, GoogleTranslateBloc googleTranslateBloc) {
+    googleTranslateBloc.traducirEnToEs(menuItems[i].title);
     return Container(
       margin: EdgeInsets.only(right: 20, top: 10, bottom: 10),
       height: 270,
@@ -116,8 +120,8 @@ class BannerMenu extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(maxWidth: 150, minHeight: 46),
-                      child: FutureBuilder(
-                        future: utils.enToEs(menuItems[i].title),
+                      child: StreamBuilder(
+                        stream: googleTranslateBloc.enToEsStream,
                         builder: (BuildContext context,
                             AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
