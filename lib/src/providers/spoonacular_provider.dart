@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:spoonacular/src/models/ingredients_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,7 @@ class SpoonacularProvider {
         _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
+    print(urlEndpoint);
     print(decodedData);
     //return [];
     final menuItems = new MenuItems.fromJsonList(decodedData['menuItems']);
@@ -32,5 +34,14 @@ class SpoonacularProvider {
     print(decodedData);
     final menuItemDetail = new MenuItemDetail.fromJSONMap(decodedData);
     return menuItemDetail;
+  }
+
+  Future<List<Ingredient>> getIngredientes(int idRecipe) async {
+    final urlEndpoint = Uri.https(
+        _url, 'recipes/$idRecipe/ingredientWidget.json', {'apiKey': _apiKey});
+    final respuesta = await http.get(urlEndpoint);
+    final decodedData = json.decode(respuesta.body);
+    final ingredientes = Ingredients.fromJSONList(decodedData);
+    return ingredientes.items;
   }
 }
