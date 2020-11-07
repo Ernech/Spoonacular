@@ -13,23 +13,24 @@ class MenuItemDetail {
   dynamic readableServingSize;
   dynamic servingSize;
   dynamic spoonacularScore;
+  List<dynamic> images;
 
-  MenuItemDetail({
-    this.id,
-    this.title,
-    this.restaurantChain,
-    this.nutrition,
-    this.badges,
-    this.breadcrumbs,
-    this.generatedText,
-    this.imageType,
-    this.likes,
-    this.numberOfServings,
-    this.price,
-    this.readableServingSize,
-    this.servingSize,
-    this.spoonacularScore,
-  });
+  MenuItemDetail(
+      {this.id,
+      this.title,
+      this.restaurantChain,
+      this.nutrition,
+      this.badges,
+      this.breadcrumbs,
+      this.generatedText,
+      this.imageType,
+      this.likes,
+      this.numberOfServings,
+      this.price,
+      this.readableServingSize,
+      this.servingSize,
+      this.spoonacularScore,
+      this.images});
 
   MenuItemDetail.fromJSONMap(Map<String, dynamic> jsonResponse) {
     id = jsonResponse['id'];
@@ -46,6 +47,7 @@ class MenuItemDetail {
     readableServingSize = jsonResponse['readableServingSize'];
     servingSize = jsonResponse['servingSize'];
     spoonacularScore = jsonResponse['spoonacularScore'];
+    images = jsonResponse['images'];
   }
   List<Nutrients> obtenerNutrientes(List<dynamic> nutrition) {
     if (nutrition == null) {
@@ -88,7 +90,6 @@ class Nutrients {
   double amount;
   String unit;
   double percentOfDailyNeeds;
-
   Nutrients({this.title, this.amount, this.unit, this.percentOfDailyNeeds});
 
   Nutrients.fromJSONMap(Map<String, dynamic> jsonResponse) {

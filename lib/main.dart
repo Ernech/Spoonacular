@@ -11,20 +11,17 @@ import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
-
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context ) {
+  Widget build(BuildContext context) {
     final prefs = PreferenciasUsuario();
     if (prefs.token != null) {
       print(prefs.token);
@@ -146,7 +143,8 @@ Widget _menuItemDetail(int id) {
         final caloricBreakdown = menuItemDetail.obtenerCaloricBreakdown(
             menuItemDetail.nutrition['caloricBreakdown']);
         print('CALORIC ${caloricBreakdown.percentCarbs}');
-
+        double calories = menuItemDetail.nutrition['calories'];
+        print('calories $calories');
         return Container();
       } else {
         return CircularProgressIndicator();

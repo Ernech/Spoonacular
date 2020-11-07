@@ -117,6 +117,10 @@ class IngredientesPage extends StatelessWidget {
                                       menuItemDetail.obtenerNutrientes(
                                           menuItemDetail
                                               .nutrition['nutrients']);
+                                  print('Nutrientes: ${nutrientes.length}');
+                                  double calories =
+                                      menuItemDetail.nutrition['fat'];
+                                  print('calories $calories');
                                   return SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
@@ -176,8 +180,8 @@ class IngredientesPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    BannerIngredientes(),
-                    _testingIngredients(spoonacularBloc),
+                    // BannerIngredientes(),
+                    //_testingIngredients(spoonacularBloc),
                     Container(
                       child: Padding(
                         padding:
