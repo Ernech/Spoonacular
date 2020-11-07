@@ -46,7 +46,7 @@ class _InicioPageState extends State<InicioPage>
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(36, 36, 10, 0),
+                padding: const EdgeInsets.fromLTRB(36, 55, 10, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -64,38 +64,38 @@ class _InicioPageState extends State<InicioPage>
               SizedBox(
                 height: 5,
               ),
-              TituloSecundario("Hola , Ariel"),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 32),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 30,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    hintText: "Restaurantes , plato y dietas",
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ),
+              //TituloSecundario("Hola , Ariel"),
+              // Container(
+              //   margin: EdgeInsets.symmetric(horizontal: 32),
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: 30,
+              //   ),
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(25),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 1.0), //(x,y)
+              //         blurRadius: 6.0,
+              //       ),
+              //     ],
+              //   ),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       icon: Icon(
+              //         Icons.search,
+              //         color: Colors.grey,
+              //       ),
+              //       hintText: "Restaurantes , plato y dietas",
+              //       hintStyle: TextStyle(color: Colors.grey),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 10,
               ),
