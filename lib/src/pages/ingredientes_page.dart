@@ -118,54 +118,13 @@ class IngredientesPage extends StatelessWidget {
                                           menuItemDetail
                                               .nutrition['nutrients']);
                                   print('Nutrientes: ${nutrientes.length}');
-                                  double calories =
+                                  String calories =
                                       menuItemDetail.nutrition['fat'];
                                   print('calories $calories');
                                   return SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      children: [
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[0].title,
-                                                  nutrientes[0].amount,
-                                                  nutrientes[0].unit),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[1].title,
-                                                  nutrientes[1].amount,
-                                                  nutrientes[1].unit),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[2].title,
-                                                  nutrientes[2].amount,
-                                                  nutrientes[2].unit),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[3].title,
-                                                  nutrientes[3].amount,
-                                                  nutrientes[3].unit),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                      children: _crearNutrientes(nutrientes),
                                     ),
                                   );
                                 }
@@ -196,6 +155,22 @@ class IngredientesPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _crearNutrientes(List<Nutrients> nutrientes) {
+    List<Widget> tarjetasNutrientes = new List();
+    for (int i = 0; i < nutrientes.length; i++) {
+      Widget tarjeta = Column(
+        children: [
+          Container(
+            child: NutrienteWidget(
+                nutrientes[i].title, nutrientes[i].amount, nutrientes[i].unit),
+          ),
+        ],
+      );
+      tarjetasNutrientes.add(tarjeta);
+    }
+    return tarjetasNutrientes;
   }
 
   Widget _testingIngredients(SpoonacularBloc spoonacularBloc) {
