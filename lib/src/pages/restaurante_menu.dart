@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/widgets/banner_menu.dart';
@@ -44,9 +45,9 @@ class RestauranteMenuPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              TituloCard("Platos principales"),
+              TituloCard("Platos principales",primaryBlack),
               _bannerMenu(spoonacularBloc),
-              TituloCard("Otros"),
+              TituloCard("Otros",primaryBlack),
               _bannerMenu(spoonacularBloc),
             ],
           ),

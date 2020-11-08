@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/pages/estilo-vida_page.dart';
 import 'package:spoonacular/src/pages/home_page.dart';
 import 'package:spoonacular/src/pages/ingredientes_page.dart';
 import 'package:spoonacular/src/pages/login.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/home': (BuildContext context) => HomePage(),
         '/ingredientes': (BuildContext context) => IngredientesPage(),
         '/restaurantemenu': (BuildContext context) => RestauranteMenuPage(),
+        '/estiloVida': (BuildContext context) => EstiloVidaPage(),
       },
     );
     return Provider(

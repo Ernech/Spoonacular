@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class TituloCard extends StatelessWidget {
   String tituloTexto="";
-  TituloCard(this.tituloTexto);
+  Color color;
+  TituloCard(this.tituloTexto,this.color);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,6 +14,7 @@ class TituloCard extends StatelessWidget {
           Text(
             tituloTexto,
             style: TextStyle(
+              color: color,
                 fontSize: 16,
                 fontFamily: "Muli",
                 fontWeight: FontWeight.bold),
