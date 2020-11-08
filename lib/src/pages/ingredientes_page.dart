@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/widgets/banner_alimentos-permitidos.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/nutriente_widget.dart';
+import 'package:spoonacular/src/widgets/nutrientesImportantes.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 
 class IngredientesPage extends StatelessWidget {
+  String tag;
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arguments =
@@ -40,15 +43,23 @@ class IngredientesPage extends StatelessWidget {
               ],
             ),
             Container(
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: primaryWhite,
+              height: 150,
+              width: 150,
+              decoration: new BoxDecoration(
+                borderRadius: new BorderRadius.circular(100.0),
+                border: Border.all(
+                  color: Colors.white,
+                  width: 7.5,
+                ),
               ),
-              child: FadeInImage(
-                  placeholder: AssetImage('images/loading-circle.gif'),
-                  image: NetworkImage(menuItem.image)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100.0),
+                child: Image.network(
+                  menuItem.image,
+                  height: 100.0,
+                  width: 100.0,
+                ),
+              ),
             ),
             SizedBox(
               height: 50,
@@ -123,42 +134,46 @@ class IngredientesPage extends StatelessWidget {
                                           children: [
                                             Container(
                                               child: NutrienteWidget(
-                                                  nutrientes[0].title,
-                                                  nutrientes[0].amount,
-                                                  nutrientes[0].unit),
+                                                nutrientes[0].title,
+                                                nutrientes[0].amount,
+                                                nutrientes[0].unit,
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[1].title,
-                                                  nutrientes[1].amount,
-                                                  nutrientes[1].unit),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[2].title,
-                                                  nutrientes[2].amount,
-                                                  nutrientes[2].unit),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              child: NutrienteWidget(
-                                                  nutrientes[3].title,
-                                                  nutrientes[3].amount,
-                                                  nutrientes[3].unit),
-                                            ),
-                                          ],
-                                        ),
+                                        // Column(
+                                        //   children: [
+                                        //     Container(
+                                        //       child: NutrienteWidget(
+                                        //           nutrientes[1].title,
+                                        //           nutrientes[1].amount,
+                                        //           nutrientes[1].unit,
+                                        //           1),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // Column(
+                                        //   children: [
+                                        //     Container(
+                                        //       child: NutrienteWidget(
+                                        //           nutrientes[2].title,
+                                        //           nutrientes[2].amount,
+                                        //           nutrientes[2].unit,
+                                        //           2),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // Column(
+                                        //   children: [
+                                        //     Container(
+                                        //       child: NutrienteWidget(
+                                        //           nutrientes[3].title,
+                                        //           nutrientes[3].amount,
+                                        //           nutrientes[3].unit,
+                                        //           3),
+                                        //     ),
+                                        //   ],
+                                        // ),
                                       ],
                                     ),
                                   );
@@ -167,18 +182,32 @@ class IngredientesPage extends StatelessWidget {
                             ),
 
                             SizedBox(
-                              height: 15,
+                              height: 5,
                             ),
                             SubtituloGeneral("Ingredientes"),
+                            //
                           ],
                         ),
                       ),
                     ),
-                    BannerIngredientes(),
-                    Container(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 36, right: 36, top: 10),
+                    //CHIPS DE INGREDIENTES
+                    BannerAlimentosPermitidos(),
+                    //
+                    //BannerIngredientes(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                      child: Column(
+                        children: [
+                          SubtituloGeneral("Nutrientes Importantes"),
+                          Row(
+                            children: [
+                              NutrientesImportantes("Calorias", 5, 0),
+                              NutrientesImportantes("Grasa", 5, 1),
+                              NutrientesImportantes("Proteinas", 5, 2),
+                              NutrientesImportantes("Carbos", 5, 3),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],

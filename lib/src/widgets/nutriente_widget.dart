@@ -7,78 +7,113 @@ class NutrienteWidget extends StatelessWidget {
   String nutriente;
   double cantidadNutriente;
   String unidades;
+
   NutrienteWidget(this.nutriente, this.cantidadNutriente, this.unidades);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Stack(
+      child: Column(
         children: [
-          Container(
-            width: 80,
-            height: 145,
-            decoration: BoxDecoration(
-              /*shape: BoxShape.circle,*/
-              color: primaryYellow,
-              borderRadius: new BorderRadius.all(Radius.elliptical(100, 100)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 0.5), //(x,y)
-                  blurRadius: 8.0,
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 7.5,
-            left: 7.5,
-            child: Container(
-              width: 65,
-              height: 65,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: primaryWhite,
-              ),
-              child: Center(
-                child: Text(
-                  ("$cantidadNutriente $unidades"),
-                  style: TextStyle(
-                      color: primaryBrown,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12),
+          Stack(
+            children: [
+              Container(
+                width: 80,
+                height: 145,
+                decoration: BoxDecoration(
+                  /*shape: BoxShape.circle,*/
+                  color: primaryYellow,
+                  borderRadius: new BorderRadius.all(Radius.elliptical(100, 100)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 0.5), //(x,y)
+                      blurRadius: 8.0,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ),
-          Positioned(
-            top: 25,
-            child: Container(
-              width: 80,
-              child: FutureBuilder(
-                future: utils.enToEs(nutriente),
-                initialData: null,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    String nutrienteTraducido = snapshot.data;
-                    return Text(
-                      nutrienteTraducido,
+              Positioned(
+                bottom: 7.5,
+                left: 7.5,
+                child: Container(
+                  width: 65,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: primaryWhite,
+                  ),
+                  child: Center(
+                    child: Text(
+                      ("$cantidadNutriente $unidades"),
                       style: TextStyle(
-                        color: primaryWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
-                    );
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                },
+                          color: primaryBrown,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                top: 25,
+                child: Container(
+                  width: 80,
+                  child: FutureBuilder(
+                    future: utils.enToEs(nutriente),
+                    initialData: null,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        String nutrienteTraducido = snapshot.data;
+                        return Text(
+                          nutrienteTraducido,
+                          style: TextStyle(
+                            color: primaryWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 12,),
+          Text("% Diario",style: TextStyle( fontFamily: "Muli", color: Color(0xFF828282)),),
+          SizedBox(height: 5,),
+          Text("5g",style: TextStyle(color: primaryGreen,fontWeight: FontWeight.bold),),
         ],
       ),
     );
   }
+
+  void showAlertDialog(BuildContext context,int numero) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Ok"),
+      onPressed:  () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Nutriente"),
+      content: Text('$numero'),
+      actions: [
+        cancelButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 }

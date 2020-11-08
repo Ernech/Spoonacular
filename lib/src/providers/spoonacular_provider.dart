@@ -7,6 +7,8 @@ import 'package:translator/translator.dart';
 
 class SpoonacularProvider {
   //696885e454824daf899c0ffe18b58bff vania
+  //4aa0c9982fad4ced95bb848e4f7870af ariel
+  //
   String _apiKey = '696885e454824daf899c0ffe18b58bff';
   String _url = 'api.spoonacular.com';
 

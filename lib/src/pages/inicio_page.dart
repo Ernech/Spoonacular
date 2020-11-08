@@ -46,7 +46,7 @@ class _InicioPageState extends State<InicioPage>
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(36, 36, 10, 0),
+                padding: const EdgeInsets.fromLTRB(36, 55, 10, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -64,38 +64,38 @@ class _InicioPageState extends State<InicioPage>
               SizedBox(
                 height: 5,
               ),
-              TituloSecundario("Hola , Ariel"),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 32),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 30,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    hintText: "Restaurantes , plato y dietas",
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ),
+              //TituloSecundario("Hola , Ariel"),
+              // Container(
+              //   margin: EdgeInsets.symmetric(horizontal: 32),
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: 30,
+              //   ),
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(25),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 1.0), //(x,y)
+              //         blurRadius: 6.0,
+              //       ),
+              //     ],
+              //   ),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       icon: Icon(
+              //         Icons.search,
+              //         color: Colors.grey,
+              //       ),
+              //       hintText: "Restaurantes , plato y dietas",
+              //       hintStyle: TextStyle(color: Colors.grey),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 10,
               ),
@@ -139,55 +139,61 @@ class _InicioPageState extends State<InicioPage>
   }
 
   Widget _tarjetasEstiloDeVida(
-      String tag, String texto, String image, Color color) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(7.5, 10, 7.5, 10),
-          child: Container(
-            //width: (MediaQuery.of(context).size.width) / 2.55,
-            height: 115,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
-                    spreadRadius: 3.0,
-                    blurRadius: 5.0),
-              ],
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Hero(
-                        tag: tag,
-                        child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(image),
-                                  fit: BoxFit.contain)),
+      String tag, String texto, String image, Color color,int index) {
+    return GestureDetector(
+      onTap: (){
+        print("dieta $index");
+        Navigator.pushNamed(context, '/estiloVida');
+      },
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(7.5, 10, 7.5, 10),
+            child: Container(
+              //width: (MediaQuery.of(context).size.width) / 2.55,
+              height: 115,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.4),
+                      spreadRadius: 3.0,
+                      blurRadius: 5.0),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Hero(
+                          tag: tag,
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(image),
+                                    fit: BoxFit.contain)),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Text(
-                  texto,
-                  style:
-                      TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
-                ),
-              ],
+                  Text(
+                    texto,
+                    style:
+                        TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -198,15 +204,15 @@ class _InicioPageState extends State<InicioPage>
         children: [
           TableRow(children: [
             _tarjetasEstiloDeVida(
-                "vegetarian", "Vegetariano", iconsImages[0], Colors.green),
+                "vegetarian", "Vegetariano", iconsImages[0], Colors.green,1),
             _tarjetasEstiloDeVida("Omnivoro", "Omnivoro", iconsImages[2],
-                Colors.deepOrangeAccent),
+                Colors.deepOrangeAccent,2),
           ]),
           TableRow(children: [
             _tarjetasEstiloDeVida(
-                "vegano", "Vegano", iconsImages[1], Colors.lightGreen),
+                "vegano", "Vegano", iconsImages[1], Colors.lightGreen,3),
             _tarjetasEstiloDeVida(
-                "No gluten", "No gluten", iconsImages[3], Colors.grey),
+                "No gluten", "No gluten", iconsImages[3], Colors.grey,4),
           ])
         ],
       ),

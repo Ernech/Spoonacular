@@ -171,7 +171,7 @@ class _RegistroState extends State<Registro> {
                     errorText: snapshot.error,
                     border: InputBorder.none,
                     icon: Icon(
-                      Icons.person,
+                      Icons.alternate_email,
                       color: Colors.grey,
                     ),
                     hintText: "Email",
