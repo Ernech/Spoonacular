@@ -92,7 +92,7 @@ class NutrientesImportantes extends StatelessWidget {
             Container(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                    "La caloría es una unidad de energía. En nutrición, cuando se habla de calorías se refiere a la energía que las personas obtienen de los alimentos y bebidas que consumen, y la energía que usa nuestro propio cuerpo en la actividad física",textAlign: TextAlign.justify),
+                    "La caloría es una unidad de energíaa En nutrición, cuando se habla de calorías se refiere a la energía que las personas obtienen de los alimentos y bebidas que consumen, y la energía que usa nuestro propio cuerpo en la actividad física",textAlign: TextAlign.justify),
               ),
             Row(
               children: [
