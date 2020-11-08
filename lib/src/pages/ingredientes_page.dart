@@ -202,10 +202,10 @@ class IngredientesPage extends StatelessWidget {
                           SubtituloGeneral("Nutrientes Importantes"),
                           Row(
                             children: [
-                              NutrientesImportantes("Calorias",5),
-                              NutrientesImportantes("Grasa",5),
-                              NutrientesImportantes("Proteinas",5),
-                              NutrientesImportantes("Caarbohidratos",5),
+                              NutrientesImportantes("Calorias",5,0),
+                              NutrientesImportantes("Grasa",5,1),
+                              NutrientesImportantes("Proteinas",5,2),
+                              NutrientesImportantes("Carbos",5,3),
                             ],
                           ),
                         ],
