@@ -51,8 +51,7 @@ class BannerWidgetArea extends StatelessWidget {
                     width: 4,
                   ),
                   image: DecorationImage(
-                    image: NetworkImage(
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Burger_King_logo.svg/1012px-Burger_King_logo.svg.png'),
+                    image: NetworkImage(restaurantes[i].url.toString()),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: [
