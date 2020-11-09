@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/models/restaurante_model.dart';
+import 'package:spoonacular/src/providers/restaurante_provider.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
@@ -131,6 +133,7 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               _tarjetas(),
+              //    _restaurantesTest(),
             ],
           ),
         ),
@@ -139,9 +142,9 @@ class _InicioPageState extends State<InicioPage>
   }
 
   Widget _tarjetasEstiloDeVida(
-      String tag, String texto, String image, Color color,int index) {
+      String tag, String texto, String image, Color color, int index) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         print("dieta $index");
         Navigator.pushNamed(context, '/estiloVida');
       },
@@ -185,8 +188,8 @@ class _InicioPageState extends State<InicioPage>
                   ),
                   Text(
                     texto,
-                    style:
-                        TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
+                    style: TextStyle(
+                        fontSize: 16, fontFamily: "Muli", color: color),
                   ),
                 ],
               ),
@@ -204,18 +207,35 @@ class _InicioPageState extends State<InicioPage>
         children: [
           TableRow(children: [
             _tarjetasEstiloDeVida(
-                "vegetarian", "Vegetariano", iconsImages[0], Colors.green,1),
+                "vegetarian", "Vegetariano", iconsImages[0], Colors.green, 1),
             _tarjetasEstiloDeVida("Omnivoro", "Omnivoro", iconsImages[2],
-                Colors.deepOrangeAccent,2),
+                Colors.deepOrangeAccent, 2),
           ]),
           TableRow(children: [
             _tarjetasEstiloDeVida(
-                "vegano", "Vegano", iconsImages[1], Colors.lightGreen,3),
+                "vegano", "Vegano", iconsImages[1], Colors.lightGreen, 3),
             _tarjetasEstiloDeVida(
-                "No gluten", "No gluten", iconsImages[3], Colors.grey,4),
+                "No gluten", "No gluten", iconsImages[3], Colors.grey, 4),
           ])
         ],
       ),
+    );
+  }
+
+  Widget _restaurantesTest() {
+    RestauranteProvider restauranteProvider = new RestauranteProvider();
+    return FutureBuilder(
+      future: restauranteProvider.obtenerRestaurantes(),
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        } else {
+          final List<RestauranteModel> restaurantes = snapshot.data;
+          print(restaurantes[0].nombre);
+          return Container();
+        }
+      },
     );
   }
 

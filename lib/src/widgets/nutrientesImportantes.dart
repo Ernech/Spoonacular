@@ -70,14 +70,21 @@ class NutrientesImportantes extends StatelessWidget {
   void showAlertDialog(BuildContext context, int numero) {
     // set up the buttons
     Widget cancelButton = FlatButton(
-      child: Text("Ok",style: TextStyle(color: primaryGreen),),
+      child: Text(
+        "Ok",
+        style: TextStyle(color: primaryGreen),
+      ),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Caloria",style: TextStyle(color:  primaryGreen,fontWeight: FontWeight.bold,fontSize: 24),),
+      title: Text(
+        "Caloria",
+        style: TextStyle(
+            color: primaryGreen, fontWeight: FontWeight.bold, fontSize: 24),
+      ),
       //content: Text('$numero'),
       content: Container(
         width: 200.0,
@@ -86,23 +93,39 @@ class NutrientesImportantes extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text("¿Que es?",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color:  primaryBrown),),
-              ],
-            ),
-            Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                    "La caloría es una unidad de energíaa En nutrición, cuando se habla de calorías se refiere a la energía que las personas obtienen de los alimentos y bebidas que consumen, y la energía que usa nuestro propio cuerpo en la actividad física",textAlign: TextAlign.justify),
-              ),
-            Row(
-              children: [
-                Text("Cantidad Minima Diaria",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color:  primaryBrown),),
+                Text(
+                  "¿Que es?",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: primaryBrown),
+                ),
               ],
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                  "2000 Cal",textAlign: TextAlign.justify,style: TextStyle(fontWeight: FontWeight.bold),),
+                  "La caloría es una unidad de energíaa En nutrición, cuando se habla de calorías se refiere a la energía que las personas obtienen de los alimentos y bebidas que consumen, y la energía que usa nuestro propio cuerpo en la actividad física",
+                  textAlign: TextAlign.justify),
+            ),
+            Row(
+              children: [
+                Text(
+                  "Cantidad Minima Diaria",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: primaryBrown),
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                "2000 Cal",
+                textAlign: TextAlign.justify,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
