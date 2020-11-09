@@ -34,13 +34,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
         '/': (BuildContext context) => Login(),
         '/registro': (BuildContext context) => Registro(),
         '/home': (BuildContext context) => HomePage(),
         '/ingredientes': (BuildContext context) => IngredientesPage(),
-        '/restaurantemenu': (BuildContext context) => RestauranteMenuPage(),
+        '/restauranteMenu': (BuildContext context) => RestauranteMenuPage(),
         '/estiloVida': (BuildContext context) => EstiloVidaPage(),
       },
     );
@@ -104,7 +104,7 @@ class MyHomePage extends StatelessWidget {
   Widget _menuItemsTest() {
     SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: spoonacularProvider.getMenuItems('tomate'),
+      future: spoonacularProvider.getMenuItems('tomate', true),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {

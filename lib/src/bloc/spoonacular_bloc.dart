@@ -19,8 +19,8 @@ class SpoonacularBloc {
       _ingredientesController.stream;
   Stream<bool> get cargando => _cargandoController.stream;
 
-  void cargarMenuItems(String query) async {
-    final menuItems = await _spoonacularProvider.getMenuItems(query);
+  void cargarMenuItems(String query, bool traducir) async {
+    final menuItems = await _spoonacularProvider.getMenuItems(query, traducir);
     _menuItemController.sink.add(menuItems);
   }
 

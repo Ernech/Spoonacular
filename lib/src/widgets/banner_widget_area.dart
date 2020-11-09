@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/models/restaurante_model.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
 
 class BannerWidgetArea extends StatelessWidget {
+  List<RestauranteModel> restaurantes;
+  BannerWidgetArea(this.restaurantes);
   final bannerItems = ["a", "b", "c", "d", "e", "f"];
   final bannerImages = [
     "images/leckerbrot.jpg",
@@ -24,13 +27,14 @@ class BannerWidgetArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+
     List<Widget> banners = new List<Widget>();
-    for (int i = 0; i < bannerItems.length; i++) {
+    for (int i = 0; i < restaurantes.length; i++) {
       var bannerView = GestureDetector(
         onTap: () {
-          print("Container"+i.toString());
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => RestauranteMenuPage()));
+          print("Container" + i.toString());
+          Navigator.pushNamed(context, '/restauranteMenu',
+              arguments: restaurantes[i].nombre);
           //Navigator.pushNamed(context, '/restaurantemenu');
         },
         child: Padding(
@@ -47,9 +51,8 @@ class BannerWidgetArea extends StatelessWidget {
                     width: 4,
                   ),
                   image: DecorationImage(
-                    image: new AssetImage(
-                      bannerImages[i],
-                    ),
+                    image: NetworkImage(
+                        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Burger_King_logo.svg/1012px-Burger_King_logo.svg.png'),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: [
@@ -63,7 +66,7 @@ class BannerWidgetArea extends StatelessWidget {
               ),
               SizedBox(height: 15),
               Text(
-                nombresRestaurantes[i],
+                restaurantes[i].nombre,
                 style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Muli",

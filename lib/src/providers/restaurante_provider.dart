@@ -9,6 +9,7 @@ class RestauranteProvider {
   Future<List<RestauranteModel>> obtenerRestaurantes() async {
     final respuesta = await http.get(_url);
     final decodedData = json.decode(respuesta.body);
+    //print(decodedData);
     final restaurantes = Restaurantes.fromJSONList(decodedData);
     return restaurantes.restaurantes;
   }

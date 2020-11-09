@@ -12,15 +12,20 @@ class SpoonacularProvider {
   String _apiKey = '0409316eb2644d86a23e7fdce0bdeb81';
   String _url = 'api.spoonacular.com';
 
-  Future<List<MenuItem>> getMenuItems(String query) async {
-    final translator = GoogleTranslator();
-    var translation = await translator.translate(query, from: 'es', to: 'en');
-    String texto = translation.toString();
+  Future<List<MenuItem>> getMenuItems(String query, bool traducir) async {
+    String texto = '';
+    if (!traducir) {
+      texto = query;
+    } else {
+      final translator = GoogleTranslator();
+      var translation = await translator.translate(query, from: 'es', to: 'en');
+      texto = translation.toString();
+    }
+
     final urlEndpoint = Uri.https(
         _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
-    print(urlEndpoint);
     print(decodedData);
     //return [];
     final menuItems = new MenuItems.fromJsonList(decodedData['menuItems']);

@@ -151,7 +151,7 @@ class IngredientesPage extends StatelessWidget {
                       ),
                     ),
                     //CHIPS DE INGREDIENTES
-                    BannerAlimentosPermitidos(),
+                    //BannerAlimentosPermitidos(),
                     //
                     //BannerIngredientes(),
                     Padding(

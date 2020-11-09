@@ -9,8 +9,11 @@ import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
 class EstiloVidaPage extends StatelessWidget {
   //const RestauranteMenuPage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context).settings.arguments;
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -39,7 +42,7 @@ class EstiloVidaPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              TituloPrimario("Vegetariano"),
+              TituloPrimario(arguments['titulo']),
               SizedBox(
                 height: 5,
               ),
@@ -64,7 +67,7 @@ class EstiloVidaPage extends StatelessWidget {
                           Radius.circular(20.0),
                         ),
                         child: Image.asset(
-                          "images/vegetarian.jpg",
+                          arguments['imagen'],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -87,7 +90,7 @@ class EstiloVidaPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Vegetariano",
+                            Text(arguments['titulo'],
                                 style: TextStyle(
                                     fontSize: 25, color: primaryWhite)),
                           ],
@@ -100,7 +103,7 @@ class EstiloVidaPage extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 34, vertical: 20),
                 child: Text(
-                  "Esta dieta excluye toda la carne, el pescado y los subproductos animales que requieren la muerte del animal (como el caldo elaborado con huesos o gelatina). Por lo general, es rico en legumbres (por ejemplo, frijoles y lentejas), granos, frutas, verduras, nueces y semillas. Los vegetarianos que comen huevos pero no lácteos se conocen como ovo vegetarianos, mientras que los vegetarianos que comen lácteos pero no huevos se conocen como lacto vegetarianos.",
+                  arguments['descripcion'],
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -109,10 +112,38 @@ class EstiloVidaPage extends StatelessWidget {
                 ),
               ),
               TituloCard("Alimentos Permitidos", primaryGreen),
-              BannerAlimentosPermitidos(),
-
+              // BannerAlimentosPermitidos(),
+              (arguments['titulo'] == "Vegetariano" ||
+                      arguments['titulo'] == "Vegano")
+                  ? BannerAlimentosPermitidos(arguments['permitidos'])
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 34, vertical: 20),
+                      child: Text(
+                        arguments['permitidos'],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.justify,
+                      ),
+                    ),
               TituloCard("Alimentos No Permitidos", primaryGreen),
-              BannerAlimentosPermitidos(),
+              (arguments['titulo'] == "Vegetariano" ||
+                      arguments['titulo'] == "Vegano")
+                  ? BannerAlimentosPermitidos(arguments['noPermitidos'])
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 34, vertical: 20),
+                      child: Text(
+                        arguments['noPermitidos'],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.justify,
+                      ),
+                    ),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/models/restaurante_model.dart';
 import 'package:spoonacular/src/providers/restaurante_provider.dart';
@@ -32,6 +33,8 @@ class _InicioPageState extends State<InicioPage>
 
   @override
   Widget build(BuildContext context) {
+    final restauranteBloc = Provider.restauranteBloc(context);
+
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -116,7 +119,8 @@ class _InicioPageState extends State<InicioPage>
                   ],
                 ),
               ),
-              BannerWidgetArea(),
+              //Restaurantes
+              _crearRestaurantes(restauranteBloc),
               Padding(
                 padding: const EdgeInsets.fromLTRB(36, 10, 10, 10),
                 child: Row(
@@ -141,12 +145,12 @@ class _InicioPageState extends State<InicioPage>
     );
   }
 
-  Widget _tarjetasEstiloDeVida(
-      String tag, String texto, String image, Color color, int index) {
+  Widget _tarjetasEstiloDeVida(String tag, String texto, String image,
+      Color color, int index, Map<String, dynamic> argumentos) {
     return GestureDetector(
       onTap: () {
         print("dieta $index");
-        Navigator.pushNamed(context, '/estiloVida');
+        Navigator.pushNamed(context, '/estiloVida', arguments: argumentos);
       },
       child: Stack(
         children: [
@@ -206,62 +210,32 @@ class _InicioPageState extends State<InicioPage>
       child: Table(
         children: [
           TableRow(children: [
-            _tarjetasEstiloDeVida(
-                "vegetarian", "Vegetariano", iconsImages[0], Colors.green, 1),
+            _tarjetasEstiloDeVida("vegetarian", "Vegetariano", iconsImages[0],
+                Colors.green, 1, utils.vegetariano),
             _tarjetasEstiloDeVida("Omnivoro", "Omnivoro", iconsImages[2],
-                Colors.deepOrangeAccent, 2),
+                Colors.deepOrangeAccent, 2, utils.omnivoro),
           ]),
           TableRow(children: [
-            _tarjetasEstiloDeVida(
-                "vegano", "Vegano", iconsImages[1], Colors.lightGreen, 3),
-            _tarjetasEstiloDeVida(
-                "No gluten", "No gluten", iconsImages[3], Colors.grey, 4),
+            _tarjetasEstiloDeVida("vegano", "Vegano", iconsImages[1],
+                Colors.lightGreen, 3, utils.vegano),
+            _tarjetasEstiloDeVida("No gluten", "No gluten", iconsImages[3],
+                Colors.grey, 4, utils.freeGluten),
           ])
         ],
       ),
     );
   }
 
-  Widget _restaurantesTest() {
-    RestauranteProvider restauranteProvider = new RestauranteProvider();
-    return FutureBuilder(
-      future: restauranteProvider.obtenerRestaurantes(),
+  Widget _crearRestaurantes(RestauranteBloc restauranteBloc) {
+    restauranteBloc.obtenerRestaurantes();
+    return StreamBuilder(
+      stream: restauranteBloc.restauranteStream,
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         } else {
-          final List<RestauranteModel> restaurantes = snapshot.data;
-          print(restaurantes[0].nombre);
-          return Container();
-        }
-      },
-    );
-  }
-
-  Widget _menuItemsTest() {
-    SpoonacularProvider menuItemProvider = new SpoonacularProvider();
-    return FutureBuilder(
-      future: menuItemProvider.getMenuItems('pollo'),
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == null) {
-          return CircularProgressIndicator();
-        } else {
-          List<MenuItem> items = snapshot.data;
-          return FutureBuilder(
-            future: utils.enToEs(items[1].title),
-            initialData: null,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                String texto = snapshot.data;
-                print('Traducido: $texto');
-                return Container();
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          );
+          return BannerWidgetArea(snapshot.data);
         }
       },
     );
