@@ -78,22 +78,22 @@ class BannerMenu extends StatelessWidget {
             top: 10,
             right: -20,
             child: Container(
-              height: 100,
-              width: 100,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(50.0),
-                child: Image.network(
-                  menuItems[i].image,
-                  height: 100.0,
-                  width: 100.0,
-                ),
-              )
+                height: 100,
+                width: 100,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Image.network(
+                    menuItems[i].image,
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                )
 
-              // FadeInImage(
-              //   placeholder: AssetImage('images/loading-circle.gif'),
-              //   image: NetworkImage(menuItems[i].image),
-              // ),
-            ),
+                // FadeInImage(
+                //   placeholder: AssetImage('images/loading-circle.gif'),
+                //   image: NetworkImage(menuItems[i].image),
+                // ),
+                ),
           ),
           Positioned(
             top: 5,

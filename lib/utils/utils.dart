@@ -41,6 +41,7 @@ void mostarAlerta(BuildContext context, String mensaje) {
       });
 }
 
+//Estilos de vida
 Map<String, dynamic> vegetariano = {
   'titulo': 'Vegetariano',
   'imagen': 'images/vegetarian.jpg',
@@ -106,3 +107,31 @@ Map<String, dynamic> freeGluten = {
   'noPermitidos':
       'Granos que contienen gluten, como trigo, cebada y centeno, así como cualquier alimento elaborado con ellos'
 };
+
+// Nutrientes Importantes
+List<Map<String, String>> nutrientesImportantes = [
+  {
+    'tipo': 'Calorias',
+    'cantidad': '2000',
+    'concepto':
+        'La caloría es una unidad de energía. En nutrición, cuando se habla de calorías se refiere a la energía que las personas obtienen de los alimentos y bebidas que consumen, y la energía que usa nuestro propio cuerpo en la actividad física.'
+  },
+  {
+    'tipo': 'Grasa',
+    'cantidad': '44 - 76 g',
+    'concepto':
+        'Las grasas son nutrientes que contienen los alimentos que ingerimos y que utiliza nuestro cuerpo para construir membranas celulares, tejido nervioso (como el cerebro) y hormonas'
+  },
+  {
+    'tipo': 'Proteinas',
+    'cantidad': '50 a 175 gramos',
+    'concepto':
+        'Las proteínas son macronutrientes esenciales que adquirimos a través de los alimentos y que cumplen funciones importantes para el buen funcionamiento del organismo grasas o hidratos de carbono.'
+  },
+  {
+    'tipo': 'Carbohidratos',
+    'cantidad': '120-130 gramos',
+    'concepto':
+        'Los carbohidratos proporcionan el combustible para el sistema nervioso central y la energía para los músculos.'
+  }
+];

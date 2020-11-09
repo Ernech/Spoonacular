@@ -7,8 +7,9 @@ class NutrienteWidget extends StatelessWidget {
   String nutriente;
   double cantidadNutriente;
   String unidades;
-
-  NutrienteWidget(this.nutriente, this.cantidadNutriente, this.unidades);
+  double percentOfDailyNeeds;
+  NutrienteWidget(this.nutriente, this.cantidadNutriente, this.unidades,
+      this.percentOfDailyNeeds);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +24,8 @@ class NutrienteWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   /*shape: BoxShape.circle,*/
                   color: primaryYellow,
-                  borderRadius: new BorderRadius.all(Radius.elliptical(100, 100)),
+                  borderRadius:
+                      new BorderRadius.all(Radius.elliptical(100, 100)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey,
@@ -82,20 +84,30 @@ class NutrienteWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 12,),
-          Text("% Diario",style: TextStyle( fontFamily: "Muli", color: Color(0xFF828282)),),
-          SizedBox(height: 5,),
-          Text("5g",style: TextStyle(color: primaryGreen,fontWeight: FontWeight.bold),),
+          SizedBox(
+            height: 12,
+          ),
+          Text(
+            "% Diario",
+            style: TextStyle(fontFamily: "Muli", color: Color(0xFF828282)),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            percentOfDailyNeeds.toString(),
+            style: TextStyle(color: primaryGreen, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
 
-  void showAlertDialog(BuildContext context,int numero) {
+  void showAlertDialog(BuildContext context, int numero) {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("Ok"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
@@ -115,5 +127,4 @@ class NutrienteWidget extends StatelessWidget {
       },
     );
   }
-
 }

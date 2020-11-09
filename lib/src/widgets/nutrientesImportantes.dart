@@ -5,16 +5,16 @@ import 'package:spoonacular/utils/utils.dart' as utils;
 // ignore: must_be_immutable
 class NutrientesImportantes extends StatelessWidget {
   String tipo;
-  double unidad;
-  int numero;
-
-  NutrientesImportantes(this.tipo, this.unidad, this.numero);
+  dynamic valor;
+  int index;
+  NutrientesImportantes(this.tipo, this.valor, this.index);
 
   @override
   Widget build(BuildContext context) {
+    Map<String, String> info = _obtenerInfo(index);
     return GestureDetector(
       onTap: () {
-        showAlertDialog(context, this.numero);
+        showAlertDialog(context, info);
       },
       child: Stack(
         children: [
@@ -53,7 +53,7 @@ class NutrientesImportantes extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    '$unidad',
+                    valor.toString(),
                     style: TextStyle(
                         fontSize: 14, fontFamily: "Muli", color: primaryWhite),
                     textAlign: TextAlign.left,
@@ -67,7 +67,7 @@ class NutrientesImportantes extends StatelessWidget {
     );
   }
 
-  void showAlertDialog(BuildContext context, int numero) {
+  void showAlertDialog(BuildContext context, Map<String, String> info) {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text(
@@ -81,7 +81,7 @@ class NutrientesImportantes extends StatelessWidget {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
-        "Caloria",
+        info['tipo'],
         style: TextStyle(
             color: primaryGreen, fontWeight: FontWeight.bold, fontSize: 24),
       ),
@@ -104,9 +104,7 @@ class NutrientesImportantes extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                  "La caloría es una unidad de energíaa En nutrición, cuando se habla de calorías se refiere a la energía que las personas obtienen de los alimentos y bebidas que consumen, y la energía que usa nuestro propio cuerpo en la actividad física",
-                  textAlign: TextAlign.justify),
+              child: Text(info['concepto'], textAlign: TextAlign.justify),
             ),
             Row(
               children: [
@@ -122,7 +120,7 @@ class NutrientesImportantes extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                "2000 Cal",
+                info['cantidad'],
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -141,5 +139,28 @@ class NutrientesImportantes extends StatelessWidget {
         return alert;
       },
     );
+  }
+
+  Map<String, String> _obtenerInfo(int index) {
+    switch (index) {
+      case 0:
+        return utils.nutrientesImportantes[0];
+        break;
+      case 1:
+        return utils.nutrientesImportantes[1];
+        break;
+      case 2:
+        return utils.nutrientesImportantes[2];
+        break;
+      case 3:
+        return utils.nutrientesImportantes[3];
+        break;
+      default:
+        return {
+          'tipo': 'Error al obtener la información',
+          'cantidad': 'Error al obtener la información',
+          'concepto': 'Error al obtener la información'
+        };
+    }
   }
 }
