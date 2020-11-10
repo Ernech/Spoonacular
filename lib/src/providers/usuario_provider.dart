@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:spoonacular/src/models/usuario_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 
 class UsuarioProvider {
@@ -41,5 +42,15 @@ class UsuarioProvider {
     } else {
       return {'ok': false, 'mensaje': decodeResp['error']['message']};
     }
+  }
+
+  Future<bool> registrarUsuarioFirebase(UsuarioModel usuario) async {
+    bool state;
+    final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';
+    final resp = await http.post(urlUsuario, body: usuarioModelToJson(usuario));
+    final decodedData = json.decode(resp.body);
+    print(decodedData);
+    resp.statusCode == 200 ? state = true : state = false;
+    return state;
   }
 }

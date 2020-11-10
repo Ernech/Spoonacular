@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/bloc/login_bloc.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/models/usuario_model.dart';
 
 import 'package:spoonacular/src/providers/usuario_provider.dart';
-import 'package:spoonacular/src/widgets/custome_input.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/custome_input_account.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/utils/utils.dart';
@@ -16,11 +17,13 @@ class Registro extends StatefulWidget {
 
 class _RegistroState extends State<Registro> {
   final usuarioProvider = new UsuarioProvider();
-
+  final spoonacularProvider = new SpoonacularProvider();
+  UsuarioBloc usuarioBloc;
   @override
   Widget build(BuildContext context) {
     final loginBloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
+    usuarioBloc = Provider.usuarioBLoc(context);
     final horizontalPadding = size.width;
     return Scaffold(
       body: Center(
@@ -64,11 +67,13 @@ class _RegistroState extends State<Registro> {
               SizedBox(
                 height: 10,
               ),
-              CustomeInputAccount("Apellido Paterno", Icons.person, "Apellido Paterno"),
+              CustomeInputAccount(
+                  "Apellido Paterno", Icons.person, "Apellido Paterno"),
               SizedBox(
                 height: 10,
               ),
-              CustomeInputAccount("Apellido Materno", Icons.person, "Apellido Materno"),
+              CustomeInputAccount(
+                  "Apellido Materno", Icons.person, "Apellido Materno"),
               SizedBox(
                 height: 10,
               ),
@@ -82,7 +87,7 @@ class _RegistroState extends State<Registro> {
               SizedBox(
                 height: 20,
               ),
-              _crearBoton(loginBloc, horizontalPadding),
+              _crearBoton(loginBloc, usuarioBloc, horizontalPadding),
               SizedBox(
                 height: 10,
               ),
@@ -247,7 +252,8 @@ class _RegistroState extends State<Registro> {
     );
   }
 
-  Widget _crearBoton(LoginBloc loginbloc, double horizontalPadding) {
+  Widget _crearBoton(
+      LoginBloc loginbloc, UsuarioBloc usuarioBloc, double horizontalPadding) {
     return StreamBuilder(
         stream: loginbloc.formValidStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -267,18 +273,38 @@ class _RegistroState extends State<Registro> {
                     horizontal: horizontalPadding / 3, vertical: 15.0),
               ),
               onPressed: snapshot.hasData
-                  ? () => _registrarse(loginbloc, context)
+                  ? () => _registrarse(loginbloc, usuarioBloc, context)
                   : null);
         });
   }
 
-  _registrarse(LoginBloc bloc, BuildContext context) async {
+  _registrarse(
+      LoginBloc bloc, UsuarioBloc usuarioBloc, BuildContext context) async {
     final info = await usuarioProvider.nuevoUsuatio(bloc.email, bloc.password);
 
     if (info['ok']) {
-      Navigator.pushReplacementNamed(context, '/');
+      //  Navigator.pushReplacementNamed(context, '/');
+      _registrarseSpoonacular(bloc.email);
     } else {
       mostarAlerta(context, info['mensaje']);
     }
+  }
+
+  _registrarseSpoonacular(String email) async {
+    final info = await spoonacularProvider.registroSpoonacular(
+        'Andrés', 'Duarte', email);
+    if (info['status'] != 200) {
+      print('error');
+    } else {
+      final usuario = new UsuarioModel(info['firstName'], info['lastName'],
+          info['email'], info['username'], info['hash']);
+      _registroUsuarioFirebase(usuario);
+    }
+  }
+
+  _registroUsuarioFirebase(UsuarioModel usuarioModel) {
+    usuarioBloc.registrarUsuario(usuarioModel);
+    print('Usuario Registrado');
+    Navigator.pushReplacementNamed(context, '/');
   }
 }
