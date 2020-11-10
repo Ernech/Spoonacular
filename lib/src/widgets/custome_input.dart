@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/bloc/login_bloc.dart';
 
 class CustomeInput extends StatelessWidget {
   IconData iconosTextfield;
   String textfieldText;
   String inputName;
+  LoginBloc loginBloc;
+  bool password;
+  TextInputType keyBoardType;
 
-  
-  CustomeInput(this.inputName,this.iconosTextfield, this.textfieldText);//Correo, icono_persona, dentro del hint
+  CustomeInput(
+      this.inputName,
+      this.iconosTextfield,
+      this.textfieldText,
+      this.loginBloc,
+      this.password,
+      this.keyBoardType); //Correo, icono_persona, dentro del hint
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +26,20 @@ class CustomeInput extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 34 ),
-              child: Text(inputName,style: TextStyle(color: primaryGreen,fontSize: 16,fontWeight: FontWeight.bold),),
+              padding: const EdgeInsets.only(left: 34),
+              child: Text(
+                inputName,
+                style: TextStyle(
+                    color: primaryGreen,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
           padding: EdgeInsets.symmetric(
@@ -42,16 +59,25 @@ class CustomeInput extends StatelessWidget {
               ),
             ],
           ),
-          child: TextField(
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-                iconosTextfield,
-                color: Colors.grey,
-              ),
-              hintText: textfieldText,
-              hintStyle: TextStyle(color: Colors.grey),
-            ),
+          child: StreamBuilder(
+            stream: password ? loginBloc.passwordStream : loginBloc.emailStream,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return TextField(
+                keyboardType: keyBoardType,
+                onChanged:
+                    password ? loginBloc.changePassword : loginBloc.changeEmail,
+                obscureText: password,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    icon: Icon(
+                      iconosTextfield,
+                      color: Colors.grey,
+                    ),
+                    hintText: textfieldText,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    errorText: snapshot.error),
+              );
+            },
           ),
         ),
       ],

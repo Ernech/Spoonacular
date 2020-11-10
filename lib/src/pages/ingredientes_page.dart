@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
-import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
+import 'package:spoonacular/src/models/ingredients_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
+import 'package:spoonacular/src/widgets/banner_alimentos-permitidos.dart';
+import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/nutriente_widget.dart';
+import 'package:spoonacular/src/widgets/nutrientesImportantes.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 
 class IngredientesPage extends StatelessWidget {
+  String tag;
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arguments =
@@ -17,6 +20,8 @@ class IngredientesPage extends StatelessWidget {
     final menuItem = arguments['menuItem'];
     final spoonacularBloc = Provider.spoonacularBloc(context);
     spoonacularBloc.cargarMenuItemDetail(arguments['id']);
+    spoonacularBloc.cargarIngredientes(arguments['id']);
+    print('ID: ${arguments['id']}');
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -41,11 +46,23 @@ class IngredientesPage extends StatelessWidget {
               ],
             ),
             Container(
-              height: 200,
-              width: double.infinity,
-              child: FadeInImage(
-                  placeholder: AssetImage('images/loading-circle.gif'),
-                  image: NetworkImage(menuItem.image)),
+              height: 150,
+              width: 150,
+              decoration: new BoxDecoration(
+                borderRadius: new BorderRadius.circular(100.0),
+                border: Border.all(
+                  color: Colors.white,
+                  width: 7.5,
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100.0),
+                child: Image.network(
+                  menuItem.image,
+                  height: 100.0,
+                  width: 100.0,
+                ),
+              ),
             ),
             SizedBox(
               height: 50,
@@ -67,121 +84,153 @@ class IngredientesPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 36, right: 36, top: 25),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 36, right: 36, top: 25),
+                          child: Column(
+                            children: [
+                              SubtituloGeneral("Nombre del plato"),
+                              StreamBuilder(
+                                stream: spoonacularBloc.menuItemDetailStream,
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<MenuItemDetail> snapshot) {
+                                  if (snapshot.hasData) {
+                                    MenuItemDetail menuItemDetail =
+                                        snapshot.data;
+                                    return ParrafoGeneral(
+                                        menuItemDetail.title, primaryGreen);
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                },
+                              ),
+                              // SizedBox(
+                              //   height: 15,
+                              // ),
+                              SubtituloGeneral("Nutrientes"),
+                              // ParrafoGeneral(
+                              //     "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
+                              //     "su nombre; sus colores predominantes son verde.",
+                              //     primaryBlack),
+
+                              StreamBuilder(
+                                stream: spoonacularBloc.menuItemDetailStream,
+                                initialData: null,
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<MenuItemDetail> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return CircularProgressIndicator();
+                                  } else {
+                                    final MenuItemDetail menuItemDetail =
+                                        snapshot.data;
+                                    final List<Nutrients> nutrientes =
+                                        menuItemDetail.obtenerNutrientes(
+                                            menuItemDetail
+                                                .nutrition['nutrients']);
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: _crearNutrientes(nutrientes),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+
+                              SizedBox(
+                                height: 5,
+                              ),
+                              SubtituloGeneral("Ingredientes"),
+                              //
+                            ],
+                          ),
+                        ),
+                      ),
+                      _crearIngredients(spoonacularBloc),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 36.0),
                         child: Column(
                           children: [
-                            SubtituloGeneral("Nombre del plato"),
-                            StreamBuilder(
-                              stream: spoonacularBloc.menuItemDetailStream,
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<MenuItemDetail> snapshot) {
-                                if (snapshot.hasData) {
-                                  MenuItemDetail menuItemDetail = snapshot.data;
-                                  return ParrafoGeneral(
-                                      menuItemDetail.title, primaryGreen);
-                                } else {
-                                  return CircularProgressIndicator();
-                                }
-                              },
+                            SubtituloGeneral("Nutrientes Importantes"),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child:
+                                  _crearNutrientesImportantes(spoonacularBloc),
                             ),
-                            // SizedBox(
-                            //   height: 15,
-                            // ),
-                            SubtituloGeneral("Nutrientes"),
-                            // ParrafoGeneral(
-                            //     "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
-                            //     "su nombre; sus colores predominantes son verde.",
-                            //     primaryBlack),
-
-                            StreamBuilder(
-                              stream: spoonacularBloc.menuItemDetailStream,
-                              initialData: null,
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<MenuItemDetail> snapshot) {
-                                if (!snapshot.hasData) {
-                                  return CircularProgressIndicator();
-                                } else {
-                                  final MenuItemDetail menuItemDetail =
-                                      snapshot.data;
-                                  final List<Nutrients> nutrientes =
-                                      menuItemDetail.obtenerNutrientes(
-                                          menuItemDetail
-                                              .nutrition['nutrients']);
-                                  return Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[0].title,
-                                                nutrientes[0].amount,
-                                                nutrientes[0].unit),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[1].title,
-                                                nutrientes[1].amount,
-                                                nutrientes[1].unit),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[2].title,
-                                                nutrientes[2].amount,
-                                                nutrientes[2].unit),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            child: NutrienteWidget(
-                                                nutrientes[3].title,
-                                                nutrientes[3].amount,
-                                                nutrientes[3].unit),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
-
-                            SizedBox(
-                              height: 15,
-                            ),
-                            SubtituloGeneral("Ingredientes"),
                           ],
                         ),
                       ),
-                    ),
-                    BannerIngredientes(),
-                    Container(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 36, right: 36, top: 10),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  List<Widget> _crearNutrientes(List<Nutrients> nutrientes) {
+    List<Widget> tarjetasNutrientes = new List();
+    for (int i = 0; i < nutrientes.length; i++) {
+      Widget tarjeta = Column(
+        children: [
+          Container(
+            child: NutrienteWidget(nutrientes[i].title, nutrientes[i].amount,
+                nutrientes[i].unit, nutrientes[i].percentOfDailyNeeds),
+          ),
+        ],
+      );
+      tarjetasNutrientes.add(tarjeta);
+    }
+    return tarjetasNutrientes;
+  }
+
+  Widget _crearNutrientesImportantes(SpoonacularBloc spoonacularBloc) {
+    return StreamBuilder(
+      stream: spoonacularBloc.menuItemDetailStream,
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        } else {
+          final MenuItemDetail menuItemDetail = snapshot.data;
+          return Row(
+            children: [
+              NutrientesImportantes(
+                  "Calorias", menuItemDetail.nutrition['calories'], 0),
+              NutrientesImportantes(
+                  "Grasa", menuItemDetail.nutrition['fat'], 1),
+              NutrientesImportantes(
+                  "Proteinas", menuItemDetail.nutrition['protein'], 2),
+              NutrientesImportantes(
+                  "Carbo...", menuItemDetail.nutrition['carbs'], 3),
+            ],
+          );
+        }
+      },
+    );
+  }
+
+  Widget _crearIngredients(SpoonacularBloc spoonacularBloc) {
+    return StreamBuilder(
+      stream: spoonacularBloc.ingredientsStream,
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          final List<Ingredient> ingredientes = snapshot.data;
+          print('Ingredientes: $ingredientes');
+          return BannerIngredientes(ingredientes);
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 }

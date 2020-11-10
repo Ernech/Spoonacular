@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/models/restaurante_model.dart';
+import 'package:spoonacular/src/providers/restaurante_provider.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
-import '../../constants.dart';
 
 class InicioPage extends StatefulWidget {
   @override
@@ -31,6 +33,8 @@ class _InicioPageState extends State<InicioPage>
 
   @override
   Widget build(BuildContext context) {
+    final restauranteBloc = Provider.restauranteBloc(context);
+
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -47,7 +51,7 @@ class _InicioPageState extends State<InicioPage>
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(36, 36, 10, 0),
+                padding: const EdgeInsets.fromLTRB(36, 55, 10, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -65,38 +69,38 @@ class _InicioPageState extends State<InicioPage>
               SizedBox(
                 height: 5,
               ),
-              TituloSecundario("Hola , Ariel"),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 32),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 30,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    hintText: "Restaurantes , plato y dietas",
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ),
+              //TituloSecundario("Hola , Ariel"),
+              // Container(
+              //   margin: EdgeInsets.symmetric(horizontal: 32),
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: 30,
+              //   ),
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(25),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 1.0), //(x,y)
+              //         blurRadius: 6.0,
+              //       ),
+              //     ],
+              //   ),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       icon: Icon(
+              //         Icons.search,
+              //         color: Colors.grey,
+              //       ),
+              //       hintText: "Restaurantes , plato y dietas",
+              //       hintStyle: TextStyle(color: Colors.grey),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 10,
               ),
@@ -115,7 +119,8 @@ class _InicioPageState extends State<InicioPage>
                   ],
                 ),
               ),
-              BannerWidgetArea(),
+              //Restaurantes
+              _crearRestaurantes(restauranteBloc),
               Padding(
                 padding: const EdgeInsets.fromLTRB(36, 10, 10, 10),
                 child: Row(
@@ -132,6 +137,7 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               _tarjetas(),
+              //    _restaurantesTest(),
             ],
           ),
         ),
@@ -139,56 +145,62 @@ class _InicioPageState extends State<InicioPage>
     );
   }
 
-  Widget _tarjetasEstiloDeVida(
-      String tag, String texto, String image, Color color) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(7.5, 10, 7.5, 10),
-          child: Container(
-            //width: (MediaQuery.of(context).size.width) / 2.55,
-            height: 115,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 3.0,
-                    blurRadius: 5.0),
-              ],
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Hero(
-                        tag: tag,
-                        child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(image),
-                                  fit: BoxFit.contain)),
+  Widget _tarjetasEstiloDeVida(String tag, String texto, String image,
+      Color color, int index, Map<String, dynamic> argumentos) {
+    return GestureDetector(
+      onTap: () {
+        print("dieta $index");
+        Navigator.pushNamed(context, '/estiloVida', arguments: argumentos);
+      },
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(7.5, 10, 7.5, 10),
+            child: Container(
+              //width: (MediaQuery.of(context).size.width) / 2.55,
+              height: 115,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.4),
+                      spreadRadius: 3.0,
+                      blurRadius: 5.0),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Hero(
+                          tag: tag,
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(image),
+                                    fit: BoxFit.contain)),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Text(
-                  texto,
-                  style:
-                      TextStyle(fontSize: 16, fontFamily: "Muli", color: color),
-                ),
-              ],
+                  Text(
+                    texto,
+                    style: TextStyle(
+                        fontSize: 16, fontFamily: "Muli", color: color),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -198,45 +210,32 @@ class _InicioPageState extends State<InicioPage>
       child: Table(
         children: [
           TableRow(children: [
-            _tarjetasEstiloDeVida(
-                "vegetarian", "Vegetariano", iconsImages[0], Colors.green),
+            _tarjetasEstiloDeVida("vegetarian", "Vegetariano", iconsImages[0],
+                Colors.green, 1, utils.vegetariano),
             _tarjetasEstiloDeVida("Omnivoro", "Omnivoro", iconsImages[2],
-                Colors.deepOrangeAccent),
+                Colors.deepOrangeAccent, 2, utils.omnivoro),
           ]),
           TableRow(children: [
-            _tarjetasEstiloDeVida(
-                "vegano", "Vegano", iconsImages[1], Colors.lightGreen),
-            _tarjetasEstiloDeVida(
-                "No gluten", "No gluten", iconsImages[3], Colors.grey),
+            _tarjetasEstiloDeVida("vegano", "Vegano", iconsImages[1],
+                Colors.lightGreen, 3, utils.vegano),
+            _tarjetasEstiloDeVida("No gluten", "No gluten", iconsImages[3],
+                Colors.grey, 4, utils.freeGluten),
           ])
         ],
       ),
     );
   }
 
-  Widget _menuItemsTest() {
-    SpoonacularProvider menuItemProvider = new SpoonacularProvider();
-    return FutureBuilder(
-      future: menuItemProvider.getMenuItems('arroz'),
+  Widget _crearRestaurantes(RestauranteBloc restauranteBloc) {
+    restauranteBloc.obtenerRestaurantes();
+    return StreamBuilder(
+      stream: restauranteBloc.restauranteStream,
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == null) {
+        if (!snapshot.hasData) {
           return CircularProgressIndicator();
         } else {
-          List<MenuItem> items = snapshot.data;
-          return FutureBuilder(
-            future: utils.enToEs(items[1].title),
-            initialData: null,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                String texto = snapshot.data;
-                print('Traducido: $texto');
-                return Container();
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          );
+          return BannerWidgetArea(snapshot.data);
         }
       },
     );

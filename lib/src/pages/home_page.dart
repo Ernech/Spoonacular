@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/pages/cuenta_page.dart';
-import 'package:spoonacular/src/pages/favoritos_page.dart';
 import 'package:spoonacular/src/pages/inicio_page.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,8 +41,6 @@ class _HomePageState extends State<HomePage> {
     return <BottomNavigationBarItem>[
       BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Inicio')),
       BottomNavigationBarItem(
-          icon: Icon(Icons.favorite), title: Text('Favoritos')),
-      BottomNavigationBarItem(
           icon: Icon(Icons.account_circle), title: Text('Cuenta')),
     ];
   }
@@ -55,9 +51,6 @@ class _HomePageState extends State<HomePage> {
         return InicioPage();
         break;
       case 1:
-        return FavoritosPage();
-        break;
-      case 2:
         return CuentaPage();
         break;
       default:

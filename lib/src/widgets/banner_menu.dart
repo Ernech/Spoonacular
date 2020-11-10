@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/pages/ingredientes_page.dart';
-import 'package:spoonacular/src/pages/restaurante_menu.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import '../../constants.dart';
 
@@ -62,7 +59,7 @@ class BannerMenu extends StatelessWidget {
   Widget _crearTarjeta(BuildContext context, int i) {
     return Container(
       margin: EdgeInsets.only(right: 20, top: 10, bottom: 10),
-      height: 270,
+      height: 235,
       width: 180,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -81,13 +78,22 @@ class BannerMenu extends StatelessWidget {
             top: 10,
             right: -20,
             child: Container(
-              height: 100,
-              width: 100,
-              child: FadeInImage(
-                placeholder: AssetImage('images/loading-circle.gif'),
-                image: NetworkImage(menuItems[i].image),
-              ),
-            ),
+                height: 100,
+                width: 100,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Image.network(
+                    menuItems[i].image,
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                )
+
+                // FadeInImage(
+                //   placeholder: AssetImage('images/loading-circle.gif'),
+                //   image: NetworkImage(menuItems[i].image),
+                // ),
+                ),
           ),
           Positioned(
             top: 5,
@@ -127,7 +133,7 @@ class BannerMenu extends StatelessWidget {
                             return Text(
                               snapshot.data,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 color: primaryGreen,
                               ),
                               textAlign: TextAlign.left,
@@ -140,29 +146,21 @@ class BannerMenu extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     // Chip(
+                //     //   label: Text(
+                //     //     'Vegetariano',
+                //     //     style: TextStyle(color: primaryWhite, fontSize: 12),
+                //     //   ),
+                //     //   backgroundColor: primaryBrown,
+                //     // ),
+                //   ],
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Chip(
-                      label: Text(
-                        'Vegetariano',
-                        style: TextStyle(color: primaryWhite, fontSize: 12),
-                      ),
-                      backgroundColor: primaryBrown,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Bs 35",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: primaryGreen,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Muli"),
-                    ),
                     RaisedButton(
                       textColor: Colors.white,
                       color: primaryGreenLight,
@@ -181,14 +179,18 @@ class BannerMenu extends StatelessWidget {
                             });
                       },
                       child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/ingredientes',
-                                arguments: <String, dynamic>{
-                                  'id': menuItems[i].id,
-                                  'menuItem': menuItems[i]
-                                });
-                          },
-                          child: Text('Ver', style: TextStyle(fontSize: 16))),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/ingredientes',
+                              arguments: <String, dynamic>{
+                                'id': menuItems[i].id,
+                                'menuItem': menuItems[i]
+                              });
+                        },
+                        child: Text(
+                          'Ver',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
                     ),
                   ],
                 ),

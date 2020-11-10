@@ -1,22 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/pages/authentication_service.dart.dart';
+import 'package:spoonacular/src/pages/estilo-vida_page.dart';
 import 'package:spoonacular/src/pages/home_page.dart';
 import 'package:spoonacular/src/pages/ingredientes_page.dart';
 import 'package:spoonacular/src/pages/login.dart';
 import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  final prefs = new PreferenciasUsuario();
+  await prefs.initPrefs();
   runApp(MyApp());
 }
 
@@ -24,31 +23,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance),
-        ),
-        StreamProvider(
-          create: (context) =>
-              context.read<AuthenticationService>().authStateChanges,
-        )
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (BuildContext context) => Login(),
-          '/registro': (BuildContext context) => Registro(),
-          '/home': (BuildContext context) => HomePage(),
-          '/ingredientes': (BuildContext context) => IngredientesPage(),
-          '/restaurantemenu': (BuildContext context) => RestauranteMenuPage(),
-        },
-        home: AuthenticationWrapper(),
+    final prefs = PreferenciasUsuario();
+    if (prefs.token != null) {
+      print(prefs.token);
+    } else {
+      print('null');
+    }
+    final mapp = MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      initialRoute: '/',
+      routes: {
+        '/': (BuildContext context) => Login(),
+        '/registro': (BuildContext context) => Registro(),
+        '/home': (BuildContext context) => HomePage(),
+        '/ingredientes': (BuildContext context) => IngredientesPage(),
+        '/restauranteMenu': (BuildContext context) => RestauranteMenuPage(),
+        '/estiloVida': (BuildContext context) => EstiloVidaPage(),
+      },
+    );
+    return Provider(
+      child: mapp,
     );
   }
 }
@@ -107,7 +104,7 @@ class MyHomePage extends StatelessWidget {
   Widget _menuItemsTest() {
     SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
     return FutureBuilder(
-      future: spoonacularProvider.getMenuItems('tomate'),
+      future: spoonacularProvider.getMenuItems('tomate', true),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
@@ -148,7 +145,8 @@ Widget _menuItemDetail(int id) {
         final caloricBreakdown = menuItemDetail.obtenerCaloricBreakdown(
             menuItemDetail.nutrition['caloricBreakdown']);
         print('CALORIC ${caloricBreakdown.percentCarbs}');
-
+        double calories = menuItemDetail.nutrition['calories'];
+        print('calories $calories');
         return Container();
       } else {
         return CircularProgressIndicator();
@@ -187,12 +185,4 @@ class BannerWidgetArea extends StatelessWidget {
       ),
     );
   }
-}
-class AuthenticationWrapper extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-  
 }

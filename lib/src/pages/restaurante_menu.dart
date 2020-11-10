@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/widgets/banner_menu.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/titulo_card.dart';
 import 'package:spoonacular/src/widgets/titulo_primario.dart';
 import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
-import 'package:spoonacular/constants.dart';
-
 class RestauranteMenuPage extends StatelessWidget {
   //const RestauranteMenuPage({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final String arguments = ModalRoute.of(context).settings.arguments;
     final spoonacularBloc = Provider.spoonacularBloc(context);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -43,14 +42,14 @@ class RestauranteMenuPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              TituloPrimario("Leckerbrot"),
+              TituloPrimario(arguments),
               SizedBox(
                 height: 5,
               ),
-              TituloCard("Platos principales"),
-              _bannerMenu(spoonacularBloc),
-              TituloCard("Otros"),
-              _bannerMenu(spoonacularBloc),
+              TituloCard("Platos principales", primaryBlack),
+              _bannerMenu(spoonacularBloc, arguments),
+              TituloCard("Otros", primaryBlack),
+              _bannerMenu(spoonacularBloc, arguments),
             ],
           ),
         ),
@@ -58,8 +57,8 @@ class RestauranteMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _bannerMenu(SpoonacularBloc bloc) {
-    bloc.cargarMenuItems('pollo');
+  Widget _bannerMenu(SpoonacularBloc bloc, String arguments) {
+    bloc.cargarMenuItems(arguments, false);
     return StreamBuilder(
       stream: bloc.menuItemsStream,
       initialData: null,
