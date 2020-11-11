@@ -68,20 +68,20 @@ class UsuarioProvider {
   Future<UsuarioModel> cargarUsuarioFirebase(String email) async {
     final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';
     final resp = await http.get(urlUsuario);
-    final decodedData = json.decode(resp.body);
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    print(decodedData);
     if (decodedData == null) {
       return null;
     }
     if (decodedData['error'] != null) {
       return null;
     }
-    final List<UsuarioModel> usuarios = new List<UsuarioModel>();
+    UsuarioModel usuarioTemp;
     decodedData.forEach((id, usuario) {
-      final prodTemp = usuario.fromJson(usuario);
-      usuario.id = id;
-      usuarios.add(prodTemp);
+      if (usuario['email'] == email) {
+        usuarioTemp = UsuarioModel.fromJSONMap(usuario);
+      }
     });
-
-    return utils.obtenerUsuario(usuarios, email);
+    return usuarioTemp;
   }
 }

@@ -7,7 +7,12 @@ import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/utils/utils.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final usuarioProvider = new UsuarioProvider();
 
   @override
@@ -124,7 +129,9 @@ class Login extends StatelessWidget {
   _ingresar(LoginBloc bloc, BuildContext context) async {
     Map info = await usuarioProvider.login(bloc.email, bloc.password);
     if (info['ok']) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home').then((value) {
+        setState(() {});
+      });
     } else {
       mostarAlerta(context, info['mensaje']);
     }

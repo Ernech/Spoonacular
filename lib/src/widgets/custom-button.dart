@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/models/usuario_model.dart';
 
 class CustomButton extends StatelessWidget {
   String buttonText;
-  CustomButton(
-    this.buttonText,
-  );
+  UsuarioModel usuario;
+
+  CustomButton(this.buttonText, this.usuario);
   @override
   Widget build(BuildContext context) {
     return RaisedButton(

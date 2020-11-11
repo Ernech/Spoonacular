@@ -26,9 +26,6 @@ class MyApp extends StatelessWidget {
     final prefs = PreferenciasUsuario();
     if (prefs.token != null) {
       print(prefs.token);
-      print(utils.parseJwt(prefs.token));
-      Map<String, dynamic> mapToken = utils.parseJwt(prefs.token);
-      print(mapToken['firebase']['identities']['email'][0]);
     } else {
       print('null');
     }

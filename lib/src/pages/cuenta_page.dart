@@ -19,7 +19,7 @@ class CuentaPage extends StatefulWidget {
 class _CuentaPageState extends State<CuentaPage> {
   final prefs = new PreferenciasUsuario();
 
-  String _dietaValue;
+  String firstName, lastNameP, lastNameM, email;
   List _tiposDietas = ['Vegetariano', 'Vegano', 'No Gluten', 'Omnivoro'];
   @override
   Widget build(BuildContext context) {
@@ -49,40 +49,49 @@ class _CuentaPageState extends State<CuentaPage> {
                     return CircularProgressIndicator();
                   } else {
                     UsuarioModel usuario = snapshot.data;
+                    firstName = usuario.firstName;
+                    lastNameP = usuario.lastNameP;
+                    lastNameM = usuario.lastNameM;
+                    email = usuario.email;
+
+                    List<String> inicial = usuario.firstName.split('');
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconUser("A", usuario.firstName),
+                        IconUser(inicial[0],
+                            '${usuario.firstName} ${usuario.lastNameP} ${usuario.lastNameM}'),
                         SizedBox(
                           height: 5,
                         ),
                         LineCirculeDetail(),
-                        _crearNombreUsuario(),
+                        _crearNombreUsuario(usuario, firstName),
                         SizedBox(
                           height: 10,
                         ),
-                        _crearApPaterno(),
+                        _crearApPaterno(usuario, lastNameP),
                         SizedBox(
                           height: 10,
                         ),
-                        _crearApMaterno(),
+                        _crearApMaterno(usuario, lastNameM),
                         SizedBox(
                           height: 10,
                         ),
-                        _crearCorreo(),
+                        _crearCorreo(usuario, email),
                         SizedBox(
                           height: 10,
                         ),
-                        // CustomeInputAccount("Contraseña", Icons.lock, "Contraseña"),
                         _crearPassword(),
                         SizedBox(
                           height: 10,
                         ),
-
                         SizedBox(
                           height: 10,
                         ),
-                        CustomButton("GUARDAR"),
+                        CustomButton("GUARDAR", usuario),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        _crearBotonCerrarSesion(prefs, context, usuario)
                       ],
                     );
                   }
@@ -93,7 +102,17 @@ class _CuentaPageState extends State<CuentaPage> {
     );
   }
 
-  Widget _crearNombreUsuario() {
+  _cerrarSesion(
+      PreferenciasUsuario prefs, BuildContext context, UsuarioModel usuario) {
+    Navigator.pushReplacementNamed(context, '/').then((value) {
+      setState(() {
+        usuario = null;
+      });
+      prefs.token = null;
+    });
+  }
+
+  Widget _crearNombreUsuario(UsuarioModel usuario, String init) {
     return Column(
       children: [
         Row(
@@ -134,6 +153,8 @@ class _CuentaPageState extends State<CuentaPage> {
               ],
             ),
             child: TextFormField(
+              initialValue: init,
+              onSaved: (value) => usuario.firstName = value,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 icon: Icon(
@@ -143,12 +164,19 @@ class _CuentaPageState extends State<CuentaPage> {
                 hintText: "Nombre de usuario",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
+              validator: (value) {
+                if (value.length > 0) {
+                  return null;
+                } else {
+                  return 'Campo Obligatorio';
+                }
+              },
             )),
       ],
     );
   }
 
-  Widget _crearApPaterno() {
+  Widget _crearApPaterno(UsuarioModel usuario, String init) {
     return Column(
       children: [
         Row(
@@ -170,40 +198,49 @@ class _CuentaPageState extends State<CuentaPage> {
           height: 10,
         ),
         Container(
-            margin: EdgeInsets.symmetric(horizontal: 32),
-            padding: EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            decoration: BoxDecoration(
+          margin: EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(
+            horizontal: 30,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(
-                color: Colors.white,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0), //(x,y)
-                  blurRadius: 6.0,
-                ),
-              ],
             ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                icon: Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                ),
-                hintText: "Apellido Paterno",
-                hintStyle: TextStyle(color: Colors.grey),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
               ),
-            )),
+            ],
+          ),
+          child: TextFormField(
+            initialValue: init,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              icon: Icon(
+                Icons.person,
+                color: Colors.grey,
+              ),
+              hintText: "Apellido Paterno",
+              hintStyle: TextStyle(color: Colors.grey),
+            ),
+            validator: (value) {
+              if (value.length > 0) {
+                return null;
+              } else {
+                return 'Campo Obligatorio';
+              }
+            },
+          ),
+        ),
       ],
     );
   }
 
-  Widget _crearApMaterno() {
+  Widget _crearApMaterno(UsuarioModel usuario, String init) {
     return Column(
       children: [
         Row(
@@ -244,6 +281,7 @@ class _CuentaPageState extends State<CuentaPage> {
               ],
             ),
             child: TextFormField(
+              initialValue: init,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 icon: Icon(
@@ -253,12 +291,19 @@ class _CuentaPageState extends State<CuentaPage> {
                 hintText: "Apellido Materno",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
+              validator: (value) {
+                if (value.length > 0) {
+                  return null;
+                } else {
+                  return 'Campo Obligatorio';
+                }
+              },
             )),
       ],
     );
   }
 
-  Widget _crearCorreo() {
+  Widget _crearCorreo(UsuarioModel usuario, String init) {
     return Column(
       children: [
         Row(
@@ -299,6 +344,7 @@ class _CuentaPageState extends State<CuentaPage> {
               ],
             ),
             child: TextFormField(
+              initialValue: init,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -368,5 +414,23 @@ class _CuentaPageState extends State<CuentaPage> {
             )),
       ],
     );
+  }
+
+  Widget _crearBotonCerrarSesion(
+      PreferenciasUsuario prefs, BuildContext context, UsuarioModel usuario) {
+    return RaisedButton(
+        textColor: Colors.white,
+        padding: EdgeInsets.all(0.0),
+        shape: StadiumBorder(),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
+          child: Text(
+            "Cerrar Sesión",
+            style: TextStyle(fontSize: 15.0),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
+        ),
+        onPressed: () => _cerrarSesion(prefs, context, usuario));
   }
 }
