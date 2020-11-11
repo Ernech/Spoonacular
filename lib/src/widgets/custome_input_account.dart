@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/bloc/register_bloc.dart';
 
 class CustomeInputAccount extends StatelessWidget {
   IconData iconosTextfield;
   String textfieldText;
   String inputName;
+  Stream stream;
+  Function(String) changed;
 
-  CustomeInputAccount(
-      this.inputName,
-      this.iconosTextfield,
-      this.textfieldText); //Correo, icono_persona, dentro del hint
+  CustomeInputAccount(this.inputName, this.iconosTextfield, this.textfieldText,
+      this.stream, this.changed); //Correo, icono_persona, dentro del hint
 
   @override
   Widget build(BuildContext context) {
@@ -34,38 +35,42 @@ class CustomeInputAccount extends StatelessWidget {
           height: 10,
         ),
         Container(
-            margin: EdgeInsets.symmetric(horizontal: 32),
-            padding: EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            decoration: BoxDecoration(
+          margin: EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(
+            horizontal: 30,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(
-                color: Colors.white,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0), //(x,y)
-                  blurRadius: 6.0,
-                ),
-              ],
             ),
-          child: TextField(
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-                iconosTextfield,
+            boxShadow: [
+              BoxShadow(
                 color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
               ),
-              hintText: textfieldText,
-              hintStyle: TextStyle(color: Colors.grey),
-            ),
+            ],
+          ),
+          child: StreamBuilder(
+            stream: stream,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return TextField(
+                onChanged: changed,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    icon: Icon(
+                      iconosTextfield,
+                      color: Colors.grey,
+                    ),
+                    hintText: textfieldText,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    errorText: snapshot.error),
+              );
+            },
           ),
         ),
-
-
       ],
     );
   }

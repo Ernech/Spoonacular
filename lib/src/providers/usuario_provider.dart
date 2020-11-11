@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:spoonacular/src/models/usuario_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
+import 'package:spoonacular/utils/utils.dart' as utils;
 
 class UsuarioProvider {
   final String _fireBaseToken = 'AIzaSyA_ej00DpuzNDqoIhU3PtLye2XkeJ9jpR0';
@@ -52,5 +53,35 @@ class UsuarioProvider {
     print(decodedData);
     resp.statusCode == 200 ? state = true : state = false;
     return state;
+  }
+
+  Future<bool> modificarUsuarioFirebase(UsuarioModel usuario) async {
+    bool state;
+    final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';
+    final resp = await http.post(urlUsuario, body: usuarioModelToJson(usuario));
+    final decodedData = json.decode(resp.body);
+    print(decodedData);
+    resp.statusCode == 200 ? state = true : state = false;
+    return state;
+  }
+
+  Future<UsuarioModel> cargarUsuarioFirebase(String email) async {
+    final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';
+    final resp = await http.get(urlUsuario);
+    final decodedData = json.decode(resp.body);
+    if (decodedData == null) {
+      return null;
+    }
+    if (decodedData['error'] != null) {
+      return null;
+    }
+    final List<UsuarioModel> usuarios = new List<UsuarioModel>();
+    decodedData.forEach((id, usuario) {
+      final prodTemp = usuario.fromJson(usuario);
+      usuario.id = id;
+      usuarios.add(prodTemp);
+    });
+
+    return utils.obtenerUsuario(usuarios, email);
   }
 }

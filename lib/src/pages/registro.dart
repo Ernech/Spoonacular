@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spoonacular/src/bloc/login_bloc.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/usuario_model.dart';
 
@@ -16,16 +15,18 @@ class Registro extends StatefulWidget {
 }
 
 class _RegistroState extends State<Registro> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final usuarioProvider = new UsuarioProvider();
   final spoonacularProvider = new SpoonacularProvider();
   UsuarioBloc usuarioBloc;
   @override
   Widget build(BuildContext context) {
-    final loginBloc = Provider.of(context);
+    final registerBloc = Provider.registerBloc(context);
     final size = MediaQuery.of(context).size;
     usuarioBloc = Provider.usuarioBLoc(context);
     final horizontalPadding = size.width;
     return Scaffold(
+      key: scaffoldKey,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -51,43 +52,41 @@ class _RegistroState extends State<Registro> {
               SizedBox(
                 height: 10,
               ),
-              // //CustomeInput("Usuario", Icons.person, "Nombre de Usuario"),
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     labelText: "Nombre de Usuario",
-              //   ),
-              //   validator: (String val) {
-              //     if (val.isEmpty) {
-              //       return "Ingrese algun texto";
-              //     }
-              //     return null;
-              //   },
-              // ),
-              CustomeInputAccount("Nombre", Icons.person, "Nombre"),
+
+              CustomeInputAccount("Nombre", Icons.person, "Nombre",
+                  registerBloc.usernameStream, registerBloc.changeUsername),
               SizedBox(
                 height: 10,
               ),
               CustomeInputAccount(
-                  "Apellido Paterno", Icons.person, "Apellido Paterno"),
+                  "Apellido Paterno",
+                  Icons.person,
+                  "Apellido Paterno",
+                  registerBloc.apPaternoStream,
+                  registerBloc.changeApPaterno),
               SizedBox(
                 height: 10,
               ),
               CustomeInputAccount(
-                  "Apellido Materno", Icons.person, "Apellido Materno"),
+                  "Apellido Materno",
+                  Icons.person,
+                  "Apellido Materno",
+                  registerBloc.apMaternoStream,
+                  registerBloc.changeApMaterno),
               SizedBox(
                 height: 10,
               ),
               //CustomeInput("Correo", Icons.person, "Correo Electronico"),
-              _crearEmail(loginBloc),
+              _crearEmail(registerBloc),
               SizedBox(
                 height: 10,
               ),
               // CustomeInput("Contraseña", Icons.lock, "Contraseña"),
-              _crearPassword(loginBloc),
+              _crearPassword(registerBloc),
               SizedBox(
                 height: 20,
               ),
-              _crearBoton(loginBloc, usuarioBloc, horizontalPadding),
+              _crearBoton(registerBloc, usuarioBloc, horizontalPadding),
               SizedBox(
                 height: 10,
               ),
@@ -126,7 +125,7 @@ class _RegistroState extends State<Registro> {
     );
   }
 
-  Widget _crearEmail(LoginBloc loginbloc) {
+  Widget _crearEmail(RegisterBloc loginbloc) {
     return Column(
       children: [
         Row(
@@ -189,7 +188,7 @@ class _RegistroState extends State<Registro> {
     );
   }
 
-  Widget _crearPassword(LoginBloc loginbloc) {
+  Widget _crearPassword(RegisterBloc loginbloc) {
     return Column(
       children: [
         Row(
@@ -252,10 +251,10 @@ class _RegistroState extends State<Registro> {
     );
   }
 
-  Widget _crearBoton(
-      LoginBloc loginbloc, UsuarioBloc usuarioBloc, double horizontalPadding) {
+  Widget _crearBoton(RegisterBloc registerBloc, UsuarioBloc usuarioBloc,
+      double horizontalPadding) {
     return StreamBuilder(
-        stream: loginbloc.formValidStream,
+        stream: registerBloc.registerFormValidStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return RaisedButton(
               textColor: Colors.white,
@@ -273,38 +272,54 @@ class _RegistroState extends State<Registro> {
                     horizontal: horizontalPadding / 3, vertical: 15.0),
               ),
               onPressed: snapshot.hasData
-                  ? () => _registrarse(loginbloc, usuarioBloc, context)
+                  ? () => _registrarse(registerBloc, usuarioBloc, context)
                   : null);
         });
   }
 
   _registrarse(
-      LoginBloc bloc, UsuarioBloc usuarioBloc, BuildContext context) async {
+      RegisterBloc bloc, UsuarioBloc usuarioBloc, BuildContext context) async {
     final info = await usuarioProvider.nuevoUsuatio(bloc.email, bloc.password);
 
     if (info['ok']) {
       //  Navigator.pushReplacementNamed(context, '/');
-      _registrarseSpoonacular(bloc.email);
+      _registrarseSpoonacular(
+          bloc.username, bloc.apPaterno, bloc.apMaterno, bloc.email);
     } else {
       mostarAlerta(context, info['mensaje']);
     }
   }
 
-  _registrarseSpoonacular(String email) async {
+  _registrarseSpoonacular(String firstname, String lastNameP, String lastNameM,
+      String email) async {
     final info = await spoonacularProvider.registroSpoonacular(
-        'Andrés', 'Duarte', email);
+        firstname, lastNameP, lastNameM, email);
     if (info['status'] != 200) {
       print('error');
     } else {
-      final usuario = new UsuarioModel(info['firstName'], info['lastName'],
-          info['email'], info['username'], info['hash']);
+      final usuario = new UsuarioModel();
+      usuario.firstName = info['firstName'];
+      usuario.lastNameP = info['lastNameP'];
+      usuario.lastNameM = info['lastNameM'];
+      usuario.email = info['email'];
+      usuario.username = info['username'];
+      usuario.hash = info['hash'];
       _registroUsuarioFirebase(usuario);
     }
   }
 
   _registroUsuarioFirebase(UsuarioModel usuarioModel) {
     usuarioBloc.registrarUsuario(usuarioModel);
-    print('Usuario Registrado');
+    _mostrarSnackBar('Usuario Registrado');
     Navigator.pushReplacementNamed(context, '/');
+  }
+
+  void _mostrarSnackBar(String mensaje) {
+    final snackBar = SnackBar(
+        content: Text(mensaje),
+        duration: Duration(
+          milliseconds: 1500,
+        ));
+    scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

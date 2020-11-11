@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/models/usuario_model.dart';
 import 'package:translator/translator.dart';
 
 String texto = '';
@@ -135,3 +138,47 @@ List<Map<String, String>> nutrientesImportantes = [
         'Los carbohidratos proporcionan el combustible para el sistema nervioso central y la energía para los músculos.'
   }
 ];
+Map<String, dynamic> parseJwt(String token) {
+  final parts = token.split('.');
+  if (parts.length != 3) {
+    throw Exception('invalid token');
+  }
+
+  final payload = _decodeBase64(parts[1]);
+  final payloadMap = json.decode(payload);
+  if (payloadMap is! Map<String, dynamic>) {
+    throw Exception('invalid payload');
+  }
+
+  return payloadMap;
+}
+
+String _decodeBase64(String str) {
+  String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Exception('Illegal base64url string!"');
+  }
+
+  return utf8.decode(base64Url.decode(output));
+}
+
+UsuarioModel obtenerUsuario(List<UsuarioModel> usuarios, String email) {
+  UsuarioModel usuario;
+  for (int i = 0; i < usuarios.length; i++) {
+    if (usuario.email == email) {
+      usuario = usuarios[i];
+      break;
+    }
+  }
+  return usuario;
+}

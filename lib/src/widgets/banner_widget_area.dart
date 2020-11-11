@@ -32,7 +32,6 @@ class BannerWidgetArea extends StatelessWidget {
     // restaurantes.removeAt(65);
     List<Widget> banners = new List<Widget>();
     for (int i = 0; i < restaurantes.length; i++) {
-      print('Nombre ${restaurantes[i].nombre} URL $i - ${restaurantes[i].url}');
       var bannerView = GestureDetector(
         onTap: () {
           print("Container" + i.toString());

@@ -1,7 +1,7 @@
-
 import 'dart:convert';
 
 String usuarioModelToJson(UsuarioModel data) => json.encode(data.toJson());
+
 class Usuarios {
   List<UsuarioModel> items = new List();
   Usuarios();
@@ -18,36 +18,37 @@ class Usuarios {
 }
 
 class UsuarioModel {
+  String id;
   String firstName;
-  String lastName;
+  String lastNameP;
+  String lastNameM;
   String email;
   String username;
   String hash;
   UsuarioModel(
-      this.firstName, this.lastName, this.email, this.username, this.hash);
+      {this.id,
+      this.firstName,
+      this.lastNameP,
+      this.lastNameM,
+      this.email,
+      this.username,
+      this.hash});
 
   UsuarioModel.fromJSONMap(Map<String, String> jsonResponse) {
+    id = jsonResponse['id'];
     username = jsonResponse['username'];
     firstName = jsonResponse['firstName'];
-    lastName = jsonResponse['lastName'];
+    lastNameP = jsonResponse['lastNameP'];
+    lastNameM = jsonResponse['lastNameM'];
     email = jsonResponse['email'];
     hash = jsonResponse['hash'];
-  }
-  UsuarioModel obtenerUsuario(List<UsuarioModel> usuarios, String email) {
-    UsuarioModel usuario;
-    for (int i = 0; i < usuarios.length; i++) {
-      if (usuario.email == email) {
-        usuario = usuarios[i];
-        break;
-      }
-    }
-    return usuario;
   }
 
   Map<String, String> toJson() => {
         'username': username,
         'firstName': firstName,
-        'lastName': lastName,
+        'lastNameP': lastNameP,
+        'lastNameM': lastNameM,
         'email': email,
         'hash': hash
       };

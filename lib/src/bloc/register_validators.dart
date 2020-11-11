@@ -1,9 +1,25 @@
 import 'dart:async';
 
 class RegisterValidators {
-  final validarUsername = StreamTransformer<String, String>.fromHandlers(
+  final validarNombre = StreamTransformer<String, String>.fromHandlers(
       handleData: (username, sink) {
-    if (username.length >= 6) {
+    if (username.length > 0) {
+      sink.add(username);
+    } else {
+      sink.addError('Campo obligatorio');
+    }
+  });
+  final validarApPaterno = StreamTransformer<String, String>.fromHandlers(
+      handleData: (username, sink) {
+    if (username.length > 0) {
+      sink.add(username);
+    } else {
+      sink.addError('Campo obligatorio');
+    }
+  });
+  final validarApMaterno = StreamTransformer<String, String>.fromHandlers(
+      handleData: (username, sink) {
+    if (username.length > 0) {
       sink.add(username);
     } else {
       sink.addError('Campo obligatorio');

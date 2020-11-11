@@ -52,10 +52,14 @@ class SpoonacularProvider {
     return ingredientes.items;
   }
 
-  Future<Map<String, dynamic>> registroSpoonacular(
-      String firstName, String lastName, String email) async {
-    final jsonBody = json
-        .encode({'firstName': firstName, 'lastName': lastName, 'email': email});
+  Future<Map<String, dynamic>> registroSpoonacular(String firstName,
+      String lastNameP, String lastNameM, String email) async {
+    final jsonBody = json.encode({
+      'firstName': firstName,
+      'lastNameP': lastNameP,
+      'lastNameM': lastNameM,
+      'email': email
+    });
     final urlEndpoint = Uri.https(_url, 'users/connect', {'apiKey': _apiKey});
     final resp = await http.post(urlEndpoint,
         headers: {'Content-type': 'application/json'}, body: jsonBody);
@@ -67,7 +71,8 @@ class SpoonacularProvider {
       'status': resp.statusCode,
       'username': decodedData['username'],
       'firstName': firstName,
-      'lastName': lastName,
+      'lastNameP': lastNameP,
+      'lastNameM': lastNameM,
       'email': email,
       'hash': decodedData['hash']
     };
