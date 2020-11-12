@@ -47,9 +47,9 @@ class RestauranteMenuPage extends StatelessWidget {
                 height: 5,
               ),
               TituloCard("Platos principales", primaryBlack),
-              _bannerMenu(spoonacularBloc, arguments),
+              _bannerMenu(spoonacularBloc, arguments, 1),
               TituloCard("Otros", primaryBlack),
-              _bannerMenu(spoonacularBloc, arguments),
+              _bannerMenu(spoonacularBloc, arguments, 2),
             ],
           ),
         ),
@@ -57,8 +57,8 @@ class RestauranteMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _bannerMenu(SpoonacularBloc bloc, String arguments) {
-    bloc.cargarMenuItems(arguments, false);
+  Widget _bannerMenu(SpoonacularBloc bloc, String arguments, int offset) {
+    bloc.cargarMenuItems(arguments, false, offset);
     return StreamBuilder(
       stream: bloc.menuItemsStream,
       initialData: null,

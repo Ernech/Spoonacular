@@ -19,6 +19,7 @@ class CuentaPage extends StatefulWidget {
 class _CuentaPageState extends State<CuentaPage> {
   final prefs = new PreferenciasUsuario();
   final formKey = GlobalKey<FormState>();
+  String npass;
   UsuarioModel usuario = new UsuarioModel();
   String firstName, lastNameP, lastNameM, email;
   final usuarioProvider = new UsuarioProvider();
@@ -51,14 +52,17 @@ class _CuentaPageState extends State<CuentaPage> {
                     return CircularProgressIndicator();
                   } else {
                     usuario = snapshot.data;
-                    List<String> inicial = usuario.firstName.split('');
+                    firstName = usuario.firstName;
+                    lastNameP = usuario.lastNameP;
+                    lastNameM = usuario.lastNameM;
+                    List<String> inicial = firstName.split('');
                     return Form(
                       key: formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconUser(inicial[0],
-                              '${usuario.firstName} ${usuario.lastNameP} ${usuario.lastNameM}'),
+                          IconUser(
+                              inicial[0], '$firstName $lastNameP $lastNameM'),
                           SizedBox(
                             height: 5,
                           ),
@@ -385,7 +389,7 @@ class _CuentaPageState extends State<CuentaPage> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Contraseña",
+                "Nueva Contraseña (Opcional)",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 16,
@@ -418,13 +422,15 @@ class _CuentaPageState extends State<CuentaPage> {
             ),
             child: TextFormField(
               obscureText: true,
+              onChanged: (value) => npass = value,
+              onSaved: (value) => npass = value,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 icon: Icon(
                   Icons.lock,
                   color: Colors.grey,
                 ),
-                hintText: "Contraseña",
+                hintText: "Nueva Contraseña",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             )),
@@ -450,15 +456,45 @@ class _CuentaPageState extends State<CuentaPage> {
         onPressed: () {
           usuarioBloc.modificarUsuario(usuario);
           _cambiarCorreo(idToken);
-          utils.mostarAlerta(
-              context, 'Cambios guardados', 'Usuario Modificado');
+          if (npass == null || npass.length == 0 || npass == '') {
+            utils.mostarAlerta(
+                context, 'Cambios guardados', 'Usuario Modificado');
+          } else {
+            if (npass.length < 6) {
+              utils.mostarAlerta(context, 'Error',
+                  'La nueva contraseña debe contener al menos 6 caracteres');
+            } else {
+              _cambiarPassword(idToken);
+              utils.mostarAlerta(
+                  context, 'Cambios guardados', 'Usuario Modificado');
+            }
+            setState(() {
+              firstName = usuario.firstName;
+              lastNameP = usuario.lastNameP;
+              lastNameM = usuario.lastNameM;
+            });
+          }
         });
   }
 
   _cambiarCorreo(String idToken) async {
     Map<String, dynamic> result =
         await usuarioProvider.cambiarCorreo(idToken, usuario.email);
-    prefs.token = result['idToken'];
+    if (result['ok']) {
+      prefs.token = result['idToken'];
+    } else {
+      utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
+    }
+  }
+
+  _cambiarPassword(String idToken) async {
+    Map<String, dynamic> result =
+        await usuarioProvider.cambiarPassword(idToken, npass);
+    if (result['ok']) {
+      prefs.token = result['idToken'];
+    } else {
+      utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
+    }
   }
 
   Widget _crearBotonCerrarSesion(

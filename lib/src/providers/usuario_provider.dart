@@ -67,6 +67,28 @@ class UsuarioProvider {
     }
   }
 
+  Future<Map<String, dynamic>> cambiarPassword(
+      String idToken, String npass) async {
+    final authData = {
+      'idToken': idToken,
+      'password': npass,
+      'returnSecureToken': true
+    };
+    final resp = await http.post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:update?key=$_fireBaseToken',
+        headers: {'Content-type': 'application/json'},
+        body: jsonEncode(authData));
+    Map<String, dynamic> decodeResp = jsonDecode(resp.body);
+    print('Respuesta: $decodeResp');
+    if (decodeResp.containsKey('idToken')) {
+      _prefs.token = decodeResp['idToken'];
+      print('NUEVO TOKEN PASS: ${decodeResp['idToken']}');
+      return {'ok': true, 'token': decodeResp['idToken']};
+    } else {
+      return {'ok': false, 'mensaje': decodeResp['error']['message']};
+    }
+  }
+
   Future<bool> registrarUsuarioFirebase(UsuarioModel usuario) async {
     bool state;
     final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';

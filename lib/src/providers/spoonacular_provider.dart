@@ -12,7 +12,8 @@ class SpoonacularProvider {
   String _apiKey = '0409316eb2644d86a23e7fdce0bdeb81';
   String _url = 'api.spoonacular.com';
 
-  Future<List<MenuItem>> getMenuItems(String query, bool traducir) async {
+  Future<List<MenuItem>> getMenuItems(
+      String query, bool traducir, int offset) async {
     String texto = '';
     if (!traducir) {
       texto = query;
@@ -22,8 +23,8 @@ class SpoonacularProvider {
       texto = translation.toString();
     }
 
-    final urlEndpoint = Uri.https(
-        _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
+    final urlEndpoint = Uri.https(_url, 'food/menuItems/search',
+        {'query': texto, 'apiKey': _apiKey, 'offset': offset.toString()});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
     print(decodedData);
