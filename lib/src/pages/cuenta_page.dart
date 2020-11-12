@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/usuario_model.dart';
+import 'package:spoonacular/src/providers/usuario_provider.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
-import 'package:spoonacular/src/widgets/custom-button.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/src/widgets/widget_icon_user.dart';
@@ -18,14 +18,15 @@ class CuentaPage extends StatefulWidget {
 
 class _CuentaPageState extends State<CuentaPage> {
   final prefs = new PreferenciasUsuario();
-
+  final formKey = GlobalKey<FormState>();
+  UsuarioModel usuario = new UsuarioModel();
   String firstName, lastNameP, lastNameM, email;
+  final usuarioProvider = new UsuarioProvider();
   List _tiposDietas = ['Vegetariano', 'Vegano', 'No Gluten', 'Omnivoro'];
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> mapToken = utils.parseJwt(prefs.token);
     final usuarioBloc = Provider.usuarioBLoc(context);
-    usuarioBloc.cargarUsuarios(mapToken['firebase']['identities']['email'][0]);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -41,58 +42,58 @@ class _CuentaPageState extends State<CuentaPage> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: StreamBuilder(
-                stream: usuarioBloc.usuarioStream,
+            child: FutureBuilder(
+                future: usuarioProvider.cargarUsuarioFirebase(
+                    mapToken['firebase']['identities']['email'][0]),
                 initialData: null,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator();
                   } else {
-                    UsuarioModel usuario = snapshot.data;
-                    firstName = usuario.firstName;
-                    lastNameP = usuario.lastNameP;
-                    lastNameM = usuario.lastNameM;
-                    email = usuario.email;
-
+                    usuario = snapshot.data;
                     List<String> inicial = usuario.firstName.split('');
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconUser(inicial[0],
-                            '${usuario.firstName} ${usuario.lastNameP} ${usuario.lastNameM}'),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        LineCirculeDetail(),
-                        _crearNombreUsuario(usuario, firstName),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _crearApPaterno(usuario, lastNameP),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _crearApMaterno(usuario, lastNameM),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _crearCorreo(usuario, email),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _crearPassword(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomButton("GUARDAR", usuario),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _crearBotonCerrarSesion(prefs, context, usuario)
-                      ],
+                    return Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconUser(inicial[0],
+                              '${usuario.firstName} ${usuario.lastNameP} ${usuario.lastNameM}'),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          LineCirculeDetail(),
+                          _crearNombreUsuario(usuario),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _crearApPaterno(usuario),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _crearApMaterno(usuario),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _crearCorreo(usuario),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _crearPassword(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _crearBotonGuardarCambios(
+                              usuarioBloc, usuario, prefs.token),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _crearBotonCerrarSesion(prefs, context, usuario)
+                        ],
+                      ),
                     );
                   }
                 }),
@@ -104,15 +105,12 @@ class _CuentaPageState extends State<CuentaPage> {
 
   _cerrarSesion(
       PreferenciasUsuario prefs, BuildContext context, UsuarioModel usuario) {
-    Navigator.pushReplacementNamed(context, '/').then((value) {
-      setState(() {
-        usuario = null;
-      });
-      prefs.token = null;
-    });
+    Navigator.pushReplacementNamed(context, '/');
+    usuario = null;
+    prefs.token = null;
   }
 
-  Widget _crearNombreUsuario(UsuarioModel usuario, String init) {
+  Widget _crearNombreUsuario(UsuarioModel usuario) {
     return Column(
       children: [
         Row(
@@ -153,8 +151,9 @@ class _CuentaPageState extends State<CuentaPage> {
               ],
             ),
             child: TextFormField(
-              initialValue: init,
+              initialValue: usuario.firstName,
               onSaved: (value) => usuario.firstName = value,
+              onChanged: (value) => usuario.firstName = value,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 icon: Icon(
@@ -176,7 +175,7 @@ class _CuentaPageState extends State<CuentaPage> {
     );
   }
 
-  Widget _crearApPaterno(UsuarioModel usuario, String init) {
+  Widget _crearApPaterno(UsuarioModel usuario) {
     return Column(
       children: [
         Row(
@@ -217,7 +216,9 @@ class _CuentaPageState extends State<CuentaPage> {
             ],
           ),
           child: TextFormField(
-            initialValue: init,
+            initialValue: usuario.lastNameP,
+            onSaved: (value) => usuario.lastNameP = value,
+            onChanged: (value) => usuario.lastNameP = value,
             decoration: InputDecoration(
               border: InputBorder.none,
               icon: Icon(
@@ -240,7 +241,7 @@ class _CuentaPageState extends State<CuentaPage> {
     );
   }
 
-  Widget _crearApMaterno(UsuarioModel usuario, String init) {
+  Widget _crearApMaterno(UsuarioModel usuario) {
     return Column(
       children: [
         Row(
@@ -281,7 +282,9 @@ class _CuentaPageState extends State<CuentaPage> {
               ],
             ),
             child: TextFormField(
-              initialValue: init,
+              initialValue: usuario.lastNameM,
+              onSaved: (value) => usuario.lastNameM = value,
+              onChanged: (value) => usuario.lastNameM = value,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 icon: Icon(
@@ -303,7 +306,7 @@ class _CuentaPageState extends State<CuentaPage> {
     );
   }
 
-  Widget _crearCorreo(UsuarioModel usuario, String init) {
+  Widget _crearCorreo(UsuarioModel usuario) {
     return Column(
       children: [
         Row(
@@ -344,7 +347,9 @@ class _CuentaPageState extends State<CuentaPage> {
               ],
             ),
             child: TextFormField(
-              initialValue: init,
+              onSaved: (value) => usuario.email = value,
+              onChanged: (value) => usuario.email = value,
+              initialValue: usuario.email,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -355,6 +360,17 @@ class _CuentaPageState extends State<CuentaPage> {
                 hintText: "Correo Electrónico",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
+              validator: (value) {
+                Pattern pattern =
+                    r'^[a-zA-Z0-9.!#$%&+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)$';
+                //Pattern pattern = r'^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$';
+                RegExp regExp = new RegExp(pattern);
+                if (regExp.hasMatch(value)) {
+                  return null;
+                } else {
+                  return 'El email no es correcto';
+                }
+              },
             )),
       ],
     );
@@ -414,6 +430,35 @@ class _CuentaPageState extends State<CuentaPage> {
             )),
       ],
     );
+  }
+
+  Widget _crearBotonGuardarCambios(
+      UsuarioBloc usuarioBloc, UsuarioModel usuarion, String idToken) {
+    return RaisedButton(
+        textColor: Colors.white,
+        padding: EdgeInsets.all(0.0),
+        shape: StadiumBorder(),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
+          child: Text(
+            "GUARDAR",
+            style: TextStyle(fontSize: 15.0),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
+        ),
+        onPressed: () {
+          usuarioBloc.modificarUsuario(usuario);
+          _cambiarCorreo(idToken);
+          utils.mostarAlerta(
+              context, 'Cambios guardados', 'Usuario Modificado');
+        });
+  }
+
+  _cambiarCorreo(String idToken) async {
+    Map<String, dynamic> result =
+        await usuarioProvider.cambiarCorreo(idToken, usuario.email);
+    prefs.token = result['idToken'];
   }
 
   Widget _crearBotonCerrarSesion(

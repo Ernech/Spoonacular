@@ -28,7 +28,7 @@ class UsuarioModel {
   String username;
   String hash;
   UsuarioModel(
-      {this.id,
+      {this.id = '',
       this.firstName,
       this.lastNameP,
       this.lastNameM,

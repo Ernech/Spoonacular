@@ -286,7 +286,7 @@ class _RegistroState extends State<Registro> {
       _registrarseSpoonacular(
           bloc.username, bloc.apPaterno, bloc.apMaterno, bloc.email);
     } else {
-      mostarAlerta(context, info['mensaje']);
+      mostarAlerta(context, "Error al registrase", info['mensaje']);
     }
   }
 

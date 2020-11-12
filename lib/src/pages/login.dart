@@ -129,11 +129,9 @@ class _LoginState extends State<Login> {
   _ingresar(LoginBloc bloc, BuildContext context) async {
     Map info = await usuarioProvider.login(bloc.email, bloc.password);
     if (info['ok']) {
-      Navigator.pushReplacementNamed(context, '/home').then((value) {
-        setState(() {});
-      });
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
-      mostarAlerta(context, info['mensaje']);
+      mostarAlerta(context, 'Información incorrecta', info['mensaje']);
     }
 
     // Navigator.pushReplacementNamed(context, 'home');

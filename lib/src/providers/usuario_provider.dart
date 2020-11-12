@@ -45,6 +45,28 @@ class UsuarioProvider {
     }
   }
 
+  Future<Map<String, dynamic>> cambiarCorreo(
+      String idToken, String newEmail) async {
+    final authData = {
+      'idToken': idToken,
+      'email': newEmail,
+      'returnSecureToken': true
+    };
+    final resp = await http.post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:update?key=$_fireBaseToken',
+        headers: {'Content-type': 'application/json'},
+        body: jsonEncode(authData));
+    Map<String, dynamic> decodeResp = jsonDecode(resp.body);
+    print('Respuesta: $decodeResp');
+    if (decodeResp.containsKey('idToken')) {
+      _prefs.token = decodeResp['idToken'];
+      print('NUEVO TOKEN: ${decodeResp['idToken']}');
+      return {'ok': true, 'token': decodeResp['idToken']};
+    } else {
+      return {'ok': false, 'mensaje': decodeResp['error']['message']};
+    }
+  }
+
   Future<bool> registrarUsuarioFirebase(UsuarioModel usuario) async {
     bool state;
     final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';
@@ -57,8 +79,10 @@ class UsuarioProvider {
 
   Future<bool> modificarUsuarioFirebase(UsuarioModel usuario) async {
     bool state;
-    final urlUsuario = 'https://sql-demos-f513d.firebaseio.com/usuarios.json';
-    final resp = await http.post(urlUsuario, body: usuarioModelToJson(usuario));
+    print('Usuario: ${usuario.id}');
+    final urlUsuario =
+        'https://sql-demos-f513d.firebaseio.com/usuarios/${usuario.id}.json';
+    final resp = await http.put(urlUsuario, body: usuarioModelToJson(usuario));
     final decodedData = json.decode(resp.body);
     print(decodedData);
     resp.statusCode == 200 ? state = true : state = false;
@@ -78,8 +102,10 @@ class UsuarioProvider {
     }
     UsuarioModel usuarioTemp;
     decodedData.forEach((id, usuario) {
+      print("ID: $id");
       if (usuario['email'] == email) {
         usuarioTemp = UsuarioModel.fromJSONMap(usuario);
+        usuarioTemp.id = id;
       }
     });
     return usuarioTemp;

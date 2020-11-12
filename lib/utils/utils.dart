@@ -29,12 +29,12 @@ Future<String> _traducirEsToEn(String text) async {
   texto = translation.toString();
 }
 
-void mostarAlerta(BuildContext context, String mensaje) {
+void mostarAlerta(BuildContext context, String titulo, String mensaje) {
   showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Información incorrecta'),
+          title: Text(titulo),
           content: Text(mensaje),
           actions: [
             FlatButton(
