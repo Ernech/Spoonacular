@@ -60,25 +60,14 @@ class NutrienteWidget extends StatelessWidget {
                 top: 25,
                 child: Container(
                   width: 80,
-                  child: FutureBuilder(
-                    future: utils.enToEs(nutriente),
-                    initialData: null,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        String nutrienteTraducido = snapshot.data;
-                        return Text(
-                          nutrienteTraducido,
-                          style: TextStyle(
-                            color: primaryWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
+                  child: Text(
+                    nutriente,
+                    style: TextStyle(
+                      color: primaryWhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
