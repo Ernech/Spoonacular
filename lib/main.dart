@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: (prefs.token == null || prefs.token == '') ? '/' : '/home',
       routes: {
         '/': (BuildContext context) => Login(),
         '/registro': (BuildContext context) => Registro(),

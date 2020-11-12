@@ -82,11 +82,7 @@ class BannerMenu extends StatelessWidget {
                 width: 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
-                  child: Image.network(
-                    menuItems[i].image,
-                    height: 100.0,
-                    width: 100.0,
-                  ),
+                  child: _crearImagen(menuItems[i].image),
                 )
 
                 // FadeInImage(
@@ -125,23 +121,13 @@ class BannerMenu extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(maxWidth: 150, minHeight: 46),
-                      child: FutureBuilder(
-                        future: utils.enToEs(menuItems[i].title),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.hasData) {
-                            return Text(
-                              snapshot.data,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: primaryGreen,
-                              ),
-                              textAlign: TextAlign.left,
-                            );
-                          } else {
-                            return CircularProgressIndicator();
-                          }
-                        },
+                      child: Text(
+                        menuItems[i].title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: primaryGreen,
+                        ),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                   ],
@@ -200,5 +186,21 @@ class BannerMenu extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _crearImagen(String url) {
+    if (url == null || url == '') {
+      return Image(
+        image: AssetImage('images/no-image.png'),
+        height: 100.0,
+        width: 100.0,
+      );
+    } else {
+      return Image.network(
+        url,
+        height: 100.0,
+        width: 100.0,
+      );
+    }
   }
 }
