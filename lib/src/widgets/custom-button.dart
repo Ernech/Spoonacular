@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/models/usuario_model.dart';
+import 'package:spoonacular/utils/utils.dart' as utils;
 
 class CustomButton extends StatelessWidget {
   String buttonText;
-  CustomButton(
-    this.buttonText,
-  );
+  UsuarioModel usuario;
+  UsuarioBloc usuarioBloc;
+
+  CustomButton(this.buttonText, this.usuario, this.usuarioBloc);
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
@@ -21,6 +25,10 @@ class CustomButton extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
         ),
-        onPressed: () {});
+        onPressed: () {
+          usuarioBloc.modificarUsuario(usuario);
+          utils.mostarAlerta(
+              context, 'Cambios guardatos', 'Usuario Modificado');
+        });
   }
 }

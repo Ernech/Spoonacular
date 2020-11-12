@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
-import 'package:spoonacular/src/models/menu_item_detail_model.dart';
-import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/pages/estilo-vida_page.dart';
 import 'package:spoonacular/src/pages/home_page.dart';
 import 'package:spoonacular/src/pages/ingredientes_page.dart';
 import 'package:spoonacular/src/pages/login.dart';
 import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
+import 'package:intl/intl.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
 void main() async {
@@ -21,8 +19,10 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+    //print(formatter.format(new DateTime.fromMillisecondsSinceEpoch(myvalue*1000)));
     final prefs = PreferenciasUsuario();
     if (prefs.token != null) {
       print(prefs.token);
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: (prefs.token == null || prefs.token == '') ? '/' : '/home',
       routes: {
         '/': (BuildContext context) => Login(),
         '/registro': (BuildContext context) => Registro(),
@@ -46,143 +46,6 @@ class MyApp extends StatelessWidget {
     );
     return Provider(
       child: mapp,
-    );
-  }
-}
-
-var bannerItems = ["a", "b", "c", "d", "e", "f"];
-var bannerImages = [
-  "images/aguacate.jpg",
-  "images/leckerbrot.jpg",
-  "images/lupito.jpg",
-  "images/manadeoscileos.jpg",
-  "images/ventanita.jpg",
-  "images/wellness.jpg"
-];
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
-        height: screenHeight,
-        width: screenWidth,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(36),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Nutrana",
-                        style: TextStyle(fontSize: 30, fontFamily: "Pacifico"),
-                      ),
-                    ],
-                  ),
-                ),
-                BannerWidgetArea(),
-                _menuItemsTest(),
-                _menuItemDetail(424571)
-              ],
-            ),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _menuItemsTest,
-        child: Icon(Icons.language),
-      ),
-    );
-  }
-
-  Widget _menuItemsTest() {
-    SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
-    return FutureBuilder(
-      future: spoonacularProvider.getMenuItems('tomate', true),
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == null) {
-          return CircularProgressIndicator();
-        } else {
-          List<MenuItem> items = snapshot.data;
-          return FutureBuilder(
-            future: utils.enToEs(items[1].title),
-            initialData: null,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                String texto = snapshot.data;
-                print('Traducido $texto');
-                return Container();
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          );
-        }
-      },
-    );
-  }
-}
-
-Widget _menuItemDetail(int id) {
-  SpoonacularProvider spoonacularProvider = new SpoonacularProvider();
-  return FutureBuilder(
-    future: spoonacularProvider.getMenuItemDetail(id),
-    initialData: null,
-    builder: (BuildContext context, AsyncSnapshot<MenuItemDetail> snapshot) {
-      if (snapshot.hasData) {
-        MenuItemDetail menuItemDetail = snapshot.data;
-        print(menuItemDetail);
-        List<Nutrients> nutrients = menuItemDetail
-            .obtenerNutrientes(menuItemDetail.nutrition['nutrients']);
-        print('NUTRIENTES ${nutrients[1].amount}');
-        final caloricBreakdown = menuItemDetail.obtenerCaloricBreakdown(
-            menuItemDetail.nutrition['caloricBreakdown']);
-        print('CALORIC ${caloricBreakdown.percentCarbs}');
-        double calories = menuItemDetail.nutrition['calories'];
-        print('calories $calories');
-        return Container();
-      } else {
-        return CircularProgressIndicator();
-      }
-    },
-  );
-}
-
-class BannerWidgetArea extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    List<Widget> banners = new List<Widget>();
-    for (int i = 0; i < bannerItems.length; i++) {
-      var bannerView = Container(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              bannerImages[i],
-              fit: BoxFit.cover,
-            ),
-          ],
-        ),
-      );
-      banners.add(bannerView);
-    }
-    PageController controller = PageController(initialPage: 0);
-    return Container(
-      width: screenWidth,
-      height: screenWidth * 9 / 16,
-      child: PageView(
-        controller: controller,
-        scrollDirection: Axis.horizontal,
-        children: banners,
-      ),
     );
   }
 }

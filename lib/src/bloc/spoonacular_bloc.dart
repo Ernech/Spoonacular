@@ -6,6 +6,7 @@ import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 
 class SpoonacularBloc {
   final _menuItemController = new BehaviorSubject<List<MenuItem>>();
+  final _menuItemControllerSec = new BehaviorSubject<List<MenuItem>>();
   final _menuItemDetailController = new BehaviorSubject<MenuItemDetail>();
   final _ingredientesController = new BehaviorSubject<List<Ingredient>>();
   final _cargandoController = new BehaviorSubject<bool>();
@@ -13,6 +14,7 @@ class SpoonacularBloc {
   final _spoonacularProvider = new SpoonacularProvider();
 
   Stream<List<MenuItem>> get menuItemsStream => _menuItemController.stream;
+  Stream<List<MenuItem>> get menuItemsStreamSec => _menuItemController.stream;
   Stream<MenuItemDetail> get menuItemDetailStream =>
       _menuItemDetailController.stream;
   Stream<List<Ingredient>> get ingredientsStream =>
@@ -22,6 +24,12 @@ class SpoonacularBloc {
   void cargarMenuItems(String query, bool traducir) async {
     final menuItems = await _spoonacularProvider.getMenuItems(query, traducir);
     _menuItemController.sink.add(menuItems);
+  }
+
+  void cargarMenuItemsSecu(String query, bool traducir, int offset) async {
+    final menuItems =
+        await _spoonacularProvider.getMenuItemsSecu(query, traducir, offset);
+    _menuItemControllerSec.sink.add(menuItems);
   }
 
   void cargarMenuItemDetail(int id) async {
@@ -36,6 +44,7 @@ class SpoonacularBloc {
 
   dipose() {
     _menuItemController?.close();
+    _menuItemControllerSec?.close();
     _menuItemDetailController?.close();
     _ingredientesController?.close();
     _cargandoController?.close();

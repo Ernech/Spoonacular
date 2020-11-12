@@ -3,7 +3,6 @@ import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/ingredients_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
-import 'package:spoonacular/src/widgets/banner_alimentos-permitidos.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/nutriente_widget.dart';
@@ -56,13 +55,8 @@ class IngredientesPage extends StatelessWidget {
                 ),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(100.0),
-                child: Image.network(
-                  menuItem.image,
-                  height: 100.0,
-                  width: 100.0,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: _crearImagen(menuItem.image)),
             ),
             SizedBox(
               height: 50,
@@ -135,7 +129,11 @@ class IngredientesPage extends StatelessWidget {
                                     return SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
-                                        children: _crearNutrientes(nutrientes),
+                                        children: (nutrientes != null ||
+                                                nutrientes.length > 0)
+                                            ? _crearNutrientes(nutrientes)
+                                            : _chipNoDisponible(
+                                                'Nutrientes no disponibles'),
                                       ),
                                     );
                                   }
@@ -192,6 +190,16 @@ class IngredientesPage extends StatelessWidget {
     return tarjetasNutrientes;
   }
 
+  Widget _chipNoDisponible(String text) {
+    return Chip(
+      label: Text(
+        text,
+        style: TextStyle(color: primaryWhite, fontSize: 12),
+      ),
+      backgroundColor: primaryBrown,
+    );
+  }
+
   Widget _crearNutrientesImportantes(SpoonacularBloc spoonacularBloc) {
     return StreamBuilder(
       stream: spoonacularBloc.menuItemDetailStream,
@@ -232,5 +240,21 @@ class IngredientesPage extends StatelessWidget {
         }
       },
     );
+  }
+
+  Widget _crearImagen(String url) {
+    if (url == null || url == '') {
+      return Image(
+        image: AssetImage('images/no-image.png'),
+        height: 100.0,
+        width: 100.0,
+      );
+    } else {
+      return Image.network(
+        url,
+        height: 100.0,
+        width: 100.0,
+      );
+    }
   }
 }

@@ -27,7 +27,9 @@ class BannerWidgetArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-
+    // restaurantes.removeAt(7);
+    // restaurantes.removeAt(26);
+    // restaurantes.removeAt(65);
     List<Widget> banners = new List<Widget>();
     for (int i = 0; i < restaurantes.length; i++) {
       var bannerView = GestureDetector(
@@ -52,7 +54,7 @@ class BannerWidgetArea extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(restaurantes[i].url.trim()
-                        // 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Burger_King_logo.svg/1012px-Burger_King_logo.svg.png'
+                        //'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Pizza_73_Logo.svg/1200px-Pizza_73_Logo.svg.png'
                         ),
                     fit: BoxFit.cover,
                   ),

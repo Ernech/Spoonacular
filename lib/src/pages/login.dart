@@ -7,7 +7,12 @@ import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/utils/utils.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final usuarioProvider = new UsuarioProvider();
 
   @override
@@ -126,7 +131,7 @@ class Login extends StatelessWidget {
     if (info['ok']) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
-      mostarAlerta(context, info['mensaje']);
+      mostarAlerta(context, 'Información incorrecta', info['mensaje']);
     }
 
     // Navigator.pushReplacementNamed(context, 'home');

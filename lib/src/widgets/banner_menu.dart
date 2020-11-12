@@ -59,7 +59,7 @@ class BannerMenu extends StatelessWidget {
   Widget _crearTarjeta(BuildContext context, int i) {
     return Container(
       margin: EdgeInsets.only(right: 20, top: 10, bottom: 10),
-      height: 235,
+      height: 265,
       width: 180,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -82,11 +82,7 @@ class BannerMenu extends StatelessWidget {
                 width: 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
-                  child: Image.network(
-                    menuItems[i].image,
-                    height: 100.0,
-                    width: 100.0,
-                  ),
+                  child: _crearImagen(menuItems[i].image),
                 )
 
                 // FadeInImage(
@@ -115,7 +111,7 @@ class BannerMenu extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 120,
+            top: 140,
             left: 16,
             width: 150,
             child: Column(
@@ -125,74 +121,58 @@ class BannerMenu extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(maxWidth: 150, minHeight: 46),
-                      child: FutureBuilder(
-                        future: utils.enToEs(menuItems[i].title),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.hasData) {
-                            return Text(
-                              snapshot.data,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: primaryGreen,
-                              ),
-                              textAlign: TextAlign.left,
-                            );
-                          } else {
-                            return CircularProgressIndicator();
-                          }
-                        },
+                      child: Text(
+                        menuItems[i].title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: primaryGreen,
+                        ),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                   ],
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     // Chip(
-                //     //   label: Text(
-                //     //     'Vegetariano',
-                //     //     style: TextStyle(color: primaryWhite, fontSize: 12),
-                //     //   ),
-                //     //   backgroundColor: primaryBrown,
-                //     // ),
-                //   ],
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    RaisedButton(
-                      textColor: Colors.white,
-                      color: primaryGreenLight,
-                      elevation: 5.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        print("Container" + i.toString());
-                        Navigator.pushNamed(context, '/ingredientes',
-                            arguments: <String, dynamic>{
-                              'id': menuItems[i].id,
-                              'menuItem': menuItems[i]
-                            });
-                      },
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/ingredientes',
-                              arguments: <String, dynamic>{
-                                'id': menuItems[i].id,
-                                'menuItem': menuItems[i]
-                              });
-                        },
-                        child: Text(
-                          'Ver',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
+
+              ],
+            ),
+          ),
+          Positioned(
+            top: 210,
+            right: 16,
+            width: 150,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                RaisedButton(
+                  textColor: Colors.white,
+                  color: primaryGreenLight,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
                     ),
-                  ],
+                  ),
+                  onPressed: () {
+                    print("Container" + i.toString());
+                    Navigator.pushNamed(context, '/ingredientes',
+                        arguments: <String, dynamic>{
+                          'id': menuItems[i].id,
+                          'menuItem': menuItems[i]
+                        });
+                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/ingredientes',
+                          arguments: <String, dynamic>{
+                            'id': menuItems[i].id,
+                            'menuItem': menuItems[i]
+                          });
+                    },
+                    child: Text(
+                      'Ver',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -200,5 +180,21 @@ class BannerMenu extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _crearImagen(String url) {
+    if (url == null || url == '') {
+      return Image(
+        image: AssetImage('images/no-image.png'),
+        height: 100.0,
+        width: 100.0,
+      );
+    } else {
+      return Image.network(
+        url,
+        height: 100.0,
+        width: 100.0,
+      );
+    }
   }
 }

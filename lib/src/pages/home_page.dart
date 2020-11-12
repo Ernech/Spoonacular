@@ -12,7 +12,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _cargarPagina(_currentIndex),
+      body: _cargarPagina(_currentIndex), //
       bottomNavigationBar: _crearBottomNavigationBar(),
     );
   }

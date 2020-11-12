@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/models/usuario_model.dart';
 import 'package:translator/translator.dart';
 
 String texto = '';
@@ -26,12 +29,12 @@ Future<String> _traducirEsToEn(String text) async {
   texto = translation.toString();
 }
 
-void mostarAlerta(BuildContext context, String mensaje) {
+void mostarAlerta(BuildContext context, String titulo, String mensaje) {
   showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Información incorrecta'),
+          title: Text(titulo),
           content: Text(mensaje),
           actions: [
             FlatButton(
@@ -135,3 +138,77 @@ List<Map<String, String>> nutrientesImportantes = [
         'Los carbohidratos proporcionan el combustible para el sistema nervioso central y la energía para los músculos.'
   }
 ];
+Map<String, dynamic> parseJwt(String token) {
+  final parts = token.split('.');
+  if (parts.length != 3) {
+    throw Exception('invalid token');
+  }
+
+  final payload = _decodeBase64(parts[1]);
+  final payloadMap = json.decode(payload);
+  if (payloadMap is! Map<String, dynamic>) {
+    throw Exception('invalid payload');
+  }
+
+  return payloadMap;
+}
+
+String _decodeBase64(String str) {
+  String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Exception('Illegal base64url string!"');
+  }
+
+  return utf8.decode(base64Url.decode(output));
+}
+
+UsuarioModel obtenerUsuario(List<UsuarioModel> usuarios, String email) {
+  UsuarioModel usuario;
+  for (int i = 0; i < usuarios.length; i++) {
+    if (usuario.email == email) {
+      usuario = usuarios[i];
+      break;
+    }
+  }
+  return usuario;
+}
+
+bool validarDatosUsuario(String username, String lastNameP, String lastNameM) {
+  if ((username.length == 0 || username == '') ||
+      (lastNameP.length == 0 || lastNameP == '') ||
+      (lastNameM.length == 0 || lastNameM == '')) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool validarEmail(String email) {
+  Pattern pattern =
+      r'^[a-zA-Z0-9.!#$%&+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)$';
+  //Pattern pattern = r'^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$';
+  RegExp regExp = new RegExp(pattern);
+  if (regExp.hasMatch(email)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool validarPassword(String pass) {
+  if (pass.length > 1 && pass.length < 6) {
+    return false;
+  } else {
+    return true;
+  }
+}
