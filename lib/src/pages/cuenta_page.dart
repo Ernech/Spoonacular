@@ -19,7 +19,7 @@ class _CuentaPageState extends State<CuentaPage> {
   final prefs = new PreferenciasUsuario();
   final formKey = GlobalKey<FormState>();
   bool guardando = false;
-  String npass, initEmail;
+  String npass = '', initEmail;
   UsuarioModel usuario = new UsuarioModel();
   String firstName, lastNameP, lastNameM, email;
   final usuarioProvider = new UsuarioProvider();
