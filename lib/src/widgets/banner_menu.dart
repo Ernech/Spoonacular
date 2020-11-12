@@ -59,7 +59,7 @@ class BannerMenu extends StatelessWidget {
   Widget _crearTarjeta(BuildContext context, int i) {
     return Container(
       margin: EdgeInsets.only(right: 20, top: 10, bottom: 10),
-      height: 235,
+      height: 255,
       width: 180,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -111,7 +111,7 @@ class BannerMenu extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 120,
+            top: 140,
             left: 16,
             width: 150,
             child: Column(
@@ -132,18 +132,6 @@ class BannerMenu extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     // Chip(
-                //     //   label: Text(
-                //     //     'Vegetariano',
-                //     //     style: TextStyle(color: primaryWhite, fontSize: 12),
-                //     //   ),
-                //     //   backgroundColor: primaryBrown,
-                //     // ),
-                //   ],
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
