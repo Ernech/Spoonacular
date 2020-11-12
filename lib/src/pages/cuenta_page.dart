@@ -127,7 +127,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 "Usuario",
                 style: TextStyle(
                     color: primaryGreen,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -185,7 +185,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 "Apellido Paterno",
                 style: TextStyle(
                     color: primaryGreen,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -244,7 +244,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 "Apellido Materno",
                 style: TextStyle(
                     color: primaryGreen,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -302,7 +302,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 "Correo",
                 style: TextStyle(
                     color: primaryGreen,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -361,7 +361,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 "Nueva Contraseña (Opcional)",
                 style: TextStyle(
                     color: primaryGreen,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -453,6 +453,24 @@ class _CuentaPageState extends State<CuentaPage> {
         });
   }
 
+  Widget _crearBotonCerrarSesion(
+      PreferenciasUsuario prefs, BuildContext context, UsuarioModel usuario) {
+    return RaisedButton(
+        textColor: Colors.white,
+        padding: EdgeInsets.all(0.0),
+        shape: StadiumBorder(),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
+          child: Text(
+            "CERRAR SESION",
+            style: TextStyle(fontSize: 15.0),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 128.0, vertical: 15.0),
+        ),
+        onPressed: () => _cerrarSesion(prefs, context, usuario));
+  }
+
   _cambiarCorreo(String idToken) async {
     Map<String, dynamic> result =
         await usuarioProvider.cambiarCorreo(idToken, usuario.email);
@@ -487,21 +505,5 @@ class _CuentaPageState extends State<CuentaPage> {
     }
   }
 
-  Widget _crearBotonCerrarSesion(
-      PreferenciasUsuario prefs, BuildContext context, UsuarioModel usuario) {
-    return RaisedButton(
-        textColor: Colors.white,
-        padding: EdgeInsets.all(0.0),
-        shape: StadiumBorder(),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
-          child: Text(
-            "Cerrar Sesión",
-            style: TextStyle(fontSize: 15.0),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
-        ),
-        onPressed: () => _cerrarSesion(prefs, context, usuario));
-  }
+
 }
