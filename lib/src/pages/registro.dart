@@ -310,16 +310,7 @@ class _RegistroState extends State<Registro> {
 
   _registroUsuarioFirebase(UsuarioModel usuarioModel) {
     usuarioBloc.registrarUsuario(usuarioModel);
-    _mostrarSnackBar('Usuario Registrado');
+    mostarAlerta(context, "Usuario Registrado", "El registro ha sido exitoso");
     Navigator.pushReplacementNamed(context, '/');
-  }
-
-  void _mostrarSnackBar(String mensaje) {
-    final snackBar = SnackBar(
-        content: Text(mensaje),
-        duration: Duration(
-          milliseconds: 1500,
-        ));
-    scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

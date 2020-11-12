@@ -182,3 +182,33 @@ UsuarioModel obtenerUsuario(List<UsuarioModel> usuarios, String email) {
   }
   return usuario;
 }
+
+bool validarDatosUsuario(String username, String lastNameP, String lastNameM) {
+  if ((username.length == 0 || username == '') ||
+      (lastNameP.length == 0 || lastNameP == '') ||
+      (lastNameM.length == 0 || lastNameM == '')) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool validarEmail(String email) {
+  Pattern pattern =
+      r'^[a-zA-Z0-9.!#$%&+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)$';
+  //Pattern pattern = r'^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$';
+  RegExp regExp = new RegExp(pattern);
+  if (regExp.hasMatch(email)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool validarPassword(String pass) {
+  if (pass.length > 1 && pass.length < 6) {
+    return false;
+  } else {
+    return true;
+  }
+}

@@ -6,7 +6,6 @@ import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/src/widgets/widget_icon_user.dart';
-
 import '../../constants.dart';
 
 class CuentaPage extends StatefulWidget {
@@ -19,7 +18,8 @@ class CuentaPage extends StatefulWidget {
 class _CuentaPageState extends State<CuentaPage> {
   final prefs = new PreferenciasUsuario();
   final formKey = GlobalKey<FormState>();
-  String npass;
+  bool guardando = false;
+  String npass, initEmail;
   UsuarioModel usuario = new UsuarioModel();
   String firstName, lastNameP, lastNameM, email;
   final usuarioProvider = new UsuarioProvider();
@@ -55,6 +55,7 @@ class _CuentaPageState extends State<CuentaPage> {
                     firstName = usuario.firstName;
                     lastNameP = usuario.lastNameP;
                     lastNameM = usuario.lastNameM;
+                    initEmail = usuario.email;
                     List<String> inicial = firstName.split('');
                     return Form(
                       key: formKey,
@@ -167,13 +168,6 @@ class _CuentaPageState extends State<CuentaPage> {
                 hintText: "Nombre de usuario",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
-              validator: (value) {
-                if (value.length > 0) {
-                  return null;
-                } else {
-                  return 'Campo Obligatorio';
-                }
-              },
             )),
       ],
     );
@@ -232,13 +226,6 @@ class _CuentaPageState extends State<CuentaPage> {
               hintText: "Apellido Paterno",
               hintStyle: TextStyle(color: Colors.grey),
             ),
-            validator: (value) {
-              if (value.length > 0) {
-                return null;
-              } else {
-                return 'Campo Obligatorio';
-              }
-            },
           ),
         ),
       ],
@@ -298,13 +285,6 @@ class _CuentaPageState extends State<CuentaPage> {
                 hintText: "Apellido Materno",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
-              validator: (value) {
-                if (value.length > 0) {
-                  return null;
-                } else {
-                  return 'Campo Obligatorio';
-                }
-              },
             )),
       ],
     );
@@ -364,17 +344,6 @@ class _CuentaPageState extends State<CuentaPage> {
                 hintText: "Correo Electrónico",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
-              validator: (value) {
-                Pattern pattern =
-                    r'^[a-zA-Z0-9.!#$%&+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)$';
-                //Pattern pattern = r'^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
-                if (regExp.hasMatch(value)) {
-                  return null;
-                } else {
-                  return 'El email no es correcto';
-                }
-              },
             )),
       ],
     );
@@ -454,20 +423,27 @@ class _CuentaPageState extends State<CuentaPage> {
           padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
         ),
         onPressed: () {
-          usuarioBloc.modificarUsuario(usuario);
-          _cambiarCorreo(idToken);
-          if (npass == null || npass.length == 0 || npass == '') {
+          if (!utils.validarDatosUsuario(
+                  usuario.firstName, usuario.lastNameP, usuario.lastNameM) ||
+              !utils.validarEmail(usuario.email) ||
+              !utils.validarPassword(npass)) {
             utils.mostarAlerta(
-                context, 'Cambios guardados', 'Usuario Modificado');
+                context, "Error", "Campos incorrectos, revise los datos");
           } else {
-            if (npass.length < 6) {
-              utils.mostarAlerta(context, 'Error',
-                  'La nueva contraseña debe contener al menos 6 caracteres');
-            } else {
-              _cambiarPassword(idToken);
+            usuarioBloc.modificarUsuario(usuario);
+            if (initEmail == usuario.email && (npass == null || npass == '')) {
               utils.mostarAlerta(
-                  context, 'Cambios guardados', 'Usuario Modificado');
+                  context, "Cambios guardados", "Se han actualizado sus datos");
+            } else if (initEmail != usuario.email &&
+                (npass == null || npass == '')) {
+              _cambiarCorreo(idToken);
+            } else if (initEmail == usuario.email &&
+                (npass != null || npass != '')) {
+              _cambiarPassword(idToken);
+            } else {
+              _cambiarCorreoYPassword(idToken);
             }
+
             setState(() {
               firstName = usuario.firstName;
               lastNameP = usuario.lastNameP;
@@ -481,7 +457,19 @@ class _CuentaPageState extends State<CuentaPage> {
     Map<String, dynamic> result =
         await usuarioProvider.cambiarCorreo(idToken, usuario.email);
     if (result['ok']) {
-      prefs.token = result['idToken'];
+      _cerrarSesion(prefs, context, usuario);
+      utils.mostarAlerta(context, "Cambios guardados",
+          "Se han actualizado sus datos vuelva a iniciar sesión");
+    } else {
+      utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
+    }
+  }
+
+  _cambiarCorreoYPassword(String idToken) async {
+    Map<String, dynamic> result =
+        await usuarioProvider.cambiarCorreo(idToken, usuario.email);
+    if (result['ok']) {
+      _cambiarPassword(result['token']);
     } else {
       utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
     }
@@ -491,7 +479,9 @@ class _CuentaPageState extends State<CuentaPage> {
     Map<String, dynamic> result =
         await usuarioProvider.cambiarPassword(idToken, npass);
     if (result['ok']) {
-      prefs.token = result['idToken'];
+      _cerrarSesion(prefs, context, usuario);
+      utils.mostarAlerta(context, "Cambios guardados",
+          "Se han actualizado sus datos vuelva a iniciar sesión");
     } else {
       utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
     }
