@@ -46,12 +46,25 @@ class NutrienteWidget extends StatelessWidget {
                     color: primaryWhite,
                   ),
                   child: Center(
-                    child: Text(
-                      ("$cantidadNutriente $unidades"),
-                      style: TextStyle(
-                          color: primaryBrown,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          ("$cantidadNutriente"),
+                          style: TextStyle(
+                              color: primaryBrown,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                        Text(
+                          ("$unidades"),
+                          style: TextStyle(
+                              color: primaryBrown,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -65,7 +78,7 @@ class NutrienteWidget extends StatelessWidget {
                     style: TextStyle(
                       color: primaryWhite,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                     textAlign: TextAlign.center,
                   ),

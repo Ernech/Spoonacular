@@ -31,19 +31,19 @@ class CustomeInput extends StatelessWidget {
                 inputName,
                 style: TextStyle(
                     color: primaryGreen,
-                    fontSize: 16,
+                    fontSize:  MediaQuery.of(context).size.width*0.04,
                     fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 10,
+          height: MediaQuery.of(context).size.height*0.01,
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
           padding: EdgeInsets.symmetric(
-            horizontal: 30,
+            horizontal: 20,
           ),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -72,9 +72,10 @@ class CustomeInput extends StatelessWidget {
                     icon: Icon(
                       iconosTextfield,
                       color: Colors.grey,
+                      size:  MediaQuery.of(context).size.width*0.05,
                     ),
                     hintText: textfieldText,
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(color: Colors.grey,fontSize: MediaQuery.of(context).size.width*0.04),
                     errorText: snapshot.error),
               );
             },

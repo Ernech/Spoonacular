@@ -7,6 +7,7 @@ class NutrientesImportantes extends StatelessWidget {
   String tipo;
   dynamic valor;
   int index;
+
   NutrientesImportantes(this.tipo, this.valor, this.index);
 
   @override
@@ -83,7 +84,9 @@ class NutrientesImportantes extends StatelessWidget {
       title: Text(
         info['tipo'],
         style: TextStyle(
-            color: primaryGreen, fontWeight: FontWeight.bold, fontSize: 24),
+            color: primaryGreen,
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.height * 0.05),
       ),
       //content: Text('$numero'),
       content: Container(
@@ -93,36 +96,57 @@ class NutrientesImportantes extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  "¿Que es?",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: primaryBrown),
-                ),
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(info['concepto'], textAlign: TextAlign.justify),
-            ),
-            Row(
-              children: [
-                Text(
-                  "Cantidad Minima Diaria",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: primaryBrown),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.20,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "¿Que es?",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: primaryBrown),
+                    ),
+                  ),
                 ),
               ],
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                info['cantidad'],
+                info['concepto'],
                 textAlign: TextAlign.justify,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.55,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "Cantidad minima diaria",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: primaryBrown),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  info['cantidad'],
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
