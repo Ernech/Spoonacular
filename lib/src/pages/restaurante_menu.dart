@@ -49,7 +49,7 @@ class RestauranteMenuPage extends StatelessWidget {
               TituloCard("Platos principales", primaryBlack),
               _bannerMenu(spoonacularBloc, arguments),
               TituloCard("Otros", primaryBlack),
-              _bannerMenuSecundario(spoonacularBloc, arguments, 15),
+              _bannerMenuSecundario(spoonacularBloc, arguments, 10),
             ],
           ),
         ),
