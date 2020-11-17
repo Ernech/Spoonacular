@@ -14,7 +14,8 @@ class SpoonacularBloc {
   final _spoonacularProvider = new SpoonacularProvider();
 
   Stream<List<MenuItem>> get menuItemsStream => _menuItemController.stream;
-  Stream<List<MenuItem>> get menuItemsStreamSec => _menuItemController.stream;
+  Stream<List<MenuItem>> get menuItemsStreamSec =>
+      _menuItemControllerSec.stream;
   Stream<MenuItemDetail> get menuItemDetailStream =>
       _menuItemDetailController.stream;
   Stream<List<Ingredient>> get ingredientsStream =>
