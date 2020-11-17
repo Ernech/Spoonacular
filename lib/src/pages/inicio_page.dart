@@ -137,7 +137,6 @@ class _InicioPageState extends State<InicioPage>
                 ),
               ),
               _tarjetas(),
-              //    _restaurantesTest(),
             ],
           ),
         ),
@@ -236,6 +235,22 @@ class _InicioPageState extends State<InicioPage>
           return CircularProgressIndicator();
         } else {
           return BannerWidgetArea(snapshot.data);
+        }
+      },
+    );
+  }
+
+  Widget _testTraductor() {
+    return FutureBuilder(
+      future: utils.traducirAEs(
+          'I would really like to drive your car around the block a few times.'),
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        } else {
+          print('Data: ${snapshot.data}');
+          return Container();
         }
       },
     );

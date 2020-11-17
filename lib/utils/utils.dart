@@ -4,12 +4,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/usuario_model.dart';
 import 'package:translator/translator.dart';
+import 'package:http/http.dart' as http;
 
 String texto = '';
 
 Future<String> enToEs(String query) async {
   await _traducirEnToEs(query);
   return texto;
+}
+
+Future<String> traducirAEs(String query) async {
+  String _url =
+      'https://microsoft-translator-text.p.rapidapi.com/translate?to=es&api-version=3.0&from=en&profanityAction=NoAction&textType=plain';
+
+  List<Map<String, String>> body = [
+    {'Text': query}
+  ];
+  final resp = await http.post(_url,
+      headers: {
+        "content-type": "application/json",
+        "x-rapidapi-key": "0f95bb87f6msh5a6d8119a0afd08p11274ajsn7ca40e882b4f",
+        "x-rapidapi-host": "microsoft-translator-text.p.rapidapi.com",
+        "useQueryString": 'true'
+      },
+      body: json.encode(body));
+
+  final decodedData = json.decode(resp.body);
+
+  return decodedData[0]['translations'][0]['text'];
 }
 
 String esToEn(String query) {

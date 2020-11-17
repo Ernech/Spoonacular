@@ -73,14 +73,24 @@ class NutrienteWidget extends StatelessWidget {
                 top: 25,
                 child: Container(
                   width: 80,
-                  child: Text(
-                    nutriente,
-                    style: TextStyle(
-                      color: primaryWhite,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                    textAlign: TextAlign.center,
+                  child: FutureBuilder(
+                    future: utils.traducirAEs(nutriente),
+                    initialData: null,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      } else {
+                        return Text(
+                          snapshot.data,
+                          style: TextStyle(
+                            color: primaryWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          textAlign: TextAlign.center,
+                        );
+                      }
+                    },
                   ),
                 ),
               ),

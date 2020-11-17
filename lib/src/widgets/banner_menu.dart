@@ -121,18 +121,28 @@ class BannerMenu extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(maxWidth: 150, minHeight: 46),
-                      child: Text(
-                        menuItems[i].title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: primaryGreen,
-                        ),
-                        textAlign: TextAlign.left,
+                      child: FutureBuilder(
+                        future: utils.traducirAEs(menuItems[i].title),
+                        initialData: null,
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          } else {
+                            return Text(
+                              snapshot.data,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: primaryGreen,
+                              ),
+                              textAlign: TextAlign.left,
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
