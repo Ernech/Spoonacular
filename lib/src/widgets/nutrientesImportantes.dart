@@ -117,14 +117,14 @@ class NutrientesImportantes extends StatelessWidget {
                 info['concepto'],
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                  fontSize: MediaQuery.of(context).size.height * 0.018,
                 ),
               ),
             ),
             Row(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.55,
+                  width: MediaQuery.of(context).size.width * 0.45,
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
@@ -135,7 +135,7 @@ class NutrientesImportantes extends StatelessWidget {
                           color: primaryBrown),
                     ),
                   ),
-                )
+                ),
               ],
             ),
             Container(
