@@ -82,7 +82,7 @@ class BannerMenu extends StatelessWidget {
                 width: 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
-                  child: _crearImagen(menuItems[i].image),
+                  child: _crearImagen(menuItems[i].image, context),
                 )
 
                 // FadeInImage(
@@ -192,7 +192,7 @@ class BannerMenu extends StatelessWidget {
     );
   }
 
-  Widget _crearImagen(String url) {
+  Widget _crearImagen(String url, BuildContext context) {
     if (url == null || url == '') {
       return Image(
         image: AssetImage('images/no-image.png'),
@@ -204,6 +204,11 @@ class BannerMenu extends StatelessWidget {
         url,
         height: 100.0,
         width: 100.0,
+        errorBuilder: (context, url, error) => Image(
+          image: AssetImage('images/no-image.png'),
+          height: 100.0,
+          width: 100.0,
+        ),
       );
     }
   }
