@@ -10,7 +10,7 @@ class SpoonacularProvider {
   //696885e454824daf899c0ffe18b58bff vania
   //0409316eb2644d86a23e7fdce0bdeb81 ernesto
   //4aa0c9982fad4ced95bb848e4f7870af ariel
-  String _apiKey = '4aa0c9982fad4ced95bb848e4f7870af';
+  String _apiKey = '0409316eb2644d86a23e7fdce0bdeb81';
   String _url = 'api.spoonacular.com';
 
   Future<List<MenuItem>> getMenuItems(String query, bool traducir) async {
