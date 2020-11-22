@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:spoonacular/src/models/ingredients_model.dart';
+import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:http/http.dart' as http;
@@ -98,5 +99,15 @@ class SpoonacularProvider {
       'email': email,
       'hash': decodedData['hash']
     };
+  }
+
+  Future<List<Meal>> generateMealPlanning(String diet) async {
+    final urlEndpoint = Uri.https(
+        _url, 'mealplanner/generate', {'apiKey': _apiKey, 'diet': diet});
+    final respuesta = await http.get(urlEndpoint);
+    final decodedData = json.decode(respuesta.body);
+    //print('Decoded ingredientes: ${decodedData['ingredients']}');
+    final mealItems = MealItems.fromJSONList(decodedData['meals']);
+    return mealItems.items;
   }
 }

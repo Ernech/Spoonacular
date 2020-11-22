@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:spoonacular/src/models/ingredients_model.dart';
+import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
@@ -10,7 +11,7 @@ class SpoonacularBloc {
   final _menuItemDetailController = new BehaviorSubject<MenuItemDetail>();
   final _ingredientesController = new BehaviorSubject<List<Ingredient>>();
   final _cargandoController = new BehaviorSubject<bool>();
-
+  final _mealPlanController = new BehaviorSubject<List<Meal>>();
   final _spoonacularProvider = new SpoonacularProvider();
 
   Stream<List<MenuItem>> get menuItemsStream => _menuItemController.stream;
@@ -43,11 +44,17 @@ class SpoonacularBloc {
     _ingredientesController.sink.add(ingredientes);
   }
 
+  void cargarPlanAlimentacion(String diet) async {
+    final mealPlan = await _spoonacularProvider.generateMealPlanning(diet);
+    _mealPlanController.sink.add(mealPlan);
+  }
+
   dipose() {
     _menuItemController?.close();
     _menuItemControllerSec?.close();
     _menuItemDetailController?.close();
     _ingredientesController?.close();
     _cargandoController?.close();
+    _mealPlanController?.close();
   }
 }

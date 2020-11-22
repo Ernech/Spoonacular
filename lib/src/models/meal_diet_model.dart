@@ -13,7 +13,7 @@ class MealDiet {
     if (items == null || items.length < 1) {
       return [];
     } else {
-      final meals = MealItems.fromJsonList(items);
+      final meals = MealItems.fromJSONList(items);
       return meals.items;
     }
   }
@@ -31,7 +31,7 @@ class MealDiet {
 class MealItems {
   List<Meal> items = new List();
   MealItems();
-  MealItems.fromJsonList(List<dynamic> jsonList) {
+  MealItems.fromJSONList(List<dynamic> jsonList) {
     if (jsonList == null) {
       return;
     } else {
