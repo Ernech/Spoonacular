@@ -11,8 +11,8 @@ class IconUser extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 100,
-          height: 100,
+          width: 70,
+          height: 70,
           decoration: BoxDecoration(
             color: primaryWhite,
             shape: BoxShape.circle,
@@ -27,7 +27,7 @@ class IconUser extends StatelessWidget {
           child: Center(
             child: Text(
               inicialUsuario,
-              style: TextStyle(fontSize: 35, color: primaryGreen),
+              style: TextStyle(fontSize: 30, color: primaryGreen),
             ),
           ),
         ),

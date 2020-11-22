@@ -6,6 +6,7 @@ import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/src/widgets/widget_icon_user.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import '../../constants.dart';
 
 class CuentaPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class CuentaPage extends StatefulWidget {
 }
 
 class _CuentaPageState extends State<CuentaPage> {
+  bool status =false;
   final prefs = new PreferenciasUsuario();
   final formKey = GlobalKey<FormState>();
   bool guardando = false;
@@ -26,6 +28,7 @@ class _CuentaPageState extends State<CuentaPage> {
   List _tiposDietas = ['Vegetariano', 'Vegano', 'No Gluten', 'Omnivoro'];
   @override
   Widget build(BuildContext context) {
+
     Map<String, dynamic> mapToken = utils.parseJwt(prefs.token);
     final usuarioBloc = Provider.usuarioBLoc(context);
     var screenHeight = MediaQuery.of(context).size.height;
@@ -62,39 +65,83 @@ class _CuentaPageState extends State<CuentaPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height*0.02,
+                          ),
                           IconUser(
                               inicial[0], '$firstName $lastNameP $lastNameM'),
-                          SizedBox(
-                            height: 5,
-                          ),
+
                           LineCirculeDetail(),
                           _crearNombreUsuario(usuario),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           _crearApPaterno(usuario),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           _crearApMaterno(usuario),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           _crearCorreo(usuario),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           _crearPassword(),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 34),
+                                    child: Text(
+                                      "Idioma",
+                                      style: TextStyle(
+                                          color: primaryGreen,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height:  MediaQuery.of(context).size.height*0.01,
+                              ),
+                              Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 32),
+
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ToggleSwitch(
+                                        minWidth: MediaQuery.of(context).size.width*0.30,
+                                        initialLabelIndex: 0,
+                                        activeBgColor: primaryGreen,
+                                        //activeTextColor: Colors.white,
+                                        inactiveBgColor: primaryBrown,
+                                        //inactiveTextColor: Colors.grey[900],
+                                        labels: ['Ingles', 'Español'],
+                                        onToggle: (index) {
+                                          print('switched to: $index');
+                                        },
+                                      ),
+                                    ],
+                                  )
+                              ),
+                            ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           _crearBotonGuardarCambios(
                               usuarioBloc, usuario, prefs.token),
                           SizedBox(
-                            height: 10,
+                            height: MediaQuery.of(context).size.height*0.01,
                           ),
                           _crearBotonCerrarSesion(prefs, context, usuario)
                         ],
@@ -134,7 +181,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height: 10,
+          height: MediaQuery.of(context).size.height*0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -192,7 +239,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height: 10,
+          height:  MediaQuery.of(context).size.height*0.01,
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
@@ -251,7 +298,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height: 10,
+          height:  MediaQuery.of(context).size.height*0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -309,7 +356,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height: 10,
+          height:  MediaQuery.of(context).size.height*0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -368,7 +415,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height: 10,
+          height:  MediaQuery.of(context).size.height*0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -418,9 +465,9 @@ class _CuentaPageState extends State<CuentaPage> {
               borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
           child: Text(
             "GUARDAR",
-            style: TextStyle(fontSize: 15.0),
+            style: TextStyle(fontSize:MediaQuery.of(context).size.height*0.015),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 15.0),
+          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.36, vertical:  MediaQuery.of(context).size.height*0.02),
         ),
         onPressed: () {
           if (!utils.validarDatosUsuario(
@@ -464,9 +511,9 @@ class _CuentaPageState extends State<CuentaPage> {
               borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
           child: Text(
             "CERRAR SESION",
-            style: TextStyle(fontSize: 15.0),
+            style: TextStyle(fontSize:MediaQuery.of(context).size.height*0.015),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 128.0, vertical: 15.0),
+          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.32, vertical:  MediaQuery.of(context).size.height*0.02),
         ),
         onPressed: () => _cerrarSesion(prefs, context, usuario));
   }

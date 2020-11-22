@@ -91,25 +91,25 @@ class BannerMenu extends StatelessWidget {
                 // ),
                 ),
           ),
-          Positioned(
-            top: 5,
-            left: 0,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.favorite),
-                  color: primaryGreenLight,
-                  onPressed: () {
-                    print("favorito");
-                  },
-                ),
-                Text(
-                  "5",
-                  style: TextStyle(color: primaryGreenLight),
-                ),
-              ],
-            ),
-          ),
+          // Positioned(
+          //   top: 5,
+          //   left: 0,
+          //   child: Row(
+          //     children: [
+          //       IconButton(
+          //         icon: Icon(Icons.favorite),
+          //         color: primaryGreenLight,
+          //         onPressed: () {
+          //           print("favorito");
+          //         },
+          //       ),
+          //       Text(
+          //         "5",
+          //         style: TextStyle(color: primaryGreenLight),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Positioned(
             top: 140,
             left: 16,

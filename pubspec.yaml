@@ -13,7 +13,8 @@ environment:
 dependencies:
   material_design_icons_flutter:
   flutter:
-    sdk: flutter 
+    sdk: flutter
+
 
 
   
@@ -24,6 +25,7 @@ dependencies:
   shared_preferences:
   translator:
   rxdart: ^0.24.1
+  toggle_switch: "^0.1.4"
 
 dev_dependencies:
   flutter_test:
