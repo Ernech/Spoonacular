@@ -1,45 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import '../../constants.dart';
 
-class BannerMenu extends StatelessWidget {
-  final List<MenuItem> menuItems;
+class BannerMeal extends StatelessWidget {
+  final List<Meal> meals;
 
-  BannerMenu({@required this.menuItems});
-
-  final bannerImagesMenu = [
-    "images/dish1.png",
-    "images/dish2.png",
-    "images/dish3.png",
-    "images/dish4.png",
-  ];
-
-  final nombresMenuPlato = [
-    "Ensalada Napolitana",
-    "Ensalada Cesar ",
-    "Fideos Romanos",
-    "Carne salteada",
-  ];
-
-  final dietaMenuPlato = [
-    "Vegetariano",
-    "Vegano",
-    "No gluten",
-    "Omnivoro",
-  ];
-  final preciosMenu = [
-    "30",
-    "25",
-    "45",
-    "20",
-  ];
+  BannerMeal({@required this.meals});
 
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> banners = new List<Widget>();
-    for (int i = 0; i < menuItems.length; i++) {
+    for (int i = 0; i < meals.length; i++) {
       var bannerView = _crearTarjeta(context, i);
       banners.add(bannerView);
     }
@@ -82,7 +55,9 @@ class BannerMenu extends StatelessWidget {
                 width: 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
-                  child: _crearImagen(menuItems[i].image, context),
+                  child: _crearImagen(
+                      'https://webknox.com/recipeImages/${meals[i].id}-556x370.${meals[i].imageType}',
+                      context),
                 )
 
                 // FadeInImage(
@@ -132,7 +107,7 @@ class BannerMenu extends StatelessWidget {
                           //     } else {
                           //       return
                           Text(
-                        menuItems[i].title,
+                        meals[i].title,
                         style: TextStyle(
                           fontSize: 16,
                           color: primaryGreen,
@@ -168,16 +143,16 @@ class BannerMenu extends StatelessWidget {
                     print("Container" + i.toString());
                     Navigator.pushNamed(context, '/ingredientes',
                         arguments: <String, dynamic>{
-                          'id': menuItems[i].id,
-                          'menuItem': menuItems[i]
+                          'id': meals[i].id,
+                          'menuItem': meals[i]
                         });
                   },
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, '/ingredientes',
                           arguments: <String, dynamic>{
-                            'id': menuItems[i].id,
-                            'menuItem': menuItems[i]
+                            'id': meals[i].id,
+                            'menuItem': meals[i]
                           });
                     },
                     child: Text(

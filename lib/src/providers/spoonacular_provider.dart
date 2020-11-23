@@ -102,12 +102,22 @@ class SpoonacularProvider {
   }
 
   Future<List<Meal>> generateMealPlanning(String diet) async {
-    final urlEndpoint = Uri.https(
-        _url, 'mealplanner/generate', {'apiKey': _apiKey, 'diet': diet});
+    final urlEndpoint = Uri.https(_url, 'mealplanner/generate',
+        {'apiKey': _apiKey, 'diet': diet, 'timeFrame': 'day'});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
     //print('Decoded ingredientes: ${decodedData['ingredients']}');
     final mealItems = MealItems.fromJSONList(decodedData['meals']);
     return mealItems.items;
+  }
+
+  Future<RecipeNutrition> getRecipeNUtrition(int id) async {
+    final urlEndpoint = Uri.https(_url, 'recipes/$id/nutritionWidget.json',
+        {'apiKey': _apiKey});
+    final respuesta = await http.get(urlEndpoint);
+    final decodedData = json.decode(respuesta.body);
+    //print('Decoded ingredientes: ${decodedData['ingredients']}');
+    final recipeNutrition = RecipeNutririon.fromJSONMap(decodedData);
+    return recipeNutrition;
   }
 }

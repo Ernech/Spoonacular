@@ -12,6 +12,7 @@ class SpoonacularBloc {
   final _ingredientesController = new BehaviorSubject<List<Ingredient>>();
   final _cargandoController = new BehaviorSubject<bool>();
   final _mealPlanController = new BehaviorSubject<List<Meal>>();
+  final _recipeNutritionController = new BehaviorSubject<RecipeNutrition>>();
   final _spoonacularProvider = new SpoonacularProvider();
 
   Stream<List<MenuItem>> get menuItemsStream => _menuItemController.stream;
@@ -21,6 +22,8 @@ class SpoonacularBloc {
       _menuItemDetailController.stream;
   Stream<List<Ingredient>> get ingredientsStream =>
       _ingredientesController.stream;
+  Stream<List<Meal>> get mealPlanStream => _mealPlanController.stream;
+  Stream<List<Meal>> get recipeNutritionStream => _recipeNutritionController.stream;
   Stream<bool> get cargando => _cargandoController.stream;
 
   void cargarMenuItems(String query, bool traducir) async {
@@ -47,6 +50,10 @@ class SpoonacularBloc {
   void cargarPlanAlimentacion(String diet) async {
     final mealPlan = await _spoonacularProvider.generateMealPlanning(diet);
     _mealPlanController.sink.add(mealPlan);
+  }
+  void cargarRecipeNutrition(int id) async {
+     final recipeNutrition = await _spoonacularProvider.getRecipeNutrition(id);
+    _recipeNutritionController.sink.add(recipeNutrition);
   }
 
   dipose() {

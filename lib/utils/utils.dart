@@ -70,6 +70,7 @@ void mostarAlerta(BuildContext context, String titulo, String mensaje) {
 Map<String, dynamic> vegetariano = {
   'titulo': 'Vegetariano',
   'imagen': 'images/vegetarian.jpg',
+  'diet': 'vegetarian',
   'descripcion':
       'Esta dieta excluye toda la carne, el pescado y los subproductos animales que requieren la muerte del animal (como el caldo elaborado con huesos o gelatina). Por lo general, es rico en legumbres (por ejemplo, frijoles y lentejas), granos, frutas, verduras, nueces y semillas. Los vegetarianos que comen huevos pero no lácteos se conocen como ovo vegetarianos, mientras que los vegetarianos que comen lácteos pero no huevos se conocen como lacto vegetarianos.',
   'permitidos': [
@@ -93,6 +94,7 @@ Map<String, dynamic> vegetariano = {
 Map<String, dynamic> omnivoro = {
   'titulo': 'Omnivoro',
   'imagen': 'images/omnivore.jpg',
+  'diet': '',
   'descripcion':
       'Una mezcla de carne, pescado, frutas, verduras, cereales, etc. Puede ser saludable si sigue una dieta equilibrada de alimentos integrales o la llamada "alimentación limpia" o no saludable si sigue la dieta estadounidense estándar.',
   'permitidos':
@@ -102,6 +104,7 @@ Map<String, dynamic> omnivoro = {
 Map<String, dynamic> vegano = {
   'titulo': 'Vegano',
   'imagen': 'images/vegan.jpg',
+  'diet': 'vegan',
   'descripcion':
       'Esta dieta excluye todos los productos animales, incluida la carne, el pescado, los lácteos, los huevos y la miel. Al igual que la dieta vegetariana, la dieta vegana se centra en legumbres, cereales, frutas, verduras, frutos secos y semillas.',
   'permitidos': [
@@ -126,6 +129,7 @@ Map<String, dynamic> vegano = {
 Map<String, dynamic> freeGluten = {
   'titulo': 'No Gluten',
   'imagen': 'images/freegluten.jpg',
+  'diet': 'gluten free',
   'descripcion':
       'Seguir una dieta sin gluten significa eliminar el gluten, las proteínas que se encuentran en el trigo y algunos otros granos. No hay otros requisitos, por lo que una dieta libre de gluten no es necesariamente una dieta saludable, ya que podría cargar fácilmente pasta, galletas y galletas saladas sin gluten. Esta es la razón por la que una dieta libre de gluten tiene más sentido si realmente tiene alergia o insensibilidad al gluten, o si elimina el gluten mientras centra su dieta en alimentos no procesados.',
   'permitidos': 'Cualquier alimento que no contenga gluten',

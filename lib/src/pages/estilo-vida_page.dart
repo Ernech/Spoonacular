@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
+import 'package:spoonacular/src/bloc/provider.dart';
+import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/src/widgets/banner_alimentos-permitidos.dart';
+import 'package:spoonacular/src/widgets/banner_meal.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/titulo_card.dart';
 import 'package:spoonacular/src/widgets/titulo_primario.dart';
@@ -12,6 +15,7 @@ class EstiloVidaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final spoonacularBloc = Provider.spoonacularBloc(context);
     final Map<String, dynamic> arguments =
         ModalRoute.of(context).settings.arguments;
     var screenHeight = MediaQuery.of(context).size.height;
@@ -144,10 +148,28 @@ class EstiloVidaPage extends StatelessWidget {
                         textAlign: TextAlign.justify,
                       ),
                     ),
+              TituloCard("Platos", primaryGreen),
+              _bannerMenu(spoonacularBloc, arguments['diet'])
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _bannerMenu(SpoonacularBloc bloc, String diet) {
+    bloc.cargarPlanAlimentacion(diet);
+    return StreamBuilder(
+      stream: bloc.mealPlanStream,
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot<List<Meal>> snapshot) {
+        if (snapshot.data == null) {
+          return CircularProgressIndicator();
+        } else {
+          List<Meal> items = snapshot.data;
+          return BannerMeal(meals: items);
+        }
+      },
     );
   }
 }
