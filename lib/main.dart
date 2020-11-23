@@ -4,6 +4,7 @@ import 'package:spoonacular/src/pages/estilo-vida_page.dart';
 import 'package:spoonacular/src/pages/home_page.dart';
 import 'package:spoonacular/src/pages/ingredientes_page.dart';
 import 'package:spoonacular/src/pages/login.dart';
+import 'package:spoonacular/src/pages/meal_information_page.dart';
 import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/ingredientes': (BuildContext context) => IngredientesPage(),
         '/restauranteMenu': (BuildContext context) => RestauranteMenuPage(),
         '/estiloVida': (BuildContext context) => EstiloVidaPage(),
+        '/mealInformation': (BuildContext context) => MealInformationPage()
       },
     );
     return Provider(

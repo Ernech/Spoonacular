@@ -5,6 +5,7 @@ import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:spoonacular/src/models/recipe_nutrition_model.dart';
 import 'package:translator/translator.dart';
 
 class SpoonacularProvider {
@@ -111,13 +112,13 @@ class SpoonacularProvider {
     return mealItems.items;
   }
 
-  Future<RecipeNutrition> getRecipeNUtrition(int id) async {
-    final urlEndpoint = Uri.https(_url, 'recipes/$id/nutritionWidget.json',
-        {'apiKey': _apiKey});
+  Future<RecipeNutrition> getRecipeNutrition(int id) async {
+    final urlEndpoint = Uri.https(
+        _url, 'recipes/$id/nutritionWidget.json', {'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);
     final decodedData = json.decode(respuesta.body);
     //print('Decoded ingredientes: ${decodedData['ingredients']}');
-    final recipeNutrition = RecipeNutririon.fromJSONMap(decodedData);
+    final recipeNutrition = RecipeNutrition.fromJSONMap(decodedData);
     return recipeNutrition;
   }
 }

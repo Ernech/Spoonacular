@@ -141,18 +141,18 @@ class BannerMeal extends StatelessWidget {
                   ),
                   onPressed: () {
                     print("Container" + i.toString());
-                    Navigator.pushNamed(context, '/ingredientes',
+                    Navigator.pushNamed(context, '/mealInformation',
                         arguments: <String, dynamic>{
                           'id': meals[i].id,
-                          'menuItem': meals[i]
+                          'meal': meals[i]
                         });
                   },
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/ingredientes',
+                      Navigator.pushNamed(context, '/mealInformation',
                           arguments: <String, dynamic>{
                             'id': meals[i].id,
-                            'menuItem': meals[i]
+                            'meal': meals[i]
                           });
                     },
                     child: Text(

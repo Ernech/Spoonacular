@@ -8,6 +8,14 @@ class RecipeNutrition {
   RecipeNutrition(
       this.calories, this.carbs, this.fat, this.protein, this.bad, this.good);
 
+  RecipeNutrition.fromJSONMap(Map<String, dynamic> json) {
+    calories = json['calories'];
+    carbs = json['carbs'];
+    fat = json['fat'];
+    protein = json['protein'];
+    bad = json['bad'];
+    good = json['good'];
+  }
   List<Good> obtenerGood(List<dynamic> items) {
     if (items == null || items.length < 1) {
       return [];

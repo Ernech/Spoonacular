@@ -5,12 +5,13 @@ import '../../constants.dart';
 
 class BannerIngredientes extends StatelessWidget {
   List<Ingredient> ingredientes;
-  BannerIngredientes(ingredientes);
+  BannerIngredientes(this.ingredientes);
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> banners = new List<Widget>();
     if (ingredientes == null || ingredientes.length == 0) {
+      print('No hay ingredientes');
       var bannerView = Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: Chip(
@@ -23,6 +24,7 @@ class BannerIngredientes extends StatelessWidget {
       );
       banners.add(bannerView);
     } else {
+      print('LENGTH: ${ingredientes.length}');
       for (int i = 0; i < ingredientes.length; i++) {
         var bannerView = _crearBanner(ingredientes[i].name);
         banners.add(bannerView);
@@ -41,26 +43,26 @@ class BannerIngredientes extends StatelessWidget {
   }
 
   Widget _crearBanner(String ingrediente) {
-    return FutureBuilder(
-      future: utils.enToEs(ingrediente),
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        } else {
-          return Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Chip(
-              label: Text(
-                snapshot.data,
-                style: TextStyle(color: primaryWhite, fontSize: 12),
-              ),
-              backgroundColor: primaryBrown,
-            ),
-          );
-        }
-      },
+    // return FutureBuilder(
+    //   future: utils.enToEs(ingrediente),
+    //   initialData: null,
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (!snapshot.hasData) {
+    //       return CircularProgressIndicator();
+    //     } else {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Chip(
+        label: Text(
+          ingrediente,
+          style: TextStyle(color: primaryWhite, fontSize: 12),
+        ),
+        backgroundColor: primaryBrown,
+      ),
     );
+    //     }
+    //   },
+    // );
   }
   // final bannerIngredientes = [
   //   "images/arbeja.png",
