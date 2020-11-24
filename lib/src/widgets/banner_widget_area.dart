@@ -53,9 +53,7 @@ class BannerWidgetArea extends StatelessWidget {
                     width: 4,
                   ),
                   image: DecorationImage(
-                    image: NetworkImage(restaurantes[i].url.trim()
-                        //'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Pizza_73_Logo.svg/1200px-Pizza_73_Logo.svg.png'
-                        ),
+                    image: NetworkImage(restaurantes[i].url.trim()),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: [

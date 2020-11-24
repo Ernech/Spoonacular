@@ -20,7 +20,6 @@ class ParrafoGeneral extends StatelessWidget {
   Widget _crearTexto(PreferenciasUsuario prefs, String title) {
     switch (prefs.idioma) {
       case 0:
-        print('IDIOMA MEAL ${prefs.idioma}');
         return Text(parrafoTexto,
             style: TextStyle(
                 fontSize: 22,
@@ -29,7 +28,6 @@ class ParrafoGeneral extends StatelessWidget {
                 color: color));
         break;
       case 1:
-        print('IDIOMA MEAL ${prefs.idioma}');
         return FutureBuilder(
           future: utils.enToEs(title),
           initialData: null,

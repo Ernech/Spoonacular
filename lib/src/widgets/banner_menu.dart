@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../constants.dart';
 
 class BannerMenu extends StatelessWidget {
@@ -227,16 +228,27 @@ class BannerMenu extends StatelessWidget {
         width: 100.0,
       );
     } else {
-      return Image.network(
-        url,
-        height: 100.0,
-        width: 100.0,
-        errorBuilder: (context, url, error) => Image(
-          image: AssetImage('images/no-image.png'),
+      return CachedNetworkImage(
+          imageUrl: url,
           height: 100.0,
           width: 100.0,
-        ),
-      );
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Image.asset(
+                'images/no-image.png',
+                height: 100.0,
+                width: 100.0,
+              ));
+
+      // Image.network(
+      //   url,
+      //   height: 100.0,
+      //   width: 100.0,
+      //   errorBuilder: (context, exception, error) => Image.asset(
+      //     'images/no-image.png',
+      //     height: 100.0,
+      //     width: 100.0,
+      //   ),
+      // );
     }
   }
 }

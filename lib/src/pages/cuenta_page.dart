@@ -98,7 +98,7 @@ class _CuentaPageState extends State<CuentaPage> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 34),
                                     child: Text(
-                                      "Idioma",
+                                      prefs.idioma == 0 ? "Language" : "Idioma",
                                       style: TextStyle(
                                           color: primaryGreen,
                                           fontSize: 14,
@@ -125,10 +125,13 @@ class _CuentaPageState extends State<CuentaPage> {
                                         //activeTextColor: Colors.white,
                                         inactiveBgColor: primaryBrown,
                                         //inactiveTextColor: Colors.grey[900],
-                                        labels: ['Ingles', 'Español'],
+                                        labels: prefs.idioma == 0
+                                            ? ['English', 'Spanish']
+                                            : ['Ingles', 'Español'],
                                         onToggle: (index) {
                                           print('switched to: $index');
                                           prefs.idioma = index;
+                                          setState(() {});
                                         },
                                       ),
                                     ],
@@ -171,7 +174,7 @@ class _CuentaPageState extends State<CuentaPage> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Usuario",
+                prefs.idioma == 0 ? "User" : "Usuario",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 14,
@@ -212,7 +215,7 @@ class _CuentaPageState extends State<CuentaPage> {
                   Icons.person,
                   color: Colors.grey,
                 ),
-                hintText: "Nombre de usuario",
+                hintText: prefs.idioma == 0 ? "Username" : "Nombre de Usuario",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             )),
@@ -346,7 +349,7 @@ class _CuentaPageState extends State<CuentaPage> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Correo",
+                prefs.idioma == 0 ? "Mail" : "Correo",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 14,
@@ -405,7 +408,9 @@ class _CuentaPageState extends State<CuentaPage> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Nueva Contraseña (Opcional)",
+                prefs.idioma == 0
+                    ? "New Password (Optional)"
+                    : "Nueva Contraseña (Opcional)",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 14,
@@ -446,7 +451,8 @@ class _CuentaPageState extends State<CuentaPage> {
                   Icons.lock,
                   color: Colors.grey,
                 ),
-                hintText: "Nueva Contraseña",
+                hintText:
+                    prefs.idioma == 0 ? "New Password" : "Nueva Contraseña",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             )),
@@ -464,7 +470,7 @@ class _CuentaPageState extends State<CuentaPage> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
           child: Text(
-            "GUARDAR",
+            prefs.idioma == 0 ? "SAVE" : "GUARDAR",
             style:
                 TextStyle(fontSize: MediaQuery.of(context).size.height * 0.015),
           ),
@@ -513,7 +519,7 @@ class _CuentaPageState extends State<CuentaPage> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
           child: Text(
-            "CERRAR SESION",
+            prefs.idioma == 0 ? "LOGOUT" : "CERRAR SESIÓN",
             style:
                 TextStyle(fontSize: MediaQuery.of(context).size.height * 0.015),
           ),

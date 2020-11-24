@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
-import 'package:spoonacular/src/models/menu_item_model.dart';
-import 'package:spoonacular/src/models/restaurante_model.dart';
-import 'package:spoonacular/src/providers/restaurante_provider.dart';
-import 'package:spoonacular/src/providers/spoonacular_provider.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
+
 import 'package:spoonacular/src/widgets/banner_widget_area.dart';
-import 'package:spoonacular/src/widgets/titulo_secundario.dart';
+
 import 'package:spoonacular/utils/utils.dart' as utils;
 
 class InicioPage extends StatefulWidget {
@@ -15,6 +13,7 @@ class InicioPage extends StatefulWidget {
 
 class _InicioPageState extends State<InicioPage>
     with SingleTickerProviderStateMixin {
+  final prefs = PreferenciasUsuario();
   final _buscador = TextEditingController();
   var iconsImages = [
     "images/icon-vegetarian.png",
@@ -110,7 +109,7 @@ class _InicioPageState extends State<InicioPage>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Restaurantes",
+                      prefs.idioma == 0 ? "Restaurants" : "Restaurantes",
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: "Muli",
@@ -127,7 +126,7 @@ class _InicioPageState extends State<InicioPage>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Estilo de Vida",
+                      prefs.idioma == 0 ? "Lifestyle" : "Estilo de vida",
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: "Muli",

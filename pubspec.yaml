@@ -26,6 +26,7 @@ dependencies:
   translator:
   rxdart: ^0.24.1
   toggle_switch: "^0.1.4"
+  cached_network_image: ^2.3.3
 
 dev_dependencies:
   flutter_test:

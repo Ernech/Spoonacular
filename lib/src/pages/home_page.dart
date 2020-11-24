@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/pages/cuenta_page.dart';
 import 'package:spoonacular/src/pages/inicio_page.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final prefs = PreferenciasUsuario();
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,12 @@ class _HomePageState extends State<HomePage> {
 
   List<BottomNavigationBarItem> _items() {
     return <BottomNavigationBarItem>[
-      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Inicio')),
       BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle), title: Text('Cuenta')),
+          icon: Icon(Icons.home),
+          title: Text(prefs.idioma == 0 ? "Home" : "Inicio")),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          title: Text(prefs.idioma == 0 ? "Account" : "Cuenta")),
     ];
   }
 
