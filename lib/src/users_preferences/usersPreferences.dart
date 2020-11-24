@@ -25,6 +25,14 @@ class PreferenciasUsuario {
     _prefs.setString('token', value);
   }
 
+  get idioma {
+    return _prefs.getInt('idioma') ?? 0;
+  }
+
+  set idioma(int value) {
+    _prefs.setInt('idioma', value);
+  }
+
   // GET y SET de la última página
   get ultimaPagina {
     return _prefs.getString('ultimaPagina') ?? 'login';

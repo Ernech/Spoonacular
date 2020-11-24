@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //print(formatter.format(new DateTime.fromMillisecondsSinceEpoch(myvalue*1000)));
     final prefs = PreferenciasUsuario();
+    print('Idioma ${prefs.idioma}');
     if (prefs.token != null) {
       print(prefs.token);
     } else {

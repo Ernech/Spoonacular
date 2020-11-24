@@ -17,7 +17,7 @@ class CuentaPage extends StatefulWidget {
 }
 
 class _CuentaPageState extends State<CuentaPage> {
-  bool status =false;
+  bool status = false;
   final prefs = new PreferenciasUsuario();
   final formKey = GlobalKey<FormState>();
   bool guardando = false;
@@ -28,7 +28,6 @@ class _CuentaPageState extends State<CuentaPage> {
   List _tiposDietas = ['Vegetariano', 'Vegano', 'No Gluten', 'Omnivoro'];
   @override
   Widget build(BuildContext context) {
-
     Map<String, dynamic> mapToken = utils.parseJwt(prefs.token);
     final usuarioBloc = Provider.usuarioBLoc(context);
     var screenHeight = MediaQuery.of(context).size.height;
@@ -66,31 +65,30 @@ class _CuentaPageState extends State<CuentaPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.02,
+                            height: MediaQuery.of(context).size.height * 0.02,
                           ),
                           IconUser(
                               inicial[0], '$firstName $lastNameP $lastNameM'),
-
                           LineCirculeDetail(),
                           _crearNombreUsuario(usuario),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           _crearApPaterno(usuario),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           _crearApMaterno(usuario),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           _crearCorreo(usuario),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           _crearPassword(),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           Column(
                             children: [
@@ -110,17 +108,19 @@ class _CuentaPageState extends State<CuentaPage> {
                                 ],
                               ),
                               SizedBox(
-                                height:  MediaQuery.of(context).size.height*0.01,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01,
                               ),
                               Container(
                                   margin: EdgeInsets.symmetric(horizontal: 32),
-
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       ToggleSwitch(
-                                        minWidth: MediaQuery.of(context).size.width*0.30,
-                                        initialLabelIndex: 0,
+                                        minWidth:
+                                            MediaQuery.of(context).size.width *
+                                                0.30,
+                                        initialLabelIndex: prefs.idioma,
                                         activeBgColor: primaryGreen,
                                         //activeTextColor: Colors.white,
                                         inactiveBgColor: primaryBrown,
@@ -128,20 +128,20 @@ class _CuentaPageState extends State<CuentaPage> {
                                         labels: ['Ingles', 'Español'],
                                         onToggle: (index) {
                                           print('switched to: $index');
+                                          prefs.idioma = index;
                                         },
                                       ),
                                     ],
-                                  )
-                              ),
+                                  )),
                             ],
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           _crearBotonGuardarCambios(
                               usuarioBloc, usuario, prefs.token),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           _crearBotonCerrarSesion(prefs, context, usuario)
                         ],
@@ -181,7 +181,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height*0.01,
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -239,7 +239,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height:  MediaQuery.of(context).size.height*0.01,
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
@@ -298,7 +298,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height:  MediaQuery.of(context).size.height*0.01,
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -356,7 +356,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height:  MediaQuery.of(context).size.height*0.01,
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -415,7 +415,7 @@ class _CuentaPageState extends State<CuentaPage> {
           ],
         ),
         SizedBox(
-          height:  MediaQuery.of(context).size.height*0.01,
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32),
@@ -465,9 +465,12 @@ class _CuentaPageState extends State<CuentaPage> {
               borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
           child: Text(
             "GUARDAR",
-            style: TextStyle(fontSize:MediaQuery.of(context).size.height*0.015),
+            style:
+                TextStyle(fontSize: MediaQuery.of(context).size.height * 0.015),
           ),
-          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.36, vertical:  MediaQuery.of(context).size.height*0.02),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.36,
+              vertical: MediaQuery.of(context).size.height * 0.02),
         ),
         onPressed: () {
           if (!utils.validarDatosUsuario(
@@ -511,9 +514,12 @@ class _CuentaPageState extends State<CuentaPage> {
               borderRadius: BorderRadius.circular(25.0), color: primaryGreen),
           child: Text(
             "CERRAR SESION",
-            style: TextStyle(fontSize:MediaQuery.of(context).size.height*0.015),
+            style:
+                TextStyle(fontSize: MediaQuery.of(context).size.height * 0.015),
           ),
-          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.32, vertical:  MediaQuery.of(context).size.height*0.02),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.32,
+              vertical: MediaQuery.of(context).size.height * 0.02),
         ),
         onPressed: () => _cerrarSesion(prefs, context, usuario));
   }
@@ -551,6 +557,4 @@ class _CuentaPageState extends State<CuentaPage> {
       utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
     }
   }
-
-
 }
