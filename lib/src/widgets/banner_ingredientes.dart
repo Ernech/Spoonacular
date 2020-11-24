@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/ingredients_model.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import '../../constants.dart';
 
 class BannerIngredientes extends StatelessWidget {
+  final prefs = PreferenciasUsuario();
   List<Ingredient> ingredientes;
   BannerIngredientes(this.ingredientes);
   @override
@@ -43,26 +45,45 @@ class BannerIngredientes extends StatelessWidget {
   }
 
   Widget _crearBanner(String ingrediente) {
-    // return FutureBuilder(
-    //   future: utils.enToEs(ingrediente),
-    //   initialData: null,
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //     if (!snapshot.hasData) {
-    //       return CircularProgressIndicator();
-    //     } else {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: Chip(
-        label: Text(
-          ingrediente,
-          style: TextStyle(color: primaryWhite, fontSize: 12),
-        ),
+        label: _crearTexto(prefs, ingrediente),
         backgroundColor: primaryBrown,
       ),
     );
-    //     }
-    //   },
-    // );
+  }
+
+  Widget _crearTexto(PreferenciasUsuario prefs, String ingrediente) {
+    switch (prefs.idioma) {
+      case 0:
+        return Text(
+          ingrediente,
+          style: TextStyle(color: primaryWhite, fontSize: 12),
+        );
+        break;
+      case 1:
+        return FutureBuilder(
+          future: utils.traducirAEs(ingrediente),
+          initialData: null,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            } else {
+              return Text(
+                snapshot.data,
+                style: TextStyle(color: primaryWhite, fontSize: 12),
+              );
+            }
+          },
+        );
+        break;
+      default:
+        return Text(
+          ingrediente,
+          style: TextStyle(color: primaryWhite, fontSize: 12),
+        );
+    }
   }
   // final bannerIngredientes = [
   //   "images/arbeja.png",

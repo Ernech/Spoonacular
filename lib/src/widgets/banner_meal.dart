@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/meal_diet_model.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 import '../../constants.dart';
 
 class BannerMeal extends StatelessWidget {
   final List<Meal> meals;
-
+  final prefs = PreferenciasUsuario();
   BannerMeal({@required this.meals});
 
   @override
@@ -95,29 +96,9 @@ class BannerMeal extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      constraints: BoxConstraints(maxWidth: 150, minHeight: 46),
-                      child:
-                          //  FutureBuilder(
-                          //   future: utils.traducirAEs(menuItems[i].title),
-                          //   initialData: null,
-                          //   builder:
-                          //       (BuildContext context, AsyncSnapshot snapshot) {
-                          //     if (!snapshot.hasData) {
-                          //       return CircularProgressIndicator();
-                          //     } else {
-                          //       return
-                          Text(
-                        meals[i].title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: primaryGreen,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      //     }
-                      //   },
-                      // ),
-                    ),
+                        constraints:
+                            BoxConstraints(maxWidth: 150, minHeight: 46),
+                        child: _crearTexto(prefs, meals[i].title)),
                   ],
                 ),
               ],
@@ -167,6 +148,50 @@ class BannerMeal extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _crearTexto(PreferenciasUsuario prefs, String title) {
+    switch (prefs.idioma) {
+      case 0:
+        return Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            color: primaryGreen,
+          ),
+          textAlign: TextAlign.left,
+        );
+        break;
+      case 1:
+        return FutureBuilder(
+          future: utils.traducirAEs(title),
+          initialData: null,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            } else {
+              return Text(
+                snapshot.data,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: primaryGreen,
+                ),
+                textAlign: TextAlign.left,
+              );
+            }
+          },
+        );
+        break;
+      default:
+        return Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            color: primaryGreen,
+          ),
+          textAlign: TextAlign.left,
+        );
+    }
   }
 
   Widget _crearImagen(String url, BuildContext context) {

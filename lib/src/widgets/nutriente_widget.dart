@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import '../../constants.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
 // ignore: must_be_immutable
 class NutrienteWidget extends StatelessWidget {
+  final prefs = PreferenciasUsuario();
   String nutriente;
   double cantidadNutriente;
   String unidades;
@@ -73,25 +75,7 @@ class NutrienteWidget extends StatelessWidget {
                 top: 25,
                 child: Container(
                   width: 80,
-                  child: FutureBuilder(
-                    future: utils.traducirAEs(nutriente),
-                    initialData: null,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
-                      } else {
-                        return Text(
-                          snapshot.data,
-                          style: TextStyle(
-                            color: primaryWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                          textAlign: TextAlign.center,
-                        );
-                      }
-                    },
-                  ),
+                  child: _crearTexto(prefs, nutriente),
                 ),
               ),
             ],
@@ -138,5 +122,52 @@ class NutrienteWidget extends StatelessWidget {
         return alert;
       },
     );
+  }
+
+  Widget _crearTexto(PreferenciasUsuario prefs, String nutriente) {
+    switch (prefs.idioma) {
+      case 0:
+        return Text(
+          nutriente,
+          style: TextStyle(
+            color: primaryWhite,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+          textAlign: TextAlign.center,
+        );
+        break;
+      case 1:
+        return FutureBuilder(
+          future: utils.traducirAEs(nutriente),
+          initialData: null,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            } else {
+              return Text(
+                snapshot.data,
+                style: TextStyle(
+                  color: primaryWhite,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              );
+            }
+          },
+        );
+        break;
+      default:
+        return Text(
+          nutriente,
+          style: TextStyle(
+            color: primaryWhite,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+          textAlign: TextAlign.center,
+        );
+    }
   }
 }

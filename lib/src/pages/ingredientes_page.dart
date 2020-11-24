@@ -89,20 +89,21 @@ class IngredientesPage extends StatelessWidget {
                           child: Column(
                             children: [
                               SubtituloGeneral("Nombre del plato"),
-                              StreamBuilder(
-                                stream: spoonacularBloc.menuItemDetailStream,
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<MenuItemDetail> snapshot) {
-                                  if (snapshot.hasData) {
-                                    MenuItemDetail menuItemDetail =
-                                        snapshot.data;
-                                    return ParrafoGeneral(
-                                        menuItemDetail.title, primaryGreen);
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                },
-                              ),
+                              ParrafoGeneral(menuItem.title, primaryGreen),
+                              // StreamBuilder(
+                              //   stream: spoonacularBloc.menuItemDetailStream,
+                              //   builder: (BuildContext context,
+                              //       AsyncSnapshot<MenuItemDetail> snapshot) {
+                              //     if (snapshot.hasData) {
+                              //       MenuItemDetail menuItemDetail =
+                              //           snapshot.data;
+                              //       return ParrafoGeneral(
+                              //           menuItemDetail.title, primaryGreen);
+                              //     } else {
+                              //       return CircularProgressIndicator();
+                              //     }
+                              //   },
+                              // ),
                               // SizedBox(
                               //   height: 15,
                               // ),
