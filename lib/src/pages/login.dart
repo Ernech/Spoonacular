@@ -3,6 +3,7 @@ import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/login_bloc.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/providers/usuario_provider.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/src/widgets/custome_input.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/utils/utils.dart';
@@ -14,7 +15,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final usuarioProvider = new UsuarioProvider();
-
+  final prefs = PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     final loginbloc = Provider.of(context);
@@ -28,24 +29,26 @@ class _LoginState extends State<Login> {
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.05,
+                height: MediaQuery.of(context).size.height * 0.05,
               ),
               new Container(
                 child: new Image.asset(
                   'images/logo.png',
-                  height:MediaQuery.of(context).size.height*0.20,
+                  height: MediaQuery.of(context).size.height * 0.20,
                   fit: BoxFit.cover,
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               Container(
-                width: MediaQuery.of(context).size.width *0.80,
+                width: MediaQuery.of(context).size.width * 0.80,
                 child: FittedBox(
-                  fit:BoxFit.fitWidth,
+                  fit: BoxFit.fitWidth,
                   child: Text(
-                    "Bienvenido a Nutrana",
+                    prefs.idioma == 0
+                        ? "Wellcome to Nutrana"
+                        : "Bienvenido a Nutrana",
                     style: TextStyle(
                       fontSize: 35,
                       fontFamily: "Pacifico",
@@ -55,38 +58,50 @@ class _LoginState extends State<Login> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
-              CustomeInput("Correo", Icons.person, "Correo Electronico",
-                  loginbloc, false, TextInputType.emailAddress),
+              CustomeInput(
+                  prefs.idioma == 0 ? "Mail" : "Correo",
+                  Icons.person,
+                  prefs.idioma == 0 ? "Email" : "Correo Electrónico",
+                  loginbloc,
+                  false,
+                  TextInputType.emailAddress),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
-              CustomeInput("Contraseña", Icons.lock, "Contraseña", loginbloc,
-                  true, null),
+              CustomeInput(
+                  prefs.idioma == 0 ? "Password" : "Contraseña",
+                  Icons.lock,
+                  prefs.idioma == 0 ? "Password" : "Contraseña",
+                  loginbloc,
+                  true,
+                  null),
               SizedBox(
-                height:  MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               SizedBox(
-                height:  MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               crearBoton(loginbloc, horizontalPadding),
               SizedBox(
-                height:  MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               LineCirculeDetail(),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.01,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               Container(
-                width: MediaQuery.of(context).size.width *0.60,
+                width: MediaQuery.of(context).size.width * 0.60,
                 child: FittedBox(
-                  fit:BoxFit.fitWidth,
+                  fit: BoxFit.fitWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "No tienes cuenta? ",
+                        prefs.idioma == 0
+                            ? "Don't have an account? "
+                            : "¿No tienes cuenta? ",
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: "Muli",
@@ -95,7 +110,9 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                           child: Text(
-                            "Crea un aqui",
+                            prefs.idioma == 0
+                                ? "Create an account here"
+                                : "Crea una aquí",
                             style: TextStyle(
                               color: primaryGreen,
                               fontSize: 14,
@@ -129,11 +146,14 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(25.0),
                   color: primaryGreen),
               child: Text(
-                'INGRESAR',
-                style: TextStyle(fontSize:MediaQuery.of(context).size.height*0.025,color: primaryWhite),
+                prefs.idioma == 0 ? "LOGIN" : "INGRESAR",
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.025,
+                    color: primaryWhite),
               ),
               padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width*0.3, vertical:  MediaQuery.of(context).size.height*0.02),
+                  horizontal: MediaQuery.of(context).size.width * 0.3,
+                  vertical: MediaQuery.of(context).size.height * 0.02),
             ),
             onPressed:
                 snapshot.hasData ? () => _ingresar(loginBloc, context) : null,
@@ -146,7 +166,11 @@ class _LoginState extends State<Login> {
     if (info['ok']) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
-      mostarAlerta(context, 'Información incorrecta', info['mensaje']);
+      mostarAlertaLogin(
+          context,
+          prefs.idioma == 0 ? "Wrong information" : "Información incorrecta ",
+          info['mensaje'],
+          prefs.idioma);
     }
 
     // Navigator.pushReplacementNamed(context, 'home');

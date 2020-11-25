@@ -232,7 +232,7 @@ class _CuentaPageState extends State<CuentaPage> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Apellido Paterno",
+                prefs.idioma == 0 ? "Last Name" : "Apellido Paterno",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 14,
@@ -273,7 +273,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 Icons.person,
                 color: Colors.grey,
               ),
-              hintText: "Apellido Paterno",
+              hintText: prefs.idioma == 0 ? "Last Name" : "Apellido Paterno",
               hintStyle: TextStyle(color: Colors.grey),
             ),
           ),
@@ -291,7 +291,7 @@ class _CuentaPageState extends State<CuentaPage> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Apellido Materno",
+                prefs.idioma == 0 ? "Mother's Last Name" : "Apellido Materno",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 14,
@@ -332,7 +332,9 @@ class _CuentaPageState extends State<CuentaPage> {
                   Icons.person,
                   color: Colors.grey,
                 ),
-                hintText: "Apellido Materno",
+                hintText: prefs.idioma == 0
+                    ? "Mother's Last Name"
+                    : "Apellido Materno",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             )),
@@ -391,7 +393,7 @@ class _CuentaPageState extends State<CuentaPage> {
                   Icons.alternate_email,
                   color: Colors.grey,
                 ),
-                hintText: "Correo Electrónico",
+                hintText: prefs.idioma == 0 ? "Email" : "Correo Electrónico",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             )),
@@ -484,12 +486,20 @@ class _CuentaPageState extends State<CuentaPage> {
               !utils.validarEmail(usuario.email) ||
               !utils.validarPassword(npass)) {
             utils.mostarAlerta(
-                context, "Error", "Campos incorrectos, revise los datos");
+                context,
+                "Error",
+                prefs.idioma == 0
+                    ? "Wrong fields, check the data"
+                    : "Campos incorrectos, revise los datos");
           } else {
             usuarioBloc.modificarUsuario(usuario);
             if (initEmail == usuario.email && (npass == null || npass == '')) {
               utils.mostarAlerta(
-                  context, "Cambios guardados", "Se han actualizado sus datos");
+                  context,
+                  prefs.idioma == 0 ? "Changes Saved" : "Cambios guardados",
+                  prefs.idioma == 0
+                      ? "Your personal data has been updated"
+                      : "Se han guardado sus datos");
             } else if (initEmail != usuario.email &&
                 (npass == null || npass == '')) {
               _cambiarCorreo(idToken);
@@ -535,10 +545,19 @@ class _CuentaPageState extends State<CuentaPage> {
         await usuarioProvider.cambiarCorreo(idToken, usuario.email);
     if (result['ok']) {
       _cerrarSesion(prefs, context, usuario);
-      utils.mostarAlerta(context, "Cambios guardados",
-          "Se han actualizado sus datos vuelva a iniciar sesión");
+      utils.mostarAlerta(
+          context,
+          prefs.idioma == 0 ? "Changes Saved" : "Cambios guardados",
+          prefs.idioma == 0
+              ? "Your personal data has been updated, please login again"
+              : "Se han guardado sus datos, vuelva a iniciar sesión");
     } else {
-      utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
+      utils.mostarAlerta(
+          context,
+          "Error",
+          prefs.idioma == 0
+              ? "Your personal data could not be updated"
+              : "No se han podido actualizar sus datos");
     }
   }
 
@@ -548,7 +567,12 @@ class _CuentaPageState extends State<CuentaPage> {
     if (result['ok']) {
       _cambiarPassword(result['token']);
     } else {
-      utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
+      utils.mostarAlerta(
+          context,
+          "Error",
+          prefs.idioma == 0
+              ? "Your personal data could not be updated"
+              : "No se han podido actualizar sus datos");
     }
   }
 
@@ -557,8 +581,12 @@ class _CuentaPageState extends State<CuentaPage> {
         await usuarioProvider.cambiarPassword(idToken, npass);
     if (result['ok']) {
       _cerrarSesion(prefs, context, usuario);
-      utils.mostarAlerta(context, "Cambios guardados",
-          "Se han actualizado sus datos vuelva a iniciar sesión");
+      utils.mostarAlerta(
+          context,
+          prefs.idioma == 0 ? "Changes Saved" : "Cambios guardados",
+          prefs.idioma == 0
+              ? "Your personal data has been updated, please login again"
+              : "Se han guardado sus datos, vuelva a iniciar sesión");
     } else {
       utils.mostarAlerta(context, "Error", "No se pudo actualizar sus datos");
     }

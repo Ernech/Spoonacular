@@ -208,16 +208,36 @@ class _InicioPageState extends State<InicioPage>
       child: Table(
         children: [
           TableRow(children: [
-            _tarjetasEstiloDeVida("vegetarian", "Vegetariano", iconsImages[0],
-                Colors.green, 1, utils.vegetariano),
-            _tarjetasEstiloDeVida("Omnivoro", "Omnivoro", iconsImages[2],
-                Colors.deepOrangeAccent, 2, utils.omnivoro),
+            _tarjetasEstiloDeVida(
+                "vegetarian",
+                prefs.idioma == 0 ? "Vegetarian" : "Vegetariano",
+                iconsImages[0],
+                Colors.green,
+                1,
+                prefs.idioma == 0 ? utils.vegetarianoEn : utils.vegetariano),
+            _tarjetasEstiloDeVida(
+                "Omnivoro",
+                prefs.idioma == 0 ? "Omnivore" : "Omnivoro",
+                iconsImages[2],
+                Colors.deepOrangeAccent,
+                2,
+                prefs.idioma == 0 ? utils.omnivoroEn : utils.omnivoro),
           ]),
           TableRow(children: [
-            _tarjetasEstiloDeVida("vegano", "Vegano", iconsImages[1],
-                Colors.lightGreen, 3, utils.vegano),
-            _tarjetasEstiloDeVida("No gluten", "No gluten", iconsImages[3],
-                Colors.grey, 4, utils.freeGluten),
+            _tarjetasEstiloDeVida(
+                "vegano",
+                prefs.idioma == 0 ? "Vegan" : "Vegano",
+                iconsImages[1],
+                Colors.lightGreen,
+                3,
+                prefs.idioma == 0 ? utils.veganoEn : utils.vegano),
+            _tarjetasEstiloDeVida(
+                "No gluten",
+                prefs.idioma == 0 ? "Free Gluten" : "No gluten",
+                iconsImages[3],
+                Colors.grey,
+                4,
+                prefs.idioma == 0 ? utils.freeGlutenEn : utils.freeGluten),
           ])
         ],
       ),
@@ -234,22 +254,6 @@ class _InicioPageState extends State<InicioPage>
           return CircularProgressIndicator();
         } else {
           return BannerWidgetArea(snapshot.data);
-        }
-      },
-    );
-  }
-
-  Widget _testTraductor() {
-    return FutureBuilder(
-      future: utils.traducirAEs(
-          'I would really like to drive your car around the block a few times.'),
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        } else {
-          print('Data: ${snapshot.data}');
-          return Container();
         }
       },
     );

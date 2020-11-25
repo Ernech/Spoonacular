@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/src/widgets/banner_menu.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/titulo_card.dart';
@@ -10,6 +11,7 @@ import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
 class RestauranteMenuPage extends StatelessWidget {
   //const RestauranteMenuPage({Key key}) : super(key: key);
+  final prefs = PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     final String arguments = ModalRoute.of(context).settings.arguments;
@@ -36,7 +38,8 @@ class RestauranteMenuPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ButtonAtras(),
-                  TituloSecundario("Restaurante"),
+                  TituloSecundario(
+                      prefs.idioma == 0 ? "Restaurant" : "Restaurante"),
                 ],
               ),
               SizedBox(
@@ -46,9 +49,12 @@ class RestauranteMenuPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              TituloCard("Platos principales", primaryBlack),
+              TituloCard(
+                  prefs.idioma == 0 ? "Main Meals" : "Platos Principales",
+                  primaryBlack),
               _bannerMenu(spoonacularBloc, arguments),
-              TituloCard("Otros", primaryBlack),
+              TituloCard(
+                  prefs.idioma == 0 ? "Other Meals" : "Otros", primaryBlack),
               _bannerMenuSecundario(spoonacularBloc, arguments, 10),
             ],
           ),

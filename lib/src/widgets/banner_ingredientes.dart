@@ -18,7 +18,9 @@ class BannerIngredientes extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: Chip(
           label: Text(
-            'Ingredientes no disponibles',
+            prefs.idioma == 0
+                ? 'Ingredients not available'
+                : 'Ingredientes no disponibles',
             style: TextStyle(color: primaryWhite, fontSize: 12),
           ),
           backgroundColor: primaryBrown,

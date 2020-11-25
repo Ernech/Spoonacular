@@ -74,7 +74,7 @@ class NutrienteMealWidget extends StatelessWidget {
             height: 12,
           ),
           Text(
-            "% Diario",
+            prefs.idioma == 0 ? "% Diary" : "% Diario",
             style: TextStyle(fontFamily: "Muli", color: Color(0xFF828282)),
           ),
           SizedBox(

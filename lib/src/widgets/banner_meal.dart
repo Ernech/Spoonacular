@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
@@ -59,33 +60,8 @@ class BannerMeal extends StatelessWidget {
                   child: _crearImagen(
                       'https://webknox.com/recipeImages/${meals[i].id}-556x370.${meals[i].imageType}',
                       context),
-                )
-
-                // FadeInImage(
-                //   placeholder: AssetImage('images/loading-circle.gif'),
-                //   image: NetworkImage(menuItems[i].image),
-                // ),
-                ),
+                )),
           ),
-          // Positioned(
-          //   top: 5,
-          //   left: 0,
-          //   child: Row(
-          //     children: [
-          //       IconButton(
-          //         icon: Icon(Icons.favorite),
-          //         color: primaryGreenLight,
-          //         onPressed: () {
-          //           print("favorito");
-          //         },
-          //       ),
-          //       Text(
-          //         "5",
-          //         style: TextStyle(color: primaryGreenLight),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Positioned(
             top: 140,
             left: 16,
@@ -137,7 +113,7 @@ class BannerMeal extends StatelessWidget {
                           });
                     },
                     child: Text(
-                      'Ver',
+                      prefs.idioma == 0 ? 'View' : 'Ver',
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
@@ -202,16 +178,16 @@ class BannerMeal extends StatelessWidget {
         width: 100.0,
       );
     } else {
-      return Image.network(
-        url,
-        height: 100.0,
-        width: 100.0,
-        errorBuilder: (context, url, error) => Image(
-          image: AssetImage('images/no-image.png'),
+      return CachedNetworkImage(
+          imageUrl: url,
           height: 100.0,
           width: 100.0,
-        ),
-      );
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Image.asset(
+                'images/no-image.png',
+                height: 100.0,
+                width: 100.0,
+              ));
     }
   }
 }

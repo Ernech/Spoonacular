@@ -66,6 +66,42 @@ void mostarAlerta(BuildContext context, String titulo, String mensaje) {
       });
 }
 
+void mostarAlertaLogin(
+    BuildContext context, String titulo, String mensaje, int idioma) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(titulo),
+          content: Text(_textoMensaje(mensaje, idioma)),
+          actions: [
+            FlatButton(
+                onPressed: () => Navigator.of(context).pop(), child: Text('ok'))
+          ],
+        );
+      });
+}
+
+String _textoMensaje(String mensaje, int idioma) {
+  if (idioma == 0) {
+    if (mensaje == 'INVALID_PASSWORD') {
+      return 'Invalid Password';
+    } else if (mensaje == 'EMAIL_NOT_FOUND') {
+      return 'Email Not Found';
+    } else {
+      return 'Wrong credentials';
+    }
+  } else {
+    if (mensaje == 'INVALID_PASSWORD') {
+      return 'Contraseña Incorrecta';
+    } else if (mensaje == 'EMAIL_NOT_FOUND') {
+      return 'Email no encontrado';
+    } else {
+      return 'Datos Incorrectos';
+    }
+  }
+}
+
 //Estilos de vida
 Map<String, dynamic> vegetariano = {
   'titulo': 'Vegetariano',
@@ -136,7 +172,76 @@ Map<String, dynamic> freeGluten = {
   'noPermitidos':
       'Granos que contienen gluten, como trigo, cebada y centeno, así como cualquier alimento elaborado con ellos'
 };
+//Estilos de vida inglés
+Map<String, dynamic> vegetarianoEn = {
+  'titulo': 'Vegetarian',
+  'imagen': 'images/vegetarian.jpg',
+  'diet': 'vegetarian',
+  'descripcion':
+      'This diet excludes all meat, fish, and animal by-products that require the animal to be killed (such as broth made from bones or gelatin). It is typically rich in legumes (e.g. beans and lentils), grains, fruits, vegetables, nuts, and seeds. Vegetarians who eat eggs but not dairy are known as ovo vegetarians while vegetarians who eat dairy but not eggs are known as lacto vegetarians.',
+  'permitidos': [
+    "Legumes",
+    "Grains",
+    "Fruits",
+    "Vegetables",
+    "Nuts",
+    "Seeds",
+    "Eggs",
+    "Dairy",
+    "Honey"
+  ],
+  'noPermitidos': [
+    "Meat",
+    "Seafood",
+    "Bone broth",
+    "Gelatin",
+  ]
+};
+Map<String, dynamic> omnivoroEn = {
+  'titulo': 'Omnivore',
+  'imagen': 'images/omnivore.jpg',
+  'diet': '',
+  'descripcion':
+      'A mixture of meat, fish, fruit, vegetables, grains, etc. It can be healthy if following a balanced whole food or so-called "clean eating" diet1 or unhealthy if eating the Standard American Diet.',
+  'permitidos':
+      'Everything! Meat, fish, grains (except in special cases), eggs, dairy, nuts, seeds, vegetables, fruit, etc',
+  'noPermitidos': 'N/A'
+};
+Map<String, dynamic> veganoEn = {
+  'titulo': 'Vegan',
+  'imagen': 'images/vegan.jpg',
+  'diet': 'vegan',
+  'descripcion':
+      'This diet excludes all animal products, including meat, fish, dairy, eggs, and honey. Like the vegetarian diet, the vegan diet is centered around legumes, grains, fruits, vegetables, nuts, and seeds.',
+  'permitidos': [
+    "Legumes",
+    "Grains",
+    "Fruits",
+    "Vegetables",
+    "Nuts",
+    "Seeds",
+  ],
+  'noPermitidos': [
+    "Meat",
+    "Seafood",
+    "Bone broth",
+    "Gelatin",
+    "Eggs",
+    "Dairy",
+    "Honey"
+  ]
+};
 
+Map<String, dynamic> freeGlutenEn = {
+  'titulo': 'Gluten Free',
+  'imagen': 'images/freegluten.jpg',
+  'diet': 'gluten free',
+  'descripcion':
+      'Following a gluten free diet means eliminating gluten, the proteins found in wheat and some other grains. There are no other requirements, so a gluten free diet is not necessarily a healthy diet, since you could easily load up on gluten free pasta, cookies, and crackers. This is why a gluten free diet mostly makes sense if you truly have a gluten allergy or insensitivity, or if you cut out gluten while centering your diet around unprocessed foods.',
+  'permitidos': "Everything that doesn't contain gluten",
+  'noPermitidos':
+      'Gluten-containing grains, such as wheat, barley, and rye, as well as any foods made from them.'
+};
 // Nutrientes Importantes
 List<Map<String, String>> nutrientesImportantes = [
   {
@@ -162,6 +267,32 @@ List<Map<String, String>> nutrientesImportantes = [
     'cantidad': '120-130 gramos',
     'concepto':
         'Los carbohidratos proporcionan el combustible para el sistema nervioso central y la energía para los músculos.'
+  }
+];
+List<Map<String, String>> nutrientesImportantesEn = [
+  {
+    'tipo': 'Calories',
+    'cantidad': '2000',
+    'concepto':
+        'The calorie is a unit of energy. In nutrition, when it comes to calories, it refers to the energy that people obtain from the food and beverages they consume, and the energy that our own body uses in physical activity.'
+  },
+  {
+    'tipo': 'Fat',
+    'cantidad': '44 - 76 g',
+    'concepto':
+        'Fats are nutrients that the food we eat contains and that our bodies use to build cell membranes, nervous tissue (such as the brain), and hormones.'
+  },
+  {
+    'tipo': 'Proteins',
+    'cantidad': '50 a 175 g',
+    'concepto':
+        'Proteins are essential macronutrients that we acquire through food and that fulfill important functions for the proper functioning of the body, fats or carbohydrates.'
+  },
+  {
+    'tipo': 'Carbohydrates',
+    'cantidad': '120-130 g',
+    'concepto':
+        'Carbohydrates provide fuel for the central nervous system and energy for muscles.'
   }
 ];
 Map<String, dynamic> parseJwt(String token) {

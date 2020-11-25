@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/estiloVida': (BuildContext context) => EstiloVidaPage(),
         '/mealInformation': (BuildContext context) => MealInformationPage()
       },
+      debugShowCheckedModeBanner: false,
     );
     return Provider(
       child: mapp,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/meal_diet_model.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/src/widgets/banner_alimentos-permitidos.dart';
 import 'package:spoonacular/src/widgets/banner_meal.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
@@ -12,7 +13,7 @@ import 'package:spoonacular/src/widgets/titulo_secundario.dart';
 
 class EstiloVidaPage extends StatelessWidget {
   //const RestauranteMenuPage({Key key}) : super(key: key);
-
+  final prefs = PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     final spoonacularBloc = Provider.spoonacularBloc(context);
@@ -40,7 +41,8 @@ class EstiloVidaPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ButtonAtras(),
-                  TituloSecundario("Estilo de Vida"),
+                  TituloSecundario(
+                      prefs.idioma == 0 ? "Lifestyle" : "Estilo de vida"),
                 ],
               ),
               SizedBox(
@@ -50,7 +52,11 @@ class EstiloVidaPage extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              TituloCard("Informacion General", primaryGreen),
+              TituloCard(
+                  prefs.idioma == 0
+                      ? "General information"
+                      : "Información General",
+                  primaryGreen),
               SizedBox(
                 height: 5,
               ),
@@ -115,10 +121,13 @@ class EstiloVidaPage extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
               ),
-              TituloCard("Alimentos Permitidos", primaryGreen),
+              TituloCard(prefs.idioma == 0 ? "Allowed" : "Alimentos permitidos",
+                  primaryGreen),
               // BannerAlimentosPermitidos(),
               (arguments['titulo'] == "Vegetariano" ||
-                      arguments['titulo'] == "Vegano")
+                      arguments['titulo'] == "Vegano" ||
+                      arguments['titulo'] == "Vegetarian" ||
+                      arguments['titulo'] == "Vegan")
                   ? BannerAlimentosPermitidos(arguments['permitidos'])
                   : Container(
                       padding:
@@ -132,9 +141,13 @@ class EstiloVidaPage extends StatelessWidget {
                         textAlign: TextAlign.justify,
                       ),
                     ),
-              TituloCard("Alimentos No Permitidos", primaryGreen),
+              TituloCard(
+                  prefs.idioma == 0 ? "Not Allowed" : "Alimentos no permitidos",
+                  primaryGreen),
               (arguments['titulo'] == "Vegetariano" ||
-                      arguments['titulo'] == "Vegano")
+                      arguments['titulo'] == "Vegano" ||
+                      arguments['titulo'] == "Vegetarian" ||
+                      arguments['titulo'] == "Vegan")
                   ? BannerAlimentosPermitidos(arguments['noPermitidos'])
                   : Container(
                       padding:
@@ -148,7 +161,7 @@ class EstiloVidaPage extends StatelessWidget {
                         textAlign: TextAlign.justify,
                       ),
                     ),
-              TituloCard("Platos", primaryGreen),
+              TituloCard(prefs.idioma == 0 ? "Meals" : "Platos", primaryGreen),
               _bannerMenu(spoonacularBloc, arguments['diet'])
             ],
           ),

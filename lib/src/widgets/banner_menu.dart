@@ -163,7 +163,7 @@ class BannerMenu extends StatelessWidget {
                           });
                     },
                     child: Text(
-                      'Ver',
+                      prefs.idioma == 0 ? 'View' : 'Ver',
                       style: TextStyle(fontSize: 16),
                     ),
                   ),

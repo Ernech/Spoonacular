@@ -4,6 +4,7 @@ import 'package:spoonacular/src/models/usuario_model.dart';
 
 import 'package:spoonacular/src/providers/usuario_provider.dart';
 import 'package:spoonacular/src/providers/spoonacular_provider.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/src/widgets/custome_input_account.dart';
 import 'package:spoonacular/src/widgets/line_circule_detail.dart';
 import 'package:spoonacular/utils/utils.dart';
@@ -18,6 +19,7 @@ class _RegistroState extends State<Registro> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final usuarioProvider = new UsuarioProvider();
   final spoonacularProvider = new SpoonacularProvider();
+  final prefs = PreferenciasUsuario();
   UsuarioBloc usuarioBloc;
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,9 @@ class _RegistroState extends State<Registro> {
                 height: 10,
               ),
               Text(
-                "Registrate en Nutrana",
+                prefs.idioma == 0
+                    ? "Sign up in Nutrana"
+                    : "Registrate en Nutrana",
                 style: TextStyle(
                   fontSize: 30,
                   fontFamily: "Pacifico",
@@ -53,24 +57,28 @@ class _RegistroState extends State<Registro> {
                 height: 10,
               ),
 
-              CustomeInputAccount("Nombre", Icons.person, "Nombre",
-                  registerBloc.usernameStream, registerBloc.changeUsername),
+              CustomeInputAccount(
+                  prefs.idioma == 0 ? "First Name" : "Nombre",
+                  Icons.person,
+                  prefs.idioma == 0 ? "First Name" : "Nombre",
+                  registerBloc.usernameStream,
+                  registerBloc.changeUsername),
               SizedBox(
                 height: 10,
               ),
               CustomeInputAccount(
-                  "Apellido Paterno",
+                  prefs.idioma == 0 ? "Last Name" : "Apellido Paterno",
                   Icons.person,
-                  "Apellido Paterno",
+                  prefs.idioma == 0 ? "Last Name" : "Apellido Paterno",
                   registerBloc.apPaternoStream,
                   registerBloc.changeApPaterno),
               SizedBox(
                 height: 10,
               ),
               CustomeInputAccount(
-                  "Apellido Materno",
+                  prefs.idioma == 0 ? "Mother's Last Name" : "Apellido Materno",
                   Icons.person,
-                  "Apellido Materno",
+                  prefs.idioma == 0 ? "Mother's Last Name" : "Apellido Materno",
                   registerBloc.apMaternoStream,
                   registerBloc.changeApMaterno),
               SizedBox(
@@ -96,7 +104,9 @@ class _RegistroState extends State<Registro> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Ya tienes cuenta? ",
+                    prefs.idioma == 0
+                        ? "Already have an account?"
+                        : "¿Ya tienes cuenta?",
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "Muli",
@@ -105,7 +115,7 @@ class _RegistroState extends State<Registro> {
                   ),
                   GestureDetector(
                       child: Text(
-                        "Ingresa por aqui",
+                        prefs.idioma == 0 ? "Login here" : "Ingresa por aquí",
                         style: TextStyle(
                           color: primaryGreen,
                           fontSize: 14,
@@ -134,7 +144,7 @@ class _RegistroState extends State<Registro> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Correo ELectronico",
+                prefs.idioma == 0 ? "Email" : "Correo Electrónico",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 16,
@@ -178,7 +188,8 @@ class _RegistroState extends State<Registro> {
                       Icons.alternate_email,
                       color: Colors.grey,
                     ),
-                    hintText: "Email",
+                    hintText:
+                        prefs.idioma == 0 ? "Email" : "Correo Electrónico",
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
                 );
@@ -197,7 +208,7 @@ class _RegistroState extends State<Registro> {
             Padding(
               padding: const EdgeInsets.only(left: 34),
               child: Text(
-                "Contraseña",
+                prefs.idioma == 0 ? "Password" : "Contraseña",
                 style: TextStyle(
                     color: primaryGreen,
                     fontSize: 16,
@@ -241,7 +252,7 @@ class _RegistroState extends State<Registro> {
                       Icons.lock,
                       color: Colors.grey,
                     ),
-                    hintText: "Contrasena",
+                    hintText: prefs.idioma == 0 ? "Password" : "Contraseña",
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
                 );
@@ -265,7 +276,7 @@ class _RegistroState extends State<Registro> {
                     borderRadius: BorderRadius.circular(25.0),
                     color: primaryGreenLight),
                 child: Text(
-                  'CREAR CUENTA',
+                  prefs.idioma == 0 ? "SIGN UP" : "CREAR CUENTA",
                   style: TextStyle(fontSize: 15.0),
                 ),
                 padding: EdgeInsets.symmetric(
@@ -286,7 +297,10 @@ class _RegistroState extends State<Registro> {
       _registrarseSpoonacular(
           bloc.username, bloc.apPaterno, bloc.apMaterno, bloc.email);
     } else {
-      mostarAlerta(context, "Error al registrase", info['mensaje']);
+      mostarAlerta(
+          context,
+          prefs.idioma == 0 ? "Error" : "Error al registrarse",
+          info['mensaje']);
     }
   }
 
@@ -310,7 +324,12 @@ class _RegistroState extends State<Registro> {
 
   _registroUsuarioFirebase(UsuarioModel usuarioModel) {
     usuarioBloc.registrarUsuario(usuarioModel);
-    mostarAlerta(context, "Usuario Registrado", "El registro ha sido exitoso");
+    mostarAlerta(
+        context,
+        prefs.idioma == 0 ? "Successful Sign Up " : "Usuario Registrado",
+        prefs.idioma == 0
+            ? "Your signup has been successful"
+            : "El registro ha sido exitoso");
     Navigator.pushReplacementNamed(context, '/');
   }
 }

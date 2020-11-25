@@ -3,6 +3,7 @@ import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/ingredients_model.dart';
 import 'package:spoonacular/src/models/menu_item_detail_model.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/src/widgets/banner_ingredientes.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
 import 'package:spoonacular/src/widgets/nutriente_widget.dart';
@@ -12,6 +13,7 @@ import 'package:spoonacular/src/widgets/subtitulo_general.dart';
 
 class IngredientesPage extends StatelessWidget {
   String tag;
+  final prefs = PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arguments =
@@ -88,7 +90,9 @@ class IngredientesPage extends StatelessWidget {
                               left: 36, right: 36, top: 25),
                           child: Column(
                             children: [
-                              SubtituloGeneral("Nombre del plato"),
+                              SubtituloGeneral(prefs.idioma == 0
+                                  ? "Title"
+                                  : "Nombre del plato"),
                               ParrafoGeneral(menuItem.title, primaryGreen),
                               // StreamBuilder(
                               //   stream: spoonacularBloc.menuItemDetailStream,
@@ -107,7 +111,9 @@ class IngredientesPage extends StatelessWidget {
                               // SizedBox(
                               //   height: 15,
                               // ),
-                              SubtituloGeneral("Nutrientes"),
+                              SubtituloGeneral(prefs.idioma == 0
+                                  ? "Nutrients"
+                                  : "Nutrientes"),
                               // ParrafoGeneral(
                               //     "La tradicional ensalada Napolitana proviene de Italia de la región de Nápoles, de allí "
                               //     "su nombre; sus colores predominantes son verde.",
@@ -133,8 +139,10 @@ class IngredientesPage extends StatelessWidget {
                                         children: (nutrientes != null ||
                                                 nutrientes.length > 0)
                                             ? _crearNutrientes(nutrientes)
-                                            : _chipNoDisponible(
-                                                'Nutrientes no disponibles'),
+                                            : _chipNoDisponible(prefs.idioma ==
+                                                    0
+                                                ? "Nutrients not available"
+                                                : "Nutrientes no disponibles"),
                                       ),
                                     );
                                   }
@@ -144,7 +152,9 @@ class IngredientesPage extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              SubtituloGeneral("Ingredientes"),
+                              SubtituloGeneral(prefs.idioma == 0
+                                  ? "Ingredients"
+                                  : "Ingredientes"),
                               //
                             ],
                           ),
@@ -155,7 +165,9 @@ class IngredientesPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 36.0),
                         child: Column(
                           children: [
-                            SubtituloGeneral("Nutrientes Importantes"),
+                            SubtituloGeneral(prefs.idioma == 0
+                                ? "Main Nutrients"
+                                : "Nutrientes Importantes"),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child:
@@ -212,14 +224,14 @@ class IngredientesPage extends StatelessWidget {
           final MenuItemDetail menuItemDetail = snapshot.data;
           return Row(
             children: [
-              NutrientesImportantes(
-                  "Calorias", menuItemDetail.nutrition['calories'], 0),
-              NutrientesImportantes(
-                  "Grasa", menuItemDetail.nutrition['fat'], 1),
-              NutrientesImportantes(
-                  "Proteinas", menuItemDetail.nutrition['protein'], 2),
-              NutrientesImportantes(
-                  "Carbo...", menuItemDetail.nutrition['carbs'], 3),
+              NutrientesImportantes(prefs.idioma == 0 ? "Calories" : "Calorias",
+                  menuItemDetail.nutrition['calories'], 0),
+              NutrientesImportantes(prefs.idioma == 0 ? "Fat" : "Grasa",
+                  menuItemDetail.nutrition['fat'], 1),
+              NutrientesImportantes(prefs.idioma == 0 ? "Protein" : "Proteinas",
+                  menuItemDetail.nutrition['protein'], 2),
+              NutrientesImportantes(prefs.idioma == 0 ? "Carbs" : "Carbo...",
+                  menuItemDetail.nutrition['carbs'], 3),
             ],
           );
         }

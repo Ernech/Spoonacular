@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import '../../constants.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
 
@@ -7,7 +8,7 @@ class NutrientesImportantes extends StatelessWidget {
   String tipo;
   dynamic valor;
   int index;
-
+  final prefs = PreferenciasUsuario();
   NutrientesImportantes(this.tipo, this.valor, this.index);
 
   @override
@@ -101,7 +102,7 @@ class NutrientesImportantes extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      "¿Que es?",
+                      (prefs.idioma == 0 ? "What is?" : "¿Qué es?"),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -128,7 +129,9 @@ class NutrientesImportantes extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      "Cantidad minima diaria",
+                      (prefs.idioma == 0
+                          ? "Minimum daily amount required"
+                          : "Cantidad mínima diaria"),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -168,16 +171,24 @@ class NutrientesImportantes extends StatelessWidget {
   Map<String, String> _obtenerInfo(int index) {
     switch (index) {
       case 0:
-        return utils.nutrientesImportantes[0];
+        return prefs.idioma == 0
+            ? utils.nutrientesImportantesEn[0]
+            : utils.nutrientesImportantes[0];
         break;
       case 1:
-        return utils.nutrientesImportantes[1];
+        return prefs.idioma == 0
+            ? utils.nutrientesImportantesEn[1]
+            : utils.nutrientesImportantes[1];
         break;
       case 2:
-        return utils.nutrientesImportantes[2];
+        return prefs.idioma == 0
+            ? utils.nutrientesImportantesEn[2]
+            : utils.nutrientesImportantes[2];
         break;
       case 3:
-        return utils.nutrientesImportantes[3];
+        return prefs.idioma == 0
+            ? utils.nutrientesImportantesEn[3]
+            : utils.nutrientesImportantes[3];
         break;
       default:
         return {
