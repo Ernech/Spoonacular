@@ -6,7 +6,7 @@ class RegisterValidators {
     if (username.length > 0) {
       sink.add(username);
     } else {
-      sink.addError('Campo obligatorio');
+      sink.addError('Campo obligatorio (Required Field)');
     }
   });
   final validarApPaterno = StreamTransformer<String, String>.fromHandlers(
@@ -14,7 +14,7 @@ class RegisterValidators {
     if (username.length > 0) {
       sink.add(username);
     } else {
-      sink.addError('Campo obligatorio');
+      sink.addError('Campo obligatorio (Required Field)');
     }
   });
   final validarApMaterno = StreamTransformer<String, String>.fromHandlers(
@@ -22,7 +22,7 @@ class RegisterValidators {
     if (username.length > 0) {
       sink.add(username);
     } else {
-      sink.addError('Campo obligatorio');
+      sink.addError('Campo obligatorio (Required Field)');
     }
   });
   final validarPassword = StreamTransformer<String, String>.fromHandlers(
@@ -30,7 +30,7 @@ class RegisterValidators {
     if (password.length >= 6) {
       sink.add(password);
     } else {
-      sink.addError('Más de 6 caracteres');
+      sink.addError('Más de 6 caracteres (More than 6 characters)');
     }
   });
 
@@ -43,7 +43,7 @@ class RegisterValidators {
     if (regExp.hasMatch(email)) {
       sink.add(email);
     } else {
-      sink.addError('El email no es correcto');
+      sink.addError('El email no es correcto (Wrong Email)');
     }
   });
 }

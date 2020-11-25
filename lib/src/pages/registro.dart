@@ -324,12 +324,13 @@ class _RegistroState extends State<Registro> {
 
   _registroUsuarioFirebase(UsuarioModel usuarioModel) {
     usuarioBloc.registrarUsuario(usuarioModel);
+
+    Navigator.pushReplacementNamed(context, '/');
     mostarAlerta(
         context,
         prefs.idioma == 0 ? "Successful Sign Up " : "Usuario Registrado",
         prefs.idioma == 0
             ? "Your signup has been successful"
             : "El registro ha sido exitoso");
-    Navigator.pushReplacementNamed(context, '/');
   }
 }
