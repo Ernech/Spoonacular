@@ -10,6 +10,7 @@ import 'package:spoonacular/src/widgets/nutriente_widget.dart';
 import 'package:spoonacular/src/widgets/nutrientesImportantes.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
+import 'package:http/http.dart' as http;
 
 class IngredientesPage extends StatelessWidget {
   String tag;
@@ -57,8 +58,20 @@ class IngredientesPage extends StatelessWidget {
                 ),
               ),
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100.0),
-                  child: _crearImagen(menuItem.image)),
+                borderRadius: BorderRadius.circular(100.0),
+                child: FutureBuilder(
+                  future: _crearImagen(menuItem.image),
+                  initialData: null,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                    if (!snapshot.hasData) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return snapshot.data;
+                    }
+                  },
+                ),
+              ),
             ),
             SizedBox(
               height: 50,
@@ -255,7 +268,7 @@ class IngredientesPage extends StatelessWidget {
     );
   }
 
-  Widget _crearImagen(String url) {
+  Future<Widget> _crearImagen(String url) async {
     if (url == null || url == '') {
       return Image(
         image: AssetImage('images/no-image.png'),
@@ -263,11 +276,16 @@ class IngredientesPage extends StatelessWidget {
         width: 100.0,
       );
     } else {
-      return Image.network(
-        url,
-        height: 100.0,
-        width: 100.0,
-      );
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        return Image.asset(
+          'images/no-image.png',
+          height: 100.0,
+          width: 100.0,
+        );
+      } else {
+        return Image.network(url, height: 100.0, width: 100.0);
+      }
     }
   }
 }

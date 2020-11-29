@@ -43,9 +43,11 @@ class _HomePageState extends State<HomePage> {
     return <BottomNavigationBarItem>[
       BottomNavigationBarItem(
           icon: Icon(Icons.home),
+          // ignore: deprecated_member_use
           title: Text(prefs.idioma == 0 ? "Home" : "Inicio")),
       BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
+          // ignore: deprecated_member_use
           title: Text(prefs.idioma == 0 ? "Account" : "Cuenta")),
     ];
   }

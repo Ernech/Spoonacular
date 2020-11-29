@@ -10,6 +10,7 @@ import 'package:spoonacular/src/widgets/nutriente_meal_widget.dart';
 import 'package:spoonacular/src/widgets/nutrientesImportantes.dart';
 import 'package:spoonacular/src/widgets/parrafo_general.dart';
 import 'package:spoonacular/src/widgets/subtitulo_general.dart';
+import 'package:http/http.dart' as http;
 
 class MealInformationPage extends StatelessWidget {
   String tag;
@@ -22,7 +23,7 @@ class MealInformationPage extends StatelessWidget {
     final spoonacularBloc = Provider.spoonacularBloc(context);
     spoonacularBloc.cargarRecipeNutrition(arguments['id']);
     spoonacularBloc.cargarIngredientes(arguments['id']);
-    print('ID: ${arguments['id']}');
+    print(arguments['id']);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -57,9 +58,21 @@ class MealInformationPage extends StatelessWidget {
                 ),
               ),
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100.0),
-                  child: _crearImagen(
-                      'https://webknox.com/recipeImages/${meal.id}-556x370.${meal.imageType}')),
+                borderRadius: BorderRadius.circular(100.0),
+                child: FutureBuilder(
+                  future: _crearImagen(
+                      'https://webknox.com/recipeImages/${meal.id}-556x370.${meal.imageType}'),
+                  initialData: null,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                    if (!snapshot.hasData) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return snapshot.data;
+                    }
+                  },
+                ),
+              ),
             ),
             SizedBox(
               height: 50,
@@ -246,7 +259,7 @@ class MealInformationPage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           final List<Ingredient> ingredientes = snapshot.data;
-          print('Ingredientes: $ingredientes');
+
           return BannerIngredientes(ingredientes);
         } else {
           return CircularProgressIndicator();
@@ -255,7 +268,7 @@ class MealInformationPage extends StatelessWidget {
     );
   }
 
-  Widget _crearImagen(String url) {
+  Future<Widget> _crearImagen(String url) async {
     if (url == null || url == '') {
       return Image(
         image: AssetImage('images/no-image.png'),
@@ -263,11 +276,16 @@ class MealInformationPage extends StatelessWidget {
         width: 100.0,
       );
     } else {
-      return Image.network(
-        url,
-        height: 100.0,
-        width: 100.0,
-      );
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        return Image.asset(
+          'images/no-image.png',
+          height: 100.0,
+          width: 100.0,
+        );
+      } else {
+        return Image.network(url, height: 100.0, width: 100.0);
+      }
     }
   }
 }
