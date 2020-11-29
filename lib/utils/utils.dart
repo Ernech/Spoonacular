@@ -49,6 +49,7 @@ Future<String> _traducirEsToEn(String text) async {
   final translator = GoogleTranslator();
   var translation = await translator.translate(text, from: 'es', to: 'en');
   texto = translation.toString();
+  return texto;
 }
 
 void mostarAlerta(BuildContext context, String titulo, String mensaje) {

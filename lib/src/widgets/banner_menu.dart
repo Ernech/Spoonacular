@@ -2,40 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:http/http.dart' as http;
 import '../../constants.dart';
 
 class BannerMenu extends StatelessWidget {
   final List<MenuItem> menuItems;
   final prefs = new PreferenciasUsuario();
   BannerMenu({@required this.menuItems});
-
-  final bannerImagesMenu = [
-    "images/dish1.png",
-    "images/dish2.png",
-    "images/dish3.png",
-    "images/dish4.png",
-  ];
-
-  final nombresMenuPlato = [
-    "Ensalada Napolitana",
-    "Ensalada Cesar ",
-    "Fideos Romanos",
-    "Carne salteada",
-  ];
-
-  final dietaMenuPlato = [
-    "Vegetariano",
-    "Vegano",
-    "No gluten",
-    "Omnivoro",
-  ];
-  final preciosMenu = [
-    "30",
-    "25",
-    "45",
-    "20",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +56,19 @@ class BannerMenu extends StatelessWidget {
                 height: 100,
                 width: 100,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50.0),
-                  child: _crearImagen(menuItems[i].image, context),
-                )
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: FutureBuilder(
+                      future: _crearImagen(menuItems[i].image, context),
+                      initialData: null,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<Widget> snapshot) {
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator();
+                        } else {
+                          return snapshot.data;
+                        }
+                      },
+                    ))
 
                 // FadeInImage(
                 //   placeholder: AssetImage('images/loading-circle.gif'),
@@ -220,7 +203,7 @@ class BannerMenu extends StatelessWidget {
     }
   }
 
-  Widget _crearImagen(String url, BuildContext context) {
+  Future<Widget> _crearImagen(String url, BuildContext context) async {
     if (url == null || url == '') {
       return Image(
         image: AssetImage('images/no-image.png'),
@@ -228,27 +211,16 @@ class BannerMenu extends StatelessWidget {
         width: 100.0,
       );
     } else {
-      return CachedNetworkImage(
-          imageUrl: url,
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        return Image.asset(
+          'images/no-image.png',
           height: 100.0,
           width: 100.0,
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Image.asset(
-                'images/no-image.png',
-                height: 100.0,
-                width: 100.0,
-              ));
-
-      // Image.network(
-      //   url,
-      //   height: 100.0,
-      //   width: 100.0,
-      //   errorBuilder: (context, exception, error) => Image.asset(
-      //     'images/no-image.png',
-      //     height: 100.0,
-      //     width: 100.0,
-      //   ),
-      // );
+        );
+      } else {
+        return Image.network(url, height: 100.0, width: 100.0);
+      }
     }
   }
 }

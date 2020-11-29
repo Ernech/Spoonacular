@@ -8,8 +8,6 @@ import 'package:spoonacular/src/pages/meal_information_page.dart';
 import 'package:spoonacular/src/pages/registro.dart';
 import 'package:spoonacular/src/pages/restaurante_menu.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
-import 'package:intl/intl.dart';
-import 'package:spoonacular/utils/utils.dart' as utils;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -14,7 +14,6 @@ class InicioPage extends StatefulWidget {
 class _InicioPageState extends State<InicioPage>
     with SingleTickerProviderStateMixin {
   final prefs = PreferenciasUsuario();
-  final _buscador = TextEditingController();
   var iconsImages = [
     "images/icon-vegetarian.png",
     "images/icon-vegan.png",

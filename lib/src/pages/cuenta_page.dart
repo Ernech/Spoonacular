@@ -25,7 +25,6 @@ class _CuentaPageState extends State<CuentaPage> {
   UsuarioModel usuario = new UsuarioModel();
   String firstName, lastNameP, lastNameM, email;
   final usuarioProvider = new UsuarioProvider();
-  List _tiposDietas = ['Vegetariano', 'Vegano', 'No Gluten', 'Omnivoro'];
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> mapToken = utils.parseJwt(prefs.token);

@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spoonacular/src/models/meal_diet_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/utils/utils.dart' as utils;
+import 'package:http/http.dart' as http;
 import '../../constants.dart';
 
 class BannerMeal extends StatelessWidget {
@@ -57,9 +57,20 @@ class BannerMeal extends StatelessWidget {
                 width: 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
-                  child: _crearImagen(
-                      'https://webknox.com/recipeImages/${meals[i].id}-556x370.${meals[i].imageType}',
-                      context),
+                  child: FutureBuilder(
+                    future: _crearImagen(
+                        'https://webknox.com/recipeImages/${meals[i].id}-556x370.${meals[i].imageType}',
+                        context),
+                    initialData: null,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      } else {
+                        return snapshot.data;
+                      }
+                    },
+                  ),
                 )),
           ),
           Positioned(
@@ -170,7 +181,7 @@ class BannerMeal extends StatelessWidget {
     }
   }
 
-  Widget _crearImagen(String url, BuildContext context) {
+  Future<Widget> _crearImagen(String url, BuildContext context) async {
     if (url == null || url == '') {
       return Image(
         image: AssetImage('images/no-image.png'),
@@ -178,16 +189,16 @@ class BannerMeal extends StatelessWidget {
         width: 100.0,
       );
     } else {
-      return CachedNetworkImage(
-          imageUrl: url,
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        return Image.asset(
+          'images/no-image.png',
           height: 100.0,
           width: 100.0,
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Image.asset(
-                'images/no-image.png',
-                height: 100.0,
-                width: 100.0,
-              ));
+        );
+      } else {
+        return Image.network(url, height: 100.0, width: 100.0);
+      }
     }
   }
 }

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:spoonacular/src/models/usuario_model.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
-import 'package:spoonacular/utils/utils.dart' as utils;
 
 class UsuarioProvider {
   final String _fireBaseToken = 'AIzaSyA_ej00DpuzNDqoIhU3PtLye2XkeJ9jpR0';
