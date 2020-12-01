@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spoonacular/constants.dart';
 import 'package:spoonacular/src/bloc/provider.dart';
 import 'package:spoonacular/src/models/menu_item_model.dart';
+import 'package:spoonacular/src/providers/spoonacular_provider.dart';
 import 'package:spoonacular/src/users_preferences/usersPreferences.dart';
 import 'package:spoonacular/src/widgets/banner_menu.dart';
 import 'package:spoonacular/src/widgets/button_atras.dart';
@@ -17,6 +18,7 @@ class RestauranteMenuPage extends StatelessWidget {
     final String arguments = ModalRoute.of(context).settings.arguments;
     print(arguments);
     final spoonacularBloc = Provider.spoonacularBloc(context);
+    final spoonacularProvider = new SpoonacularProvider();
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -53,10 +55,10 @@ class RestauranteMenuPage extends StatelessWidget {
               TituloCard(
                   prefs.idioma == 0 ? "Main Meals" : "Platos Principales",
                   primaryBlack),
-              _bannerMenu(spoonacularBloc, arguments),
+              _bannerMenu(spoonacularProvider, arguments),
               TituloCard(
                   prefs.idioma == 0 ? "Other Meals" : "Otros", primaryBlack),
-              _bannerMenuSecundario(spoonacularBloc, arguments, 10),
+              _bannerMenuSecundario(spoonacularProvider, arguments, 10),
             ],
           ),
         ),
@@ -64,10 +66,24 @@ class RestauranteMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _bannerMenu(SpoonacularBloc bloc, String arguments) {
-    bloc.cargarMenuItems(arguments, false);
-    return StreamBuilder(
-      stream: bloc.menuItemsStream,
+  // Widget _bannerMenu(SpoonacularBloc bloc, String arguments) {
+  //   bloc.cargarMenuItems(arguments, false);
+  //   return StreamBuilder(
+  //     stream: bloc.menuItemsStream,
+  //     initialData: null,
+  //     builder: (BuildContext context, AsyncSnapshot<List<MenuItem>> snapshot) {
+  //       if (snapshot.data == null) {
+  //         return CircularProgressIndicator();
+  //       } else {
+  //         List<MenuItem> items = snapshot.data;
+  //         return BannerMenu(menuItems: items);
+  //       }
+  //     },
+  //   );
+  // }
+  Widget _bannerMenu(SpoonacularProvider provider, String arguments) {
+    return FutureBuilder(
+      future: provider.getMenuItems(arguments, false),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot<List<MenuItem>> snapshot) {
         if (snapshot.data == null) {
@@ -80,11 +96,26 @@ class RestauranteMenuPage extends StatelessWidget {
     );
   }
 
+  // Widget _bannerMenuSecundario(
+  //     SpoonacularBloc bloc, String arguments, int offset) {
+  //   bloc.cargarMenuItemsSecu(arguments, false, offset);
+  //   return StreamBuilder(
+  //     stream: bloc.menuItemsStreamSec,
+  //     initialData: null,
+  //     builder: (BuildContext context, AsyncSnapshot<List<MenuItem>> snapshot) {
+  //       if (snapshot.data == null) {
+  //         return CircularProgressIndicator();
+  //       } else {
+  //         List<MenuItem> items = snapshot.data;
+  //         return BannerMenu(menuItems: items);
+  //       }
+  //     },
+  //   );
+  // }
   Widget _bannerMenuSecundario(
-      SpoonacularBloc bloc, String arguments, int offset) {
-    bloc.cargarMenuItemsSecu(arguments, false, offset);
-    return StreamBuilder(
-      stream: bloc.menuItemsStreamSec,
+      SpoonacularProvider provider, String arguments, int offset) {
+    return FutureBuilder(
+      future: provider.getMenuItemsSecu(arguments, false, offset),
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot<List<MenuItem>> snapshot) {
         if (snapshot.data == null) {
