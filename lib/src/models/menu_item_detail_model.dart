@@ -94,9 +94,9 @@ class Nutrients {
 
   Nutrients.fromJSONMap(Map<String, dynamic> jsonResponse) {
     title = jsonResponse['title'];
-    amount = jsonResponse['amount'];
+    amount = jsonResponse['amount'] / 1.0;
     unit = jsonResponse['unit'];
-    percentOfDailyNeeds = jsonResponse['percentOfDailyNeeds'];
+    percentOfDailyNeeds = jsonResponse['percentOfDailyNeeds'] / 1.0;
   }
 }
 

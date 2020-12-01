@@ -24,7 +24,7 @@ class SpoonacularProvider {
       var translation = await translator.translate(query, from: 'es', to: 'en');
       texto = translation.toString();
     }
-
+    print('QUERY $texto');
     final urlEndpoint = Uri.https(
         _url, 'food/menuItems/search', {'query': texto, 'apiKey': _apiKey});
     final respuesta = await http.get(urlEndpoint);

@@ -88,7 +88,7 @@ class Good {
   Good.fronJSONResponse(Map<String, dynamic> json) {
     amount = json['amount'];
     indented = json['indented'];
-    percentOfDailyNeeds = json['percentOfDailyNeeds'];
+    percentOfDailyNeeds = json['percentOfDailyNeeds'] / 1.0;
     title = json['title'];
   }
 }

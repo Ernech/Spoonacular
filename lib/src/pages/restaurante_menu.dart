@@ -15,6 +15,7 @@ class RestauranteMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String arguments = ModalRoute.of(context).settings.arguments;
+    print(arguments);
     final spoonacularBloc = Provider.spoonacularBloc(context);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;

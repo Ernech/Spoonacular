@@ -13,7 +13,6 @@ class BannerIngredientes extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> banners = new List<Widget>();
     if (ingredientes == null || ingredientes.length == 0) {
-      print('No hay ingredientes');
       var bannerView = Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: Chip(
@@ -28,7 +27,6 @@ class BannerIngredientes extends StatelessWidget {
       );
       banners.add(bannerView);
     } else {
-      print('LENGTH: ${ingredientes.length}');
       for (int i = 0; i < ingredientes.length; i++) {
         var bannerView = _crearBanner(ingredientes[i].name);
         banners.add(bannerView);
