@@ -90,9 +90,25 @@ class RestauranteMenuPage extends StatelessWidget {
           return CircularProgressIndicator();
         } else {
           List<MenuItem> items = snapshot.data;
-          return BannerMenu(menuItems: items);
+          if (items.length < 1) {
+            return _chipNoDisponible(prefs.idioma == 0
+                ? 'Meal Items not available, try again later.'
+                : 'Platos no disponible, inténtelo más tarde.');
+          } else {
+            return BannerMenu(menuItems: items);
+          }
         }
       },
+    );
+  }
+
+  Widget _chipNoDisponible(String text) {
+    return Chip(
+      label: Text(
+        text,
+        style: TextStyle(color: primaryWhite, fontSize: 12),
+      ),
+      backgroundColor: primaryBrown,
     );
   }
 
@@ -122,7 +138,13 @@ class RestauranteMenuPage extends StatelessWidget {
           return CircularProgressIndicator();
         } else {
           List<MenuItem> items = snapshot.data;
-          return BannerMenu(menuItems: items);
+          if (items.length < 1) {
+            return _chipNoDisponible(prefs.idioma == 0
+                ? 'Meal Items not available, try again later.'
+                : 'Platos no disponibles, inténtelo más tarde.');
+          } else {
+            return BannerMenu(menuItems: items);
+          }
         }
       },
     );

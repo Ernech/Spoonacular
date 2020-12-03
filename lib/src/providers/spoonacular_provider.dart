@@ -12,7 +12,7 @@ class SpoonacularProvider {
   //696885e454824daf899c0ffe18b58bff vania
   //0409316eb2644d86a23e7fdce0bdeb81 ernesto
   //4aa0c9982fad4ced95bb848e4f7870af ariel
-  String _apiKey = '0409316eb2644d86a23e7fdce0bdeb81';
+  String _apiKey = '696885e454824daf899c0ffe18b58bff';
   String _url = 'api.spoonacular.com';
 
   Future<List<MenuItem>> getMenuItems(String query, bool traducir) async {
@@ -21,7 +21,8 @@ class SpoonacularProvider {
       texto = query;
     } else {
       final translator = GoogleTranslator();
-      var translation = await translator.translate(query, from: 'es', to: 'en');
+      var translation =
+          await translator.translate(query.trim(), from: 'es', to: 'en');
       texto = translation.toString();
     }
     print('QUERY $texto');
@@ -42,10 +43,10 @@ class SpoonacularProvider {
       texto = query;
     } else {
       final translator = GoogleTranslator();
-      var translation = await translator.translate(query, from: 'es', to: 'en');
+      var translation =
+          await translator.translate(query.trim(), from: 'es', to: 'en');
       texto = translation.toString();
     }
-    print(offset);
     final urlEndpoint = Uri.https(_url, 'food/menuItems/search',
         {'query': texto, 'apiKey': _apiKey, 'offset': offset.toString()});
     final respuesta = await http.get(urlEndpoint);
